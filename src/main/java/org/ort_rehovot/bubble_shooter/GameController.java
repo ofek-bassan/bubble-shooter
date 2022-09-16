@@ -3,6 +3,8 @@ package org.ort_rehovot.bubble_shooter;
 import lombok.val;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
+import org.ort_rehovot.bubble_shooter.state.Events;
+import org.ort_rehovot.bubble_shooter.state.StateMachine;
 
 
 public class GameController {
@@ -94,6 +96,7 @@ public class GameController {
             owner.setInAnimation(false);
             if(gameModel.isGameOver())
             {
+                StateMachine.getInstance().handleEvent(Events.GAME_OVER);
                 gameModel.getView().removeAll();
                 gameModel.getView().setVisible(false);
                 GameOverFrame gop = new GameOverFrame();

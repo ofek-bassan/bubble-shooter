@@ -1,39 +1,40 @@
 package org.ort_rehovot.bubble_shooter.state;
 
-import java.util.Scanner;
+import org.ort_rehovot.bubble_shooter.PlayingState;
+
+import java.awt.*;
 
 public class StateMachine {
     private AbstractState state;
+    private static StateMachine sInstance = null;
 
-    public StateMachine() {
-        state = new NullState();
+    public static StateMachine getInstance() {
+        if (sInstance == null) {
+            sInstance = new StateMachine();
+        }
+        return sInstance;
     }
 
-    public void say() {
-        state.say();
+    private StateMachine() {
+        state = new PlayingState();
     }
 
-    public void handleEvent(char x) {
-        AbstractState transition = state.transition(x);
+    public void repaint(Graphics g) {
+        if (state != null) {
+            state.repaint(g);
+        }
+    }
+
+    public void handleMouseClick(int x, int y) {
+        if (state != null) {
+            state.handleMouseClick(x, y);
+        }
+    }
+
+    public void handleEvent(Events ev) {
+        AbstractState transition = state.transition(ev);
         if (transition != null) {
             state = transition;
         }
-    }
-
-    public static void main(String[] args) {
-        StateMachine fsm = new StateMachine();
-        Scanner input = new Scanner(System.in);
-        while (input.hasNext()) {
-            String s = input.nextLine();
-            char ch = s.charAt(0);
-            if (ch == '!') {
-                fsm.say();
-            } else if (ch == '.') {
-                break;
-            } else {
-                fsm.handleEvent(ch);
-            }
-        }
-
     }
 }

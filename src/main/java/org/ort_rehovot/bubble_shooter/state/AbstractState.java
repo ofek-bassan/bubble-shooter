@@ -1,7 +1,10 @@
 package org.ort_rehovot.bubble_shooter.state;
 
-public interface AbstractState {
-    void say();
+import java.awt.*;
 
-    AbstractState transition(char x);
+public interface AbstractState {
+    void repaint(Graphics g);
+    void handleMouseClick(int x, int y);
+
+    AbstractState transition(Events ev);
 }
