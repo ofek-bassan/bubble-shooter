@@ -1,5 +1,7 @@
 package org.ort_rehovot.bubble_shooter.ao;
 
+import java.io.IOException;
+
 public class ActiveObject extends Thread{
     private BoundedBuffer<Command> queue;
 
@@ -33,6 +35,8 @@ public class ActiveObject extends Thread{
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

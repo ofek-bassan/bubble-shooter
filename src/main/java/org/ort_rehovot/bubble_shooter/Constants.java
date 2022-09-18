@@ -1,6 +1,7 @@
 package org.ort_rehovot.bubble_shooter;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class Constants {
     public static final int FIELD_SIZE_X = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -13,4 +14,13 @@ public class Constants {
     public static final int MAX_ROWS = 11;
     public static final int MAX_COLS = 28;
     public static final int MAX_BAD_THROWS = 6;
+    public static final  FrameController fc;
+
+    static {
+        try {
+            fc = new FrameController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

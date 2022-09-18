@@ -1,14 +1,28 @@
 package org.ort_rehovot.bubble_shooter;
 
+import org.ort_rehovot.bubble_shooter.state.Events;
+
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 public class GameFrame extends JFrame {
 
-    public GameFrame() throws IOException {
+    public GameFrame(Events ev) throws IOException {
         super();
-        GamePanel bbp = new GamePanel();
-        add(bbp);
+        switch (ev)
+        {
+            case GAME_WIN:
+            case START_GAME:
+                GamePanel bbp = new GamePanel();
+                add(bbp);
+                break;
+            case GAME_OVER:
+                setBackground(Color.black);
+                GameOverPanel gop = new GameOverPanel();
+                add(gop);
+                break;
+        }
         /*
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y);

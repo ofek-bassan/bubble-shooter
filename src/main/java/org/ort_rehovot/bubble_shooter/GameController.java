@@ -3,8 +3,8 @@ package org.ort_rehovot.bubble_shooter;
 import lombok.val;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
-import org.ort_rehovot.bubble_shooter.state.Events;
-import org.ort_rehovot.bubble_shooter.state.StateMachine;
+
+import java.io.IOException;
 
 
 public class GameController {
@@ -45,7 +45,7 @@ public class GameController {
          * moves the ball until it collided with another ball
          */
         @Override
-        public void call() {
+        public void call() throws IOException {
             owner.setInAnimation(true);
             val h = gameModel.getHeight();
             val w = gameModel.getWidth();
@@ -96,10 +96,7 @@ public class GameController {
             owner.setInAnimation(false);
             if(gameModel.isGameOver())
             {
-                StateMachine.getInstance().handleEvent(Events.GAME_OVER);
-                gameModel.getView().removeAll();
-                gameModel.getView().setVisible(false);
-                GameOverFrame gop = new GameOverFrame();
+                Constants.fc.Lose();
             }
             else
                 gameModel.getView().repaint();

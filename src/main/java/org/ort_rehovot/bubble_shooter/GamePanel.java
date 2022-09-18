@@ -1,7 +1,5 @@
 package org.ort_rehovot.bubble_shooter;
 
-import org.ort_rehovot.bubble_shooter.state.StateMachine;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -37,8 +35,7 @@ public class GamePanel extends JPanel implements GameView{
 				if (e.getButton() == 1) {
 					int x = e.getX();
 					int y = e.getY();
-					StateMachine.getInstance().handleMouseClick(x, y);
-					//gameController.shoot(x, y);
+					gameController.shoot(x, y);
 				} else if (e.getButton() == 3) {
 					gameController.changeColor();
 				} else if (e.getButton() == 2) {
@@ -61,11 +58,19 @@ public class GamePanel extends JPanel implements GameView{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		StateMachine.getInstance().repaint(g);
-//
-//
+
+		g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
+		gameModel.getPlayer().draw(g);
+		Graphics2D g2d = (Graphics2D) g;
+		arrow.paintComponent(g2d, getLocationOnScreen());
 
 
+
+		for (int i = 0; i < gameModel.getRows(); i++) {
+			for (int j = 0; j < gameModel.getCols(); j++) {
+				gameModel.getGrid()[i][j].draw(g);
+			}
+		}
 	}
 
 	public void hideMouseCursor() {
@@ -80,8 +85,8 @@ public class GamePanel extends JPanel implements GameView{
 	}
 
 	public static void main(String[] args) throws IOException {
-
-		GameFrame gf = new GameFrame();
+		Constants.fc.ShowGame();
+		//GameFrame gf = new GameFrame();
 		//WinFrame wf = new WinFrame();
 		//GameOverPanel gop = new GameOverPanel();
 		// bbp.hideMouseCursor();
