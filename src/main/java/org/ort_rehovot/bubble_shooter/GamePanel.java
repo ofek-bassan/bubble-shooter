@@ -86,11 +86,6 @@ public class GamePanel extends JPanel implements GameView{
 
 	public static void main(String[] args) throws IOException {
 		Constants.fc.ShowGame();
-		//GameFrame gf = new GameFrame();
-		//WinFrame wf = new WinFrame();
-		//GameOverPanel gop = new GameOverPanel();
-		// bbp.hideMouseCursor();
-
 	}
 
 	@Override

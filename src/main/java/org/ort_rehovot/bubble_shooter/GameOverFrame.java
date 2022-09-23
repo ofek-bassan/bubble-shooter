@@ -25,7 +25,7 @@ public class GameOverFrame extends JFrame{
         add(_won_player);
 
         //  menu
-        _img_menu = new JLabel(new ImageIcon(ResourceLoader.getInstance().getWinImage()));
+        _img_menu = new JLabel(new ImageIcon(ResourceLoader.getInstance().getGameOverGif()));
         _img_menu.setBounds(0, 0, 500, 500);
         add(_img_menu);
 

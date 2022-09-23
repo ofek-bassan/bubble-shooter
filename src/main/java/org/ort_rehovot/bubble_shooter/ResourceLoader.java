@@ -22,6 +22,9 @@ public class ResourceLoader {
 	private final Image winImage;
 
 	@Getter
+	private final Image gameOverGif;
+
+	@Getter
 	private final Clip boom;
 
 	@Getter
@@ -31,6 +34,7 @@ public class ResourceLoader {
 
 		bgImage = new ImageIcon(ResourceLoader.loadResource("bg.png")).getImage();
 		winImage = new ImageIcon(ResourceLoader.loadResource("win2.jpg")).getImage();
+		gameOverGif = new ImageIcon(ResourceLoader.loadResource("gameover2.gif")).getImage();
 		balls = new Image[NUM_BALLS];
 		for (int i=1; i<=NUM_BALLS; i++) {
 			balls[i-1] = new ImageIcon(ResourceLoader.loadResource("Ball"+i+".png")).getImage();
