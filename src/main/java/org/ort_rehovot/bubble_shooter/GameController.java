@@ -44,12 +44,12 @@ public class GameController {
         /***
          * moves the ball until it collided with another ball
          */
-        @Override
-        public void call() throws IOException {
+
+        private void normalGame() {
             owner.setInAnimation(true);
             val h = gameModel.getHeight();
             val w = gameModel.getWidth();
-            
+
             double m = gameModel.getPlayer().getSlope();
             while (true) {
                 int x = gameModel.getPlayer().getX();
@@ -96,10 +96,28 @@ public class GameController {
             owner.setInAnimation(false);
             if(gameModel.isGameOver())
             {
-                Constants.fc.Lose();
+                try {
+                    Constants.fc.Lose();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             else
                 gameModel.getView().repaint();
+        }
+
+        @Override
+        public void call() throws IOException {
+
+            /**
+             * if has balls to explode - draw explosion animations
+             * else continue as usual
+             */
+            if (gameModel.hasBallsToExplode()) {
+
+            } else {
+                normalGame();
+            }
         }
     }
 

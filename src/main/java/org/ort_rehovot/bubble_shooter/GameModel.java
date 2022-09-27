@@ -396,12 +396,12 @@ public class GameModel {
 		System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn,color);
 
 		if (!grid[newRow][newColumn].isInvisible()) {
-			if(sector == 7)
-				newColumn++;
-			if(sector == 6)
-				newColumn++;
-			if(sector == 8)
-				newColumn++;
+			switch (sector) {
+				case 7, 6, 8 -> newColumn++;
+				default -> {
+				}
+			}
+
 		}
 
 		grid[newRow][newColumn] = Ball.create(newRow, newColumn, this, color);
@@ -427,8 +427,10 @@ public class GameModel {
 		System.out.printf("Throws = %d\n", throwsCounter);
 
 		collisions = getLonelyBalls(newRow);
-		explode(collisions);
-		view.playExplosion();
+		if (!collisions.isEmpty()) {
+			explode(collisions);
+			view.playExplosion();
+		}
 
 		moveRowsDown(newRow);
 
@@ -497,23 +499,36 @@ public class GameModel {
 	 */
 	private void explode(List<Ball> balls) {
 		for (val b : balls) {
-			b.setInvisible();
+			//b.setInvisible();
+			b.setExplosion(0);
 		}
 	}
+
+	public boolean hasBallsToExplode() {
+		for (int r = 0; r < Constants.MAX_ROWS; r++) {
+			for (int c=0; c<Constants.MAX_COLS; c++) {
+				if(grid[r][c].getExplosion() >= 0) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private List<Ball> getLonelyBalls(int lastRow)
 	{
 		List<Ball> out = new ArrayList<>();
-		Ball cell = null;
+
 		for (int r = lastRow; r>=1; r--) {
 			for (int c=1; c<Constants.MAX_COLS-1; c++) {
-				cell = grid[r][c];
-				if(grid[r+1][c+1].getColor() == -1
-						&& grid[r][c-1].getColor() == -1
-						&& grid[r-1][c].getColor() == -1
-						&& grid[r-1][c+1].getColor() == -1
-						&& grid[r][c+1].getColor() == -1)
+				if(!grid[r][c].isInvisible() &&
+						grid[r+1][c+1].isInvisible()
+						&& grid[r][c-1].isInvisible()
+						&& grid[r-1][c].isInvisible()
+						&& grid[r-1][c+1].isInvisible()
+						&& grid[r][c+1].isInvisible())
 				{
-					out.add(cell);
+					out.add(grid[r][c]);
 				}
 			}
 		}

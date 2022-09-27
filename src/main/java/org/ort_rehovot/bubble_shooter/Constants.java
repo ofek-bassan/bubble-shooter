@@ -13,7 +13,7 @@ public class Constants {
     public static final int BALL_WIDTH = 67;
     public static final int MAX_ROWS = 11;
     public static final int MAX_COLS = 28;
-    public static final int MAX_BAD_THROWS = 1000;
+    public static final int MAX_BAD_THROWS = 3;
     public static final  FrameController fc;
 
     static {

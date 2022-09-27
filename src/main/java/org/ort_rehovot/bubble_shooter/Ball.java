@@ -38,6 +38,10 @@ public class Ball{
 	@Setter
 	private int color;
 
+	@Getter
+	@Setter
+	private int explosion = -1;
+
 	private int dirx = 1;
 	private int diry = 1;
 	private final GameModel gameModel;
@@ -168,7 +172,7 @@ public class Ball{
 	 * @param g graphic object
 	 */
 	public void draw(Graphics g) {
-		if (color != -1)
+		if (!isInvisible())
 		{
 			g.drawImage(image, x - width / 2, y - width / 2, width, width, null);
 		}
@@ -204,7 +208,7 @@ public class Ball{
 	 * check if the ball is destroyed
 	 * @return true iff color is invisible
 	 */
-	public boolean isInvisible() { return color == -1; }
+	public boolean isInvisible() { return color == -1 || explosion > -1; }
 
 	/***
 	 * check if a ball is destroyed
