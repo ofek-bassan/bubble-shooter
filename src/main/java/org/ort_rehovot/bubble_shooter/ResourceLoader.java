@@ -12,6 +12,7 @@ import java.io.InputStream;
 public class ResourceLoader {
 	
 	public final static int NUM_BALLS = 6;
+	public final static int NUM_EXPLOSIONS = 20;
 	
 	private final Image [] balls;
 	@Getter
@@ -21,11 +22,18 @@ public class ResourceLoader {
 	@Getter
 	private final Image winImage;
 
+
+	@Getter
+	private final Image[] explosion;
+
 	@Getter
 	private final Image gameOverGif;
 
 	@Getter
 	private final Clip boom;
+
+	@Getter
+	private final Clip explode;
 
 	@Getter
 	private final Clip backgroundMusic;
@@ -39,9 +47,21 @@ public class ResourceLoader {
 		for (int i=1; i<=NUM_BALLS; i++) {
 			balls[i-1] = new ImageIcon(ResourceLoader.loadResource("Ball"+i+".png")).getImage();
 		}
+
+		explosion = new Image[NUM_EXPLOSIONS];
+		for (int i=0; i<NUM_EXPLOSIONS; i++) {
+			if (i < 10) {
+				explosion[i] = new ImageIcon(ResourceLoader.loadResource("explosion/tile00" + i + ".png")).getImage();
+			} else {
+				explosion[i] = new ImageIcon(ResourceLoader.loadResource("explosion/tile0" + i + ".png")).getImage();
+			}
+		}
+
 		arrow = new ImageIcon(ResourceLoader.loadResource("arrow.png")).getImage();
 
 		boom = loadMusicResource("boom.wav");
+
+		explode = loadMusicResource("explode.wav");
 
 		backgroundMusic = loadMusicResource("background.wav");
 	}

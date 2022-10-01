@@ -1,10 +1,12 @@
 package org.ort_rehovot.bubble_shooter;
 
+import lombok.AllArgsConstructor;
 import lombok.val;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class GameController {
@@ -22,6 +24,31 @@ public class GameController {
 
     public synchronized void setInAnimation(boolean v) {
         inAnimation1 = v;
+    }
+
+    @AllArgsConstructor
+    private static class ExplodeCommand implements Command {
+        private final GameModel gameModel;
+        private final GameController owner;
+
+        @Override
+        public void call() throws IOException {
+            List<Ball> ballsToExplode = gameModel.hasBallsToExplode();
+            if (!ballsToExplode.isEmpty()) {
+                do {
+                    for (Ball b : ballsToExplode) {
+                        b.advanceExplosionAnimation();
+                    }
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    gameModel.getView().repaint();
+                    ballsToExplode = gameModel.hasBallsToExplode();
+                } while (!ballsToExplode.isEmpty());
+            }
+        }
     }
 
 
@@ -45,7 +72,10 @@ public class GameController {
          * moves the ball until it collided with another ball
          */
 
-        private void normalGame() {
+
+
+        @Override
+        public void call() throws IOException {
             owner.setInAnimation(true);
             val h = gameModel.getHeight();
             val w = gameModel.getWidth();
@@ -102,21 +132,9 @@ public class GameController {
                     e.printStackTrace();
                 }
             }
-            else
+            else {
                 gameModel.getView().repaint();
-        }
-
-        @Override
-        public void call() throws IOException {
-
-            /**
-             * if has balls to explode - draw explosion animations
-             * else continue as usual
-             */
-            if (gameModel.hasBallsToExplode()) {
-
-            } else {
-                normalGame();
+                owner.activeObject.dispatch(new ExplodeCommand(gameModel, owner));
             }
         }
     }

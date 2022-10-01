@@ -175,8 +175,20 @@ public class Ball{
 		if (!isInvisible())
 		{
 			g.drawImage(image, x - width / 2, y - width / 2, width, width, null);
+		} else {
+			if (explosion > -1) {
+				g.drawImage(ResourceLoader.getInstance().getExplosion()[explosion], x - width / 2, y - width / 2, width, width, null);
+			}
 		}
 
+	}
+
+	public void advanceExplosionAnimation() {
+		explosion++;
+		if (explosion >= ResourceLoader.getInstance().getExplosion().length) {
+			explosion = -1;
+			setInvisible();
+		}
 	}
 
 	/***

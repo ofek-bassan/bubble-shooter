@@ -31,6 +31,15 @@ public class SoundSystem extends ActiveObject {
         });
     }
     public void playExplosion() {
+        dispatch(() -> {
+            try {
+                Clip boom = ResourceLoader.getInstance().getExplode();
+                boom.setFramePosition(0);
+                boom.start();
 
+            } catch (Exception exc) {
+                exc.printStackTrace(System.out);
+            }
+        });
     }
 }
