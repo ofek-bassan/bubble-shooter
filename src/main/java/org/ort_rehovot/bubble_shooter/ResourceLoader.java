@@ -50,11 +50,7 @@ public class ResourceLoader {
 
 		explosion = new Image[NUM_EXPLOSIONS];
 		for (int i=0; i<NUM_EXPLOSIONS; i++) {
-			if (i < 10) {
-				explosion[i] = new ImageIcon(ResourceLoader.loadResource("explosion/tile00" + i + ".png")).getImage();
-			} else {
-				explosion[i] = new ImageIcon(ResourceLoader.loadResource("explosion/tile0" + i + ".png")).getImage();
-			}
+			explosion[i] = new ImageIcon(ResourceLoader.loadResource("explosion/tile" + i + ".png")).getImage();
 		}
 
 		arrow = new ImageIcon(ResourceLoader.loadResource("arrow.png")).getImage();

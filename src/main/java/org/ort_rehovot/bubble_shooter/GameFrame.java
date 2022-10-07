@@ -4,12 +4,24 @@ import org.ort_rehovot.bubble_shooter.state.Events;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class GameFrame extends JFrame {
 
     public GameFrame(Events ev) throws IOException {
         super();
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if(e.getKeyCode()== KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_Q)
+                {
+                    System.exit(0);
+                }
+            }
+        });
         switch (ev)
         {
             case GAME_WIN:

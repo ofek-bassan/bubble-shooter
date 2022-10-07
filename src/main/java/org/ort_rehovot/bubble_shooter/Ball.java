@@ -185,7 +185,7 @@ public class Ball{
 
 	public void advanceExplosionAnimation() {
 		explosion++;
-		System.out.println("explosion:"+explosion);
+
 		if (explosion >= ResourceLoader.getInstance().getExplosion().length) {
 			explosion = -1;
 			setInvisible();
