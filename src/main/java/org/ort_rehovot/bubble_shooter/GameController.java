@@ -135,6 +135,7 @@ public class GameController {
             else {
                 gameModel.getView().repaint();
                 owner.activeObject.dispatch(new ExplodeCommand(gameModel, owner));
+                gameModel.setNewPlayer();
             }
         }
     }

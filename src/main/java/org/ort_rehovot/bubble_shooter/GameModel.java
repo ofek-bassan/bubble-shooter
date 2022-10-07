@@ -276,7 +276,7 @@ public class GameModel {
 			return true;
 		}
 
-		//printGrid(row, column, newRow, newColumn);
+		printGrid(row, column, newRow, newColumn);
 
 		List<Ball> collisions = getCollisions(newRow, newColumn, color);
 		if (collisions.size() >= MIN_NUM_TO_EXPLODE) {
@@ -289,19 +289,19 @@ public class GameModel {
 		}
 		System.out.printf("Throws = %d\n", throwsCounter);
 
-		collisions = getLonelyBalls(newRow);
+		/*collisions = getLonelyBalls(newRow);
 		if (!collisions.isEmpty()) {
 			explode(collisions);
 			view.playExplosion();
-		}
+		}*/
 
 		moveRowsDown(newRow);
 
-		//System.out.println("//////////////////////////////////////////////////////////////////");
+		System.out.println("//////////////////////////////////////////////////////////////////");
 		//printDebug();
+		printGrid(row, column, newRow, newColumn);
 
 		updateRows();
-		setNewPlayer();
 		return true;
 	}
 
@@ -372,10 +372,12 @@ public class GameModel {
 		for (int r = 0; r < Constants.MAX_ROWS; r++) {
 			for (int c=0; c<Constants.MAX_COLS; c++) {
 				if(grid[r][c].getExplosion() >= 0) {
+					System.out.println("explode:("+r+","+c+")");
 					result.add(grid[r][c]);
 				}
 			}
 		}
+		System.out.println("size:"+result.size());
 		return result;
 	}
 
@@ -385,14 +387,28 @@ public class GameModel {
 
 		for (int r = lastRow; r>=1; r--) {
 			for (int c=1; c<Constants.MAX_COLS-1; c++) {
-				if(!grid[r][c].isInvisible() &&
-						grid[r+1][c+1].isInvisible()
-						&& grid[r][c-1].isInvisible()
-						&& grid[r-1][c].isInvisible()
-						&& grid[r-1][c+1].isInvisible()
-						&& grid[r][c+1].isInvisible())
-				{
-					out.add(grid[r][c]);
+				if (r % 2 == 0) {
+					if(!grid[r-1][c].isNoneColor() &&
+							grid[r][c+1].isNoneColor()
+							&& grid[r+1][c].isNoneColor()
+							&& grid[r+1][c-1].isNoneColor()
+							&& grid[r][c-1].isNoneColor()
+							&& grid[r-1][c-1].isNoneColor())
+					{
+						out.add(grid[r][c]);
+						System.out.println("helper:("+r+","+c+")");
+					}
+				} else {
+					if(!grid[r][c].isNoneColor() &&
+							grid[r+1][c+1].isNoneColor()
+							&& grid[r][c-1].isNoneColor()
+							&& grid[r-1][c].isNoneColor()
+							&& grid[r-1][c+1].isNoneColor()
+							&& grid[r][c+1].isNoneColor())
+					{
+						out.add(grid[r][c]);
+						System.out.println("helper:("+r+","+c+")");
+					}
 				}
 			}
 		}
@@ -412,7 +428,6 @@ public class GameModel {
 				ball.setVisited(false);
 			}
 		}
-
 		getCollisionsHelper(i, j, color, out);
 		return out;
 	}
@@ -437,6 +452,7 @@ public class GameModel {
 
 		if (grid[i][j].getColor() == color) {
 			grid[i][j].setVisited(true);
+			System.out.println("helper:("+i+","+j+")");
 			out.add(grid[i][j]);
 			if (i % 2 != 0) {
 				getCollisionsHelper(i-1, j, color, out);

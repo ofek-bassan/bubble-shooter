@@ -185,6 +185,7 @@ public class Ball{
 
 	public void advanceExplosionAnimation() {
 		explosion++;
+		System.out.println("explosion:"+explosion);
 		if (explosion >= ResourceLoader.getInstance().getExplosion().length) {
 			explosion = -1;
 			setInvisible();
@@ -221,6 +222,8 @@ public class Ball{
 	 * @return true iff color is invisible
 	 */
 	public boolean isInvisible() { return color == -1 || explosion > -1; }
+
+	public boolean isNoneColor(){return color == -1;}
 
 	/***
 	 * check if a ball is destroyed
