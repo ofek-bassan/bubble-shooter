@@ -106,7 +106,7 @@ public class GameController {
                     }
 
                     if (m > 8 || m < -8) {
-                        gameModel.getPlayer().addY(-8);
+                        gameModel.getPlayer().addY(-4);
                     } else if (m < 3) {
                         gameModel.getPlayer().setY(((int) (m * ((x + 3) - x) + y)) * diry);
                         if (!gameModel.getPlayer().isLeft()) {
