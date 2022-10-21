@@ -7,18 +7,17 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
-public class GamePanel extends JPanel implements GameView{
+public class GamePanel extends JPanel {
 	GameModel gameModel;
 	GameController gameController;
 	Arrow arrow;
-	SoundSystem soundSystem;
+
 	public GamePanel() throws IOException {
 		ResourceLoader.init();
 		gameModel = new GameModel(this);
 		gameController = new GameController(gameModel);
 		arrow = new Arrow();
-		soundSystem = new SoundSystem();
-		playBackgroundMusic();
+		SoundSystem.getInstance().playBackgroundMusic();
 		addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -84,21 +83,7 @@ public class GamePanel extends JPanel implements GameView{
 		Constants.fc.ShowGame();
 	}
 
-	@Override
-	public void refresh() {
-		repaint();
-	}
 
-	@Override
-	public void playBoom() {
-		soundSystem.playBoom();
-	}
 
-	public void playBackgroundMusic() {
-		soundSystem.playBackgroundMusic();
-	}
-	@Override
-	public void playExplosion() {
-		soundSystem.playExplosion();
-	}
+
 }

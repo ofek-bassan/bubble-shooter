@@ -14,7 +14,7 @@ public class GameModel {
     private Ball player;
 
     private Ball[][] grid;
-    private int rows = 1, cols = 28;
+    private int rows = 5, cols = 28;
 
     @Getter
     @Setter
@@ -291,7 +291,7 @@ public class GameModel {
 
             throwsCounter = 0;
         } else {
-            view.playBoom();
+            SoundSystem.getInstance().playBoom();
             throwsCounter++;
         }
         System.out.printf("Throws = %d\n", throwsCounter);
@@ -307,7 +307,7 @@ public class GameModel {
             exploded = true;
         }
         if (exploded) {
-            view.playExplosion();
+            SoundSystem.getInstance().playExplosion();
         }
 
 

@@ -30,8 +30,10 @@ public class GameFrame extends JFrame {
                 add(bbp);
                 break;
             case GAME_OVER:
+
                 setBackground(Color.black);
                 GameOverPanel gop = new GameOverPanel();
+
                 add(gop);
                 break;
         }

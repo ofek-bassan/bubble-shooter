@@ -16,6 +16,7 @@ public class FrameController {
     }
 
     public void Lose() throws IOException {
+        SoundSystem.getInstance().stopBackgroundMusic();
         gf.dispose();
         gf = new GameFrame(Events.GAME_OVER);
     }
