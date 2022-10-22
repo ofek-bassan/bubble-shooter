@@ -61,8 +61,8 @@ public class GamePanel extends JPanel {
 
 
 
-		for (int i = 0; i < gameModel.getRows(); i++) {
-			for (int j = 0; j < gameModel.getCols(); j++) {
+		for (int i = 0; i < Constants.MAX_ROWS; i++) {
+			for (int j = 0; j < Constants.MAX_COLS; j++) {
 				gameModel.getGrid()[i][j].draw(g);
 			}
 		}

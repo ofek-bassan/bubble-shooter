@@ -248,9 +248,12 @@ public class GameModel {
                     newRow--;
                     break;
                 case 4:
-                case 5:
                 case 6:
                 case 7:
+                    break;
+                case 5:
+                    newRow--;
+                    newColumn--;
                     break;
                 case 8:
                     //newColumn++;
@@ -285,10 +288,10 @@ public class GameModel {
         List<Ball> collisions = getCollisions(newRow, newColumn, color);
 
         boolean exploded = false;
+
         if (collisions.size() >= MIN_NUM_TO_EXPLODE) {
             explode(collisions);
             exploded = true;
-
             throwsCounter = 0;
         } else {
             SoundSystem.getInstance().playBoom();
@@ -312,11 +315,8 @@ public class GameModel {
 
 
         moveRowsDown(newRow);
-
-        if (System.getenv("PRINT_DEBUG") != null) {
-            System.out.println("//////////////////////////////////////////////////////////////////");
-            //printDebug();
-        }
+        System.out.println("//////////////////////////////////////////////////////////////////");
+        //printDebug();
         printGrid(row, column, newRow, newColumn);
 
         updateRows();

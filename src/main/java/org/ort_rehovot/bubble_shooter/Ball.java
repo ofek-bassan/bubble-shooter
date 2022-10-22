@@ -177,6 +177,8 @@ public class Ball{
 			g.drawImage(image, x - width / 2, y - width / 2, width, width, null);
 		} else {
 			if (explosion > -1) {
+				if(row==5 && column == 21)
+					System.out.println("asdasdasdads");
 				g.drawImage(ResourceLoader.getInstance().getExplosion()[explosion], x - width / 2, y - width / 2, width, width, null);
 			}
 		}
@@ -185,7 +187,8 @@ public class Ball{
 
 	public void advanceExplosionAnimation() {
 		explosion++;
-
+		if(row==5 && column == 21)
+			System.out.println(explosion);
 		if (explosion >= ResourceLoader.getInstance().getExplosion().length) {
 			explosion = -1;
 			setInvisible();
