@@ -168,7 +168,6 @@ public class GameModel {
         grid[4][8] = Ball.create(4, 8, this, 4);
         grid[4][9] = Ball.create(4, 9, this, 3);
         grid[4][18] = Ball.create(4, 18, this, 5);
-        grid[4][19] = Ball.create(4, 19, this, 4);
         grid[4][20] = Ball.create(4, 20, this, 6);
         grid[4][21] = Ball.create(4, 21, this, 4);
         grid[4][22] = Ball.create(4, 22, this, 5);
@@ -211,8 +210,11 @@ public class GameModel {
         grid[7][2] = Ball.create(7, 2, this, 5);
         grid[7][5] = Ball.create(7, 5, this, 3);
         grid[7][6] = Ball.create(7, 6, this, 2);
-        grid[7][19] = Ball.create(7, 19, this, 4);
+        grid[7][20] = Ball.create(7, 20, this, 1);
         grid[8][6] = Ball.create(8, 6, this, 3);
+        grid[8][20] = Ball.create(8, 20, this, 5);
+        grid[8][21] = Ball.create(8, 21, this, 4);
+        grid[9][21] = Ball.create(9, 21, this, 3);
     }
 
     void initDebugBalls() {
@@ -369,6 +371,10 @@ public class GameModel {
         }
         if (newRow % 2 == 0) {
             switch (sector) {
+                case 2:
+                    newRow-=2;
+                    newColumn++;
+                    break;
                 case 1:
                     newRow--;
                     newColumn++;
@@ -389,6 +395,10 @@ public class GameModel {
             }
         } else {
             switch (sector) {
+                case 2:
+                    newRow-=2;
+                    newColumn++;
+                    break;
                 case 1:
                     newColumn++;
                     newRow--;
