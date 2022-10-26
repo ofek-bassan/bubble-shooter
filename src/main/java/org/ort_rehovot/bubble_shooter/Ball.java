@@ -3,7 +3,6 @@ package org.ort_rehovot.bubble_shooter;
 //23-5-2021
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
 
 import java.awt.*;
 import java.util.Random;
@@ -110,7 +109,9 @@ public class Ball{
 	public static Ball create(int r, int c, GameModel gameModel, int color) {
 		Ball ret = create(r,c,gameModel);
 		ret.color = color;
-		ret.image = ResourceLoader.getInstance().getBallImage(color);
+		if (color >= 0) {
+			ret.image = ResourceLoader.getInstance().getBallImage(color);
+		}
 		return ret;
 	}
 
@@ -177,8 +178,6 @@ public class Ball{
 			g.drawImage(image, x - width / 2, y - width / 2, width, width, null);
 		} else {
 			if (explosion > -1) {
-				if(row==5 && column == 21)
-					System.out.println("asdasdasdads");
 				g.drawImage(ResourceLoader.getInstance().getExplosion()[explosion], x - width / 2, y - width / 2, width, width, null);
 			}
 		}

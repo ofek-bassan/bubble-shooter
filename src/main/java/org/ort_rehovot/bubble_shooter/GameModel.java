@@ -14,7 +14,7 @@ public class GameModel {
     private Ball player;
 
     private Ball[][] grid;
-    private int rows = 5, cols = 28;
+    private int rows = Constants.START_NUM_ROWS, cols = 28;
 
     @Getter
     @Setter
@@ -66,155 +66,7 @@ public class GameModel {
     }
 
     private void initDebugBallsInternal() {
-        grid[0][0] = Ball.create(0, 0, this, 2);
-        grid[0][1] = Ball.create(0, 1, this, 4);
-        grid[0][2] = Ball.create(0, 2, this, 4);
-        grid[0][3] = Ball.create(0, 3, this, 2);
-        grid[0][4] = Ball.create(0, 4, this, 1);
-        grid[0][5] = Ball.create(0, 5, this, 2);
-        grid[0][6] = Ball.create(0, 6, this, 5);
-        grid[0][7] = Ball.create(0, 7, this, 5);
-        grid[0][8] = Ball.create(0, 8, this, 4);
-        grid[0][9] = Ball.create(0, 9, this, 5);
-        grid[0][10] = Ball.create(0, 10, this, 4);
-        grid[0][13] = Ball.create(0, 13, this, 4);
-        grid[0][14] = Ball.create(0, 14, this, 2);
-        grid[0][15] = Ball.create(0, 15, this, 4);
-        grid[0][16] = Ball.create(0, 16, this, 5);
-        grid[0][17] = Ball.create(0, 17, this, 4);
-        grid[0][18] = Ball.create(0, 18, this, 6);
-        grid[0][19] = Ball.create(0, 19, this, 1);
-        grid[0][20] = Ball.create(0, 20, this, 6);
-        grid[0][21] = Ball.create(0, 21, this, 1);
-        grid[0][22] = Ball.create(0, 22, this, 5);
-        grid[0][23] = Ball.create(0, 23, this, 5);
-        grid[0][24] = Ball.create(0, 24, this, 4);
-        grid[0][25] = Ball.create(0, 25, this, 3);
-        grid[0][26] = Ball.create(0, 26, this, 1);
-        grid[0][27] = Ball.create(0, 27, this, 5);
-        grid[1][0] = Ball.create(1, 0, this, 4);
-        grid[1][1] = Ball.create(1, 1, this, 5);
-        grid[1][2] = Ball.create(1, 2, this, 4);
-        grid[1][3] = Ball.create(1, 3, this, 6);
-        grid[1][4] = Ball.create(1, 4, this, 6);
-        grid[1][5] = Ball.create(1, 5, this, 4);
-        grid[1][6] = Ball.create(1, 6, this, 2);
-        grid[1][8] = Ball.create(1, 8, this, 5);
-        grid[1][9] = Ball.create(1, 9, this, 4);
-        grid[1][11] = Ball.create(1, 11, this, 1);
-        grid[1][13] = Ball.create(1, 13, this, 1);
-        grid[1][16] = Ball.create(1, 16, this, 4);
-        grid[1][17] = Ball.create(1, 17, this, 3);
-        grid[1][18] = Ball.create(1, 18, this, 1);
-        grid[1][19] = Ball.create(1, 19, this, 5);
-        grid[1][20] = Ball.create(1, 20, this, 2);
-        grid[1][21] = Ball.create(1, 21, this, 1);
-        grid[1][22] = Ball.create(1, 22, this, 2);
-        grid[1][23] = Ball.create(1, 23, this, 1);
-        grid[1][24] = Ball.create(1, 24, this, 3);
-        grid[1][25] = Ball.create(1, 25, this, 4);
-        grid[1][26] = Ball.create(1, 26, this, 3);
-        grid[1][27] = Ball.create(1, 27, this, 5);
-        grid[2][0] = Ball.create(2, 0, this, 3);
-        grid[2][1] = Ball.create(2, 1, this, 5);
-        grid[2][2] = Ball.create(2, 2, this, 4);
-        grid[2][3] = Ball.create(2, 3, this, 4);
-        grid[2][4] = Ball.create(2, 4, this, 3);
-        grid[2][5] = Ball.create(2, 5, this, 4);
-        grid[2][6] = Ball.create(2, 6, this, 5);
-        grid[2][8] = Ball.create(2, 8, this, 6);
-        grid[2][9] = Ball.create(2, 9, this, 3);
-        grid[2][12] = Ball.create(2, 12, this, 2);
-        grid[2][13] = Ball.create(2, 13, this, 6);
-        grid[2][14] = Ball.create(2, 14, this, 6);
-        grid[2][16] = Ball.create(2, 16, this, 2);
-        grid[2][17] = Ball.create(2, 17, this, 2);
-        grid[2][18] = Ball.create(2, 18, this, 2);
-        grid[2][19] = Ball.create(2, 19, this, 1);
-        grid[2][20] = Ball.create(2, 20, this, 1);
-        grid[2][21] = Ball.create(2, 21, this, 5);
-        grid[2][22] = Ball.create(2, 22, this, 3);
-        grid[2][23] = Ball.create(2, 23, this, 5);
-        grid[2][24] = Ball.create(2, 24, this, 6);
-        grid[2][25] = Ball.create(2, 25, this, 6);
-        grid[2][26] = Ball.create(2, 26, this, 1);
-        grid[2][27] = Ball.create(2, 27, this, 3);
-        grid[3][0] = Ball.create(3, 0, this, 5);
-        grid[3][1] = Ball.create(3, 1, this, 1);
-        grid[3][2] = Ball.create(3, 2, this, 1);
-        grid[3][3] = Ball.create(3, 3, this, 5);
-        grid[3][4] = Ball.create(3, 4, this, 1);
-        grid[3][6] = Ball.create(3, 6, this, 3);
-        grid[3][7] = Ball.create(3, 7, this, 6);
-        grid[3][8] = Ball.create(3, 8, this, 5);
-        grid[3][9] = Ball.create(3, 9, this, 4);
-        grid[3][10] = Ball.create(3, 10, this, 1);
-        grid[3][19] = Ball.create(3, 19, this, 2);
-        grid[3][20] = Ball.create(3, 20, this, 5);
-        grid[3][21] = Ball.create(3, 21, this, 3);
-        grid[3][22] = Ball.create(3, 22, this, 2);
-        grid[3][23] = Ball.create(3, 23, this, 4);
-        grid[3][24] = Ball.create(3, 24, this, 1);
-        grid[3][25] = Ball.create(3, 25, this, 5);
-        grid[3][26] = Ball.create(3, 26, this, 4);
-        grid[3][27] = Ball.create(3, 27, this, 5);
-        grid[4][0] = Ball.create(4, 0, this, 5);
-        grid[4][1] = Ball.create(4, 1, this, 1);
-        grid[4][2] = Ball.create(4, 2, this, 4);
-        grid[4][3] = Ball.create(4, 3, this, 5);
-        grid[4][4] = Ball.create(4, 4, this, 6);
-        grid[4][5] = Ball.create(4, 5, this, 6);
-        grid[4][7] = Ball.create(4, 7, this, 1);
-        grid[4][8] = Ball.create(4, 8, this, 4);
-        grid[4][9] = Ball.create(4, 9, this, 3);
-        grid[4][18] = Ball.create(4, 18, this, 5);
-        grid[4][20] = Ball.create(4, 20, this, 6);
-        grid[4][21] = Ball.create(4, 21, this, 4);
-        grid[4][22] = Ball.create(4, 22, this, 5);
-        grid[4][23] = Ball.create(4, 23, this, 1);
-        grid[4][24] = Ball.create(4, 24, this, 5);
-        grid[4][25] = Ball.create(4, 25, this, 4);
-        grid[4][26] = Ball.create(4, 26, this, 2);
-        grid[4][27] = Ball.create(4, 27, this, 1);
-        grid[5][0] = Ball.create(5, 0, this, 5);
-        grid[5][1] = Ball.create(5, 1, this, 6);
-        grid[5][2] = Ball.create(5, 2, this, 6);
-        grid[5][3] = Ball.create(5, 3, this, 1);
-        grid[5][7] = Ball.create(5, 7, this, 5);
-        grid[5][8] = Ball.create(5, 8, this, 6);
-        grid[5][9] = Ball.create(5, 9, this, 3);
-        grid[5][20] = Ball.create(5, 20, this, 5);
-        grid[5][21] = Ball.create(5, 21, this, 1);
-        grid[5][22] = Ball.create(5, 22, this, 4);
-        grid[5][23] = Ball.create(5, 23, this, 2);
-        grid[5][24] = Ball.create(5, 24, this, 4);
-        grid[5][25] = Ball.create(5, 25, this, 6);
-        grid[5][26] = Ball.create(5, 26, this, 6);
-        grid[5][27] = Ball.create(5, 27, this, 6);
-        grid[6][0] = Ball.create(6, 0, this, 1);
-        grid[6][1] = Ball.create(6, 1, this, 5);
-        grid[6][2] = Ball.create(6, 2, this, 6);
-        grid[6][3] = Ball.create(6, 3, this, 1);
-        grid[6][4] = Ball.create(6, 4, this, 2);
-        grid[6][5] = Ball.create(6, 5, this, 3);
-        grid[6][8] = Ball.create(6, 8, this, 6);
-        grid[6][19] = Ball.create(6, 19, this, 1);
-        grid[6][21] = Ball.create(6, 21, this, 1);
-        grid[6][22] = Ball.create(6, 22, this, 1);
-        grid[6][23] = Ball.create(6, 23, this, 4);
-        grid[6][24] = Ball.create(6, 24, this, 4);
-        grid[6][25] = Ball.create(6, 25, this, 3);
-        grid[6][26] = Ball.create(6, 26, this, 4);
-        grid[6][27] = Ball.create(6, 27, this, 1);
-        grid[7][1] = Ball.create(7, 1, this, 6);
-        grid[7][2] = Ball.create(7, 2, this, 5);
-        grid[7][5] = Ball.create(7, 5, this, 3);
-        grid[7][6] = Ball.create(7, 6, this, 2);
-        grid[7][20] = Ball.create(7, 20, this, 1);
-        grid[8][6] = Ball.create(8, 6, this, 3);
-        grid[8][20] = Ball.create(8, 20, this, 5);
-        grid[8][21] = Ball.create(8, 21, this, 4);
-        grid[9][21] = Ball.create(9, 21, this, 3);
+
     }
 
     void initDebugBalls() {
@@ -235,8 +87,8 @@ public class GameModel {
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
             }
-        //initRandomBalls();
-        initDebugBalls();
+        initRandomBalls();
+        //initDebugBalls();
     }
 
     public void printDebug() {
@@ -474,9 +326,9 @@ public class GameModel {
 
 
         moveRowsDown(newRow);
-        System.out.println("//////////////////////////////////////////////////////////////////");
-        printDebug();
-        System.out.println("//////////////////////////////////////////////////////////////////");
+        //System.out.println("//////////////////////////////////////////////////////////////////");
+        //printDebug();
+        //System.out.println("//////////////////////////////////////////////////////////////////");
         printGrid(row, column, newRow, newColumn);
 
         updateRows();
@@ -486,7 +338,6 @@ public class GameModel {
     private void moveRowsDown(int newRow) {
         if (throwsCounter >= Constants.MAX_BAD_THROWS) {
             addRow(newRow);
-            //	printGrid(row, column, newRow, newColumn);
             throwsCounter = 0;
         }
     }
@@ -525,9 +376,8 @@ public class GameModel {
         }
         for (int r = lastRow; r >= 1; r--) {
             for (int c = 0; c < Constants.MAX_COLS; c++) {
-                grid[r][c] = grid[r - 1][c];
-                grid[r][c].setRow(r);
-                grid[r][c].reinitCoords();
+                Ball ball = grid[r - 1][c];
+                grid[r][c] = Ball.create(r, c, this, ball.getColor());
             }
         }
         for (int c = 0; c < Constants.MAX_COLS; c++) {

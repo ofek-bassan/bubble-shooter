@@ -1,11 +1,13 @@
 package org.ort_rehovot.bubble_shooter;
 
+import org.ort_rehovot.bubble_shooter.ipc.Client;
+import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 
 public class GamePanel extends JPanel {
 	GameModel gameModel;
@@ -79,7 +81,21 @@ public class GamePanel extends JPanel {
 		setCursor(blankCursor);
 	}
 
+	private static void waitForFriend(int port) throws IOException {
+		try (Client client = new Client(port)) {
+			System.out.println("Sending discovery of " + port);
+			client.send(CommandFormatter.hello(port));
+			String receive = client.receive();
+			System.out.println(receive);
+		}
+	}
+
 	public static void main(String[] args) throws IOException {
+		if (args.length == 1) {
+			int port = Integer.parseInt(args[0]);
+			waitForFriend(port);
+			return;
+		}
 		Constants.fc.ShowGame();
 	}
 
