@@ -450,9 +450,9 @@ public class GameModel {
 
         List<Ball> singletons = getClusters();
 
-        System.out.println("=========================================================");
-        System.out.printf("Collisions %d singletons %d\n,", collisions.size(), singletons.size());
-        System.out.println("=========================================================");
+        //System.out.println("=========================================================");
+       // System.out.printf("Collisions %d singletons %d\n,", collisions.size(), singletons.size());
+       // System.out.println("=========================================================");
 
         if (!singletons.isEmpty()) {
             explode(singletons);
@@ -464,9 +464,9 @@ public class GameModel {
 
 
         moveRowsDown(newRow);
-        System.out.println("//////////////////////////////////////////////////////////////////");
-        printDebug();
-        System.out.println("//////////////////////////////////////////////////////////////////");
+        //System.out.println("//////////////////////////////////////////////////////////////////");
+        //printDebug();
+        //System.out.println("//////////////////////////////////////////////////////////////////");
         printGrid(row, column, newRow, newColumn);
 
         updateRows();
@@ -515,9 +515,18 @@ public class GameModel {
         }
         for (int r = lastRow; r >= 1; r--) {
             for (int c = 0; c < Constants.MAX_COLS; c++) {
-                grid[r][c] = grid[r - 1][c];
-                grid[r][c].setRow(r);
-                grid[r][c].reinitCoords();
+                if((r-1)%2 == 0)
+                {
+                    grid[r][c] = grid[r - 1][c];
+                    grid[r][c].setRow(r);
+                    grid[r][c].reinitCoords();
+                }
+                else
+                {
+                    grid[r][c] = grid[r - 1][c];
+                    grid[r][c].setRow(r);
+                    grid[r][c].reinitCoords();
+                }
             }
         }
         for (int c = 0; c < Constants.MAX_COLS; c++) {
