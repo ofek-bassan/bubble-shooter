@@ -3,6 +3,7 @@ package org.ort_rehovot.bubble_shooter.ipc;
 import lombok.Data;
 
 import java.net.InetAddress;
+import java.util.LinkedList;
 import java.util.List;
 
 public interface Protocol {
@@ -14,5 +15,5 @@ public interface Protocol {
         private int port;
     }
 
-    List<Reply> handleCommand(InetAddress address, String data);
+    List<Reply> handleCommand(InetAddress address, String data, LinkedList<Integer> ports);
 }

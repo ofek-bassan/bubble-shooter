@@ -15,6 +15,7 @@ public class Constants {
     public static final int MAX_COLS = 28;
     public static final int MAX_BAD_THROWS = 3;
     public static final int START_NUM_ROWS = 3;
+    public static long SEED;
     public static final  FrameController fc;
 
     public static final int DEFAULT_DISCOVERY_PORT = 4445;

@@ -5,7 +5,7 @@ public class CommandFormatter {
         return "H" + ' ' + port;
     }
 
-    public static String ready(int port, int seed, String ip) {
+    public static String ready(int port, long seed, String ip) {
         return "R" + ' ' + port + ' ' + ip + ' ' + seed;
     }
 

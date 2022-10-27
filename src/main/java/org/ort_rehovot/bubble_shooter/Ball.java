@@ -57,7 +57,7 @@ public class Ball{
 	@Setter
 	private boolean activated;
 
-	private static final Random rnd = new Random(0);
+	private static final Random rnd = new Random(Constants.SEED);
 
 	private static int evalX(int r, int c) {
 		if (r % 2 == 0) {

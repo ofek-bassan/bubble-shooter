@@ -87,6 +87,7 @@ public class GamePanel extends JPanel {
 			client.send(CommandFormatter.hello(port));
 			String receive = client.receive();
 			System.out.println(receive);
+			Constants.SEED =Long.parseLong(receive.split(" ")[3]);
 		}
 	}
 
@@ -94,7 +95,6 @@ public class GamePanel extends JPanel {
 		if (args.length == 1) {
 			int port = Integer.parseInt(args[0]);
 			waitForFriend(port);
-			return;
 		}
 		Constants.fc.ShowGame();
 	}
