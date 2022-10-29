@@ -3,7 +3,6 @@ package org.ort_rehovot.bubble_shooter;
 //23-5-2021
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
 
 import java.awt.*;
 import java.util.Random;
@@ -42,8 +41,6 @@ public class Ball{
 	@Setter
 	private int explosion = -1;
 
-	private int dirx = 1;
-	private int diry = 1;
 	private final GameModel gameModel;
 	private boolean isThrowable;
 
@@ -58,18 +55,8 @@ public class Ball{
 	@Setter
 	private boolean activated;
 
-	private static final Random rnd = new Random(0);
+	private static final Random rnd = new Random(Constants.SEED);
 
-	private static int evalX(int r, int c) {
-		if (r % 2 == 0) {
-			return c * Constants.BALL_WIDTH + 50;
-		}
-		return c * Constants.BALL_WIDTH + 25;
-	}
-
-	private static int evalY(int r, int c) {
-			return r * Constants.BALL_WIDTH + 30;
-	}
 
 	/***
 	 * creates a ball
@@ -93,11 +80,10 @@ public class Ball{
 	public void reinitCoords() {
 		if (row % 2 == 0) {
 			x = column * Constants.BALL_WIDTH + 50;
-			y = row * Constants.BALL_WIDTH + 30;
 		} else {
 			x = column * Constants.BALL_WIDTH + 25;
-			y = row * Constants.BALL_WIDTH + 30;
 		}
+		y = row * Constants.BALL_WIDTH + 30;
 	}
 
 	/***
@@ -110,7 +96,9 @@ public class Ball{
 	public static Ball create(int r, int c, GameModel gameModel, int color) {
 		Ball ret = create(r,c,gameModel);
 		ret.color = color;
-		ret.image = ResourceLoader.getInstance().getBallImage(color);
+		if (color >= 0) {
+			ret.image = ResourceLoader.getInstance().getBallImage(color);
+		}
 		return ret;
 	}
 
@@ -137,9 +125,7 @@ public class Ball{
 		isThrowable = throwable;
 		isLeft = false;
 
-		if (color != -1) {
-			image = ResourceLoader.getInstance().getBallImage(color);
-		}
+		image = ResourceLoader.getInstance().getBallImage(color);
 		activated = false;
 	}
 
@@ -177,8 +163,6 @@ public class Ball{
 			g.drawImage(image, x - width / 2, y - width / 2, width, width, null);
 		} else {
 			if (explosion > -1) {
-				if(row==5 && column == 21)
-					System.out.println("asdasdasdads");
 				g.drawImage(ResourceLoader.getInstance().getExplosion()[explosion], x - width / 2, y - width / 2, width, width, null);
 			}
 		}

@@ -13,8 +13,12 @@ public class Constants {
     public static final int BALL_WIDTH = 67;
     public static final int MAX_ROWS = 11;
     public static final int MAX_COLS = 28;
-    public static final int MAX_BAD_THROWS = 6;
+    public static final int MAX_BAD_THROWS = 3;
+    public static final int START_NUM_ROWS = 3;
+    public static long SEED;
     public static final  FrameController fc;
+
+    public static final int DEFAULT_DISCOVERY_PORT = 4445;
 
     static {
         try {
