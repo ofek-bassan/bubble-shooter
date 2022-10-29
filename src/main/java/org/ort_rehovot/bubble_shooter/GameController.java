@@ -75,7 +75,7 @@ public class GameController {
 
 
         @Override
-        public void call() throws IOException {
+        public void call(){
             owner.setInAnimation(true);
             val h = gameModel.getHeight();
             val w = gameModel.getWidth();

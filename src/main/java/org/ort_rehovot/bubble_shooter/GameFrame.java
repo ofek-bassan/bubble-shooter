@@ -22,20 +22,16 @@ public class GameFrame extends JFrame {
                 }
             }
         });
-        switch (ev)
-        {
-            case GAME_WIN:
-            case START_GAME:
+        switch (ev) {
+            case GAME_WIN, START_GAME -> {
                 GamePanel bbp = new GamePanel();
                 add(bbp);
-                break;
-            case GAME_OVER:
-
+            }
+            case GAME_OVER -> {
                 setBackground(Color.black);
                 GameOverPanel gop = new GameOverPanel();
-
                 add(gop);
-                break;
+            }
         }
         /*
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

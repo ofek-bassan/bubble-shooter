@@ -41,8 +41,6 @@ public class Ball{
 	@Setter
 	private int explosion = -1;
 
-	private int dirx = 1;
-	private int diry = 1;
 	private final GameModel gameModel;
 	private boolean isThrowable;
 
@@ -59,16 +57,6 @@ public class Ball{
 
 	private static final Random rnd = new Random(Constants.SEED);
 
-	private static int evalX(int r, int c) {
-		if (r % 2 == 0) {
-			return c * Constants.BALL_WIDTH + 50;
-		}
-		return c * Constants.BALL_WIDTH + 25;
-	}
-
-	private static int evalY(int r, int c) {
-			return r * Constants.BALL_WIDTH + 30;
-	}
 
 	/***
 	 * creates a ball
@@ -92,11 +80,10 @@ public class Ball{
 	public void reinitCoords() {
 		if (row % 2 == 0) {
 			x = column * Constants.BALL_WIDTH + 50;
-			y = row * Constants.BALL_WIDTH + 30;
 		} else {
 			x = column * Constants.BALL_WIDTH + 25;
-			y = row * Constants.BALL_WIDTH + 30;
 		}
+		y = row * Constants.BALL_WIDTH + 30;
 	}
 
 	/***
@@ -138,9 +125,7 @@ public class Ball{
 		isThrowable = throwable;
 		isLeft = false;
 
-		if (color != -1) {
-			image = ResourceLoader.getInstance().getBallImage(color);
-		}
+		image = ResourceLoader.getInstance().getBallImage(color);
 		activated = false;
 	}
 

@@ -41,18 +41,4 @@ public class ActiveObject extends Thread{
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        ActiveObject ao = new ActiveObject();
-
-        ao.dispatch(() -> System.out.println("C1"));
-        ao.dispatch(() -> System.out.println("C2"));
-        ao.dispatch(() -> System.out.println("C3"));
-        ao.dispatch(() -> System.out.println("C4"));
-
-        System.out.println("Sleep");
-        Thread.sleep(1000);
-        ao.exit();
-
-
-    }
 }

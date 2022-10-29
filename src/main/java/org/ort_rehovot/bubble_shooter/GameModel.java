@@ -14,7 +14,8 @@ public class GameModel {
     private Ball player;
 
     private Ball[][] grid;
-    private int rows = Constants.START_NUM_ROWS, cols = 28;
+    private int rows = Constants.START_NUM_ROWS;
+    private final int cols = 28;
 
     @Getter
     @Setter
@@ -24,7 +25,6 @@ public class GameModel {
     @Setter
     private int height;
     private final GamePanel view;
-    //private final GamePanel gameOverView;
 
     private final static int MIN_NUM_TO_EXPLODE = 3;
 
@@ -49,12 +49,7 @@ public class GameModel {
      * @return panel
      */
     public GamePanel getView() {
-        if (!gameOver) {
-            return view;
-        } else {
-            // TODO
-            return view;
-        }
+        return view;
     }
 
     private void initRandomBalls() {
@@ -276,9 +271,7 @@ public class GameModel {
                 case 5 -> {
                     newRow--;
                     newColumn--;}
-                case 8 -> {
-                    newColumn++;}
-                case 7, 6, -1 -> newColumn++;
+                case 8, 7, 6, -1 -> newColumn++;
                 default -> {
                 }
             }
@@ -409,35 +402,6 @@ public class GameModel {
         return result;
     }
 
-    private List<Ball> getLonelyBalls(int lastRow) {
-        List<Ball> out = new ArrayList<>();
-
-        for (int r = lastRow; r >= 1; r--) {
-            for (int c = 1; c < Constants.MAX_COLS - 1; c++) {
-                if (r % 2 == 0) {
-                    if (!grid[r - 1][c].isNoneColor() &&
-                            grid[r][c + 1].isNoneColor()
-                            && grid[r + 1][c].isNoneColor()
-                            && grid[r + 1][c - 1].isNoneColor()
-                            && grid[r][c - 1].isNoneColor()
-                            && grid[r - 1][c - 1].isNoneColor()) {
-                        out.add(grid[r][c]);
-                    }
-                } else {
-                    if (!grid[r][c].isNoneColor() &&
-                            grid[r + 1][c + 1].isNoneColor()
-                            && grid[r][c - 1].isNoneColor()
-                            && grid[r - 1][c].isNoneColor()
-                            && grid[r - 1][c + 1].isNoneColor()
-                            && grid[r][c + 1].isNoneColor()) {
-                        out.add(grid[r][c]);
-                    }
-                }
-            }
-        }
-        return out;
-    }
-
     private List<Ball> getClusters() {
         List<Ball> out = new ArrayList<>();
         for (Ball[] arrBall : grid) {
@@ -464,20 +428,12 @@ public class GameModel {
     }
 
     public boolean isCluster(int r, int c, List<Ball> out) {
-        if (r == 5 && c == 7) {
-            Ball ball = grid[r][c];
-            System.out.println();
-        }
         if (r == -1 || r >= grid.length) {
             return false;
         }
         if (r == 0) {
             if (c < 0 || c >= grid[r].length) {
-                if (grid[r][c].isInvisible()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return grid[r][c].isInvisible();
             }
             return false;
         }
@@ -575,14 +531,6 @@ public class GameModel {
 
     public Ball[][] getGrid() {
         return grid;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public int getCols() {
-        return cols;
     }
 
 }
