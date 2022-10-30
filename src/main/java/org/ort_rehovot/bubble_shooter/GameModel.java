@@ -15,7 +15,7 @@ public class GameModel {
 
     private Ball[][] grid;
     private int rows = Constants.START_NUM_ROWS;
-    private final int cols = 28;
+    private final int cols = Constants.START_NUM_COLS/2;
 
     @Getter
     @Setter
@@ -319,6 +319,15 @@ public class GameModel {
 
 
         moveRowsDown(newRow);
+        singletons = getClusters();
+
+        if (!singletons.isEmpty()) {
+            explode(singletons);
+            exploded = true;
+        }
+        if (exploded) {
+            SoundSystem.getInstance().playExplosion();
+        }
         //System.out.println("//////////////////////////////////////////////////////////////////");
         //printDebug();
         //System.out.println("//////////////////////////////////////////////////////////////////");

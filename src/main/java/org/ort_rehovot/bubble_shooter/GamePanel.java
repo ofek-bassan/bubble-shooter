@@ -15,6 +15,7 @@ public class GamePanel extends JPanel {
 	Arrow arrow;
 
 	public GamePanel() throws IOException {
+		//hideMouseCursor();
 		ResourceLoader.init();
 		gameModel = new GameModel(this);
 		gameController = new GameController(gameModel);
@@ -92,10 +93,11 @@ public class GamePanel extends JPanel {
 	}
 
 	public static void main(String[] args) throws IOException {
-		if (args.length == 1) {
+		/*if (args.length == 1) {
 			int port = Integer.parseInt(args[0]);
 			waitForFriend(port);
 		}
+		 */
 		Constants.fc.ShowGame();
 	}
 

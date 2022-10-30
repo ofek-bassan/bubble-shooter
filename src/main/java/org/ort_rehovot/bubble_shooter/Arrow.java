@@ -43,7 +43,7 @@ public class Arrow{
         }
         x = p.x-base.x;
         y = p.y-base.y;
-        double angle = Math.atan((double)(x-Constants.FIELD_SIZE_X/2)/(Constants.FIELD_SIZE_Y-y));
+        double angle = Math.atan((double)(x-Constants.PLAYER_X)/(Constants.PLAYER_Y));
         g2d.rotate(angle,Constants.PLAYER_X,Constants.PLAYER_Y);
         int w = 50;
         int h = 140;
