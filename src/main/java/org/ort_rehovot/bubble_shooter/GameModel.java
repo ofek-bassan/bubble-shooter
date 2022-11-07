@@ -15,7 +15,7 @@ public class GameModel {
 
     private Ball[][] grid;
     private int rows = Constants.START_NUM_ROWS;
-    private final int cols = Constants.START_NUM_COLS/2;
+    private final int cols = Constants.START_NUM_COLS;
 
     @Getter
     @Setter
@@ -61,7 +61,32 @@ public class GameModel {
     }
 
     private void initDebugBallsInternal() {
-
+        grid[0][2] = Ball.create(0, 2, this, 4);
+        grid[0][3] = Ball.create(0, 3, this, 5);
+        grid[0][4] = Ball.create(0, 4, this, 4);
+        grid[0][5] = Ball.create(0, 5, this, 6);
+        grid[0][6] = Ball.create(0, 6, this, 6);
+        grid[0][7] = Ball.create(0, 7, this, 4);
+        grid[0][9] = Ball.create(0, 9, this, 4);
+        grid[0][10] = Ball.create(0, 10, this, 5);
+        grid[0][11] = Ball.create(0, 11, this, 4);
+        grid[0][12] = Ball.create(0, 12, this, 6);
+        grid[1][0] = Ball.create(1, 0, this, 3);
+        grid[1][2] = Ball.create(1, 2, this, 6);
+        grid[1][3] = Ball.create(1, 3, this, 3);
+        grid[1][4] = Ball.create(1, 4, this, 1);
+        grid[1][5] = Ball.create(1, 5, this, 5);
+        grid[1][6] = Ball.create(1, 6, this, 4);
+        grid[1][7] = Ball.create(1, 7, this, 6);
+        grid[1][8] = Ball.create(1, 8, this, 3);
+        grid[1][10] = Ball.create(1, 10, this, 5);
+        grid[1][11] = Ball.create(1, 11, this, 6);
+        grid[2][1] = Ball.create(2, 1, this, 1);
+        grid[2][2] = Ball.create(2, 2, this, 1);
+        grid[2][3] = Ball.create(2, 3, this, 5);
+        grid[2][7] = Ball.create(2, 7, this, 6);
+        grid[3][4] = Ball.create(3, 4, this, 5);
+        grid[3][8] = Ball.create(3, 8, this, 2);
     }
 
     void initDebugBalls() {
@@ -82,8 +107,8 @@ public class GameModel {
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
             }
-        initRandomBalls();
-        //initDebugBalls();
+        //initRandomBalls();
+        initDebugBalls();
     }
 
     public void printDebug() {
@@ -328,9 +353,9 @@ public class GameModel {
         if (exploded) {
             SoundSystem.getInstance().playExplosion();
         }
-        //System.out.println("//////////////////////////////////////////////////////////////////");
-        //printDebug();
-        //System.out.println("//////////////////////////////////////////////////////////////////");
+        System.out.println("//////////////////////////////////////////////////////////////////");
+        printDebug();
+        System.out.println("//////////////////////////////////////////////////////////////////");
         printGrid(row, column, newRow, newColumn);
 
         updateRows();
@@ -377,12 +402,12 @@ public class GameModel {
             return;
         }
         for (int r = lastRow; r >= 1; r--) {
-            for (int c = 0; c < Constants.MAX_COLS; c++) {
+            for (int c = 0; c < cols; c++) {
                 Ball ball = grid[r - 1][c];
                 grid[r][c] = Ball.create(r, c, this, ball.getColor());
             }
         }
-        for (int c = 0; c < Constants.MAX_COLS; c++) {
+        for (int c = 0; c < cols; c++) {
             grid[0][c] = Ball.create(0, c, this);
             grid[0][c].reinitCoords();
         }
@@ -420,7 +445,9 @@ public class GameModel {
         }
 
         for (int r = 0; r < grid.length; r++) {
-            for (int c = 1; c < Constants.MAX_COLS - 1; c++) {
+            for (int c = 0; c < Constants.MAX_COLS ; c++) {
+                if(c == 0 && r == 1)
+                    System.out.println();
                 if (grid[r][c].isInvisible()) {
                     continue;
                 }
@@ -438,13 +465,14 @@ public class GameModel {
 
     public boolean isCluster(int r, int c, List<Ball> out) {
         if (r == -1 || r >= grid.length) {
-            return false;
+            return true;
         }
         if (r == 0) {
             if (c < 0 || c >= grid[r].length) {
-                return grid[r][c].isInvisible();
+                return true;
             }
-            return false;
+            return grid[r][c].isInvisible();
+
         }
         if (c < 0 || c >= grid[r].length) {
             return true;
