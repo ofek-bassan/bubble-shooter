@@ -20,6 +20,12 @@ public class GameFrame extends JFrame {
                 {
                     System.exit(0);
                 }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    GlobalState.getInstance().setPaused(!GlobalState.getInstance().isPaused());
+                    System.out.println("Paused");
+                    repaint();
+                    //GamePanel.setPauseVisible(GlobalState.getInstance().isPaused());
+                }
             }
         });
         switch (ev) {

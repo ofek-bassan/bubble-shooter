@@ -21,6 +21,8 @@ public class ResourceLoader {
 	private final Image arrow;
 	@Getter
 	private final Image winImage;
+	@Getter
+	private final Image pauseImage;
 
 
 	@Getter
@@ -41,6 +43,7 @@ public class ResourceLoader {
 	private ResourceLoader() throws IOException{
 
 		bgImage = new ImageIcon(ResourceLoader.loadResource("bg.png")).getImage();
+		pauseImage = new ImageIcon(ResourceLoader.loadResource("pause.png")).getImage();
 		winImage = new ImageIcon(ResourceLoader.loadResource("win2.jpg")).getImage();
 		gameOverGif = new ImageIcon(ResourceLoader.loadResource("gameover2.gif")).getImage();
 		balls = new Image[NUM_BALLS];

@@ -13,6 +13,11 @@ public class GamePanel extends JPanel {
 	GameModel gameModel;
 	GameController gameController;
 	Arrow arrow;
+	private final JLabel pauseLabel;
+
+	public void setPauseVisible(boolean v) {
+		pauseLabel.setVisible(v);
+	}
 
 	public GamePanel() throws IOException {
 		//hideMouseCursor();
@@ -21,24 +26,34 @@ public class GamePanel extends JPanel {
 		gameController = new GameController(gameModel);
 		arrow = new Arrow();
 		SoundSystem.getInstance().playBackgroundMusic();
+		//  pause image
+		pauseLabel = new JLabel(new ImageIcon(ResourceLoader.getInstance().getPauseImage()));
+		pauseLabel.setBounds(0, 0, 500, 500);
+		pauseLabel.setVisible(false);
+		add(pauseLabel);
+
 		addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				repaint();
+				if (!GlobalState.getInstance().isPaused()) {
+					repaint();
+				}
 			}
 		});
 
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == 1) {
-					int x = e.getX();
-					int y = e.getY();
-					gameController.shoot(x, y);
-				} else if (e.getButton() == 3) {
-					gameController.changeColor();
-				} else if (e.getButton() == 2) {
-					gameModel.printDebug();
+				if (!GlobalState.getInstance().isPaused()) {
+					if (e.getButton() == 1) {
+						int x = e.getX();
+						int y = e.getY();
+						gameController.shoot(x, y);
+					} else if (e.getButton() == 3) {
+						gameController.changeColor();
+					} else if (e.getButton() == 2) {
+						gameModel.printDebug();
+					}
 				}
 			}
 		});
@@ -55,8 +70,12 @@ public class GamePanel extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
+		if (GlobalState.getInstance().isPaused()) {
+			setPauseVisible(true);
+		} else {
+			setPauseVisible(false);
+		}
 		super.paintComponent(g);
-
 		g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
 		gameModel.getPlayer().draw(g);
 		Graphics2D g2d = (Graphics2D) g;

@@ -319,6 +319,7 @@ public class GameModel {
         boolean exploded = false;
 
         if (collisions.size() >= MIN_NUM_TO_EXPLODE) {
+            GlobalState.getInstance().updateScore(collisions.size());
             explode(collisions);
             exploded = true;
             throwsCounter = 0;
@@ -335,6 +336,7 @@ public class GameModel {
         System.out.println("=========================================================");
 
         if (!singletons.isEmpty()) {
+            GlobalState.getInstance().updateScore(singletons.size());
             explode(singletons);
             exploded = true;
         }

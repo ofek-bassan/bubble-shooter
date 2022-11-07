@@ -82,38 +82,15 @@ public class GameController {
 
             double m = gameModel.getPlayer().getSlope();
             while (true) {
-                int x = gameModel.getPlayer().getX();
-                int y = gameModel.getPlayer().getY();
-                if (checkThrow(gameModel)) {
-                    break;
-                }
-                if (h > 0) // until panel gets size from frame 23-5-2021
-                {
-                    if (x + Constants.BALL_WIDTH / 2 > w) {
-                        dirx = -1;
+                if (!GlobalState.getInstance().isPaused()) {
+                    int x = gameModel.getPlayer().getX();
+                    int y = gameModel.getPlayer().getY();
+                    if (checkThrow(gameModel)) {
+                        break;
                     }
-
-                    if (x - Constants.BALL_WIDTH / 2 < 0) {
-                        dirx = -1;
-                    }
-
-                    if (y + Constants.BALL_WIDTH / 2 > h) {
-                        diry = -1;
-                    }
-
-                    if (y - Constants.BALL_WIDTH / 2 < 0) {
-                        diry = 1;
-                    }
-
-                    if (m > 8 || m < -8) {
-                        gameModel.getPlayer().addY(-4);
-                    } else if (m < 3) {
-                        gameModel.getPlayer().setY(((int) (m * ((x + 3) - x) + y)) * diry);
-                        if (!gameModel.getPlayer().isLeft()) {
-                            gameModel.getPlayer().addX((3 * dirx));
-                        } else {
-                            gameModel.getPlayer().addX((-3 * dirx));
-                        }
+                    if (h > 0) // until panel gets size from frame 23-5-2021
+                    {
+                        updateMovement(h, w, m, x, y);
                     }
                 }
                 try {
@@ -133,9 +110,39 @@ public class GameController {
                 }
             }
             else {
+                //gameModel.getView().setPauseVisible(GlobalState.getInstance().isPaused());
                 gameModel.getView().repaint();
                 owner.activeObject.dispatch(new ExplodeCommand(gameModel, owner));
                 gameModel.setNewPlayer();
+            }
+        }
+
+        private void updateMovement(int h, int w, double m, int x, int y) {
+            if (x + Constants.BALL_WIDTH / 2 > w) {
+                dirx = -1;
+            }
+
+            if (x - Constants.BALL_WIDTH / 2 < 0) {
+                dirx = -1;
+            }
+
+            if (y + Constants.BALL_WIDTH / 2 > h) {
+                diry = -1;
+            }
+
+            if (y - Constants.BALL_WIDTH / 2 < 0) {
+                diry = 1;
+            }
+
+            if (m > 8 || m < -8) {
+                gameModel.getPlayer().addY(-4);
+            } else if (m < 3) {
+                gameModel.getPlayer().setY(((int) (m * ((x + 3) - x) + y)) * diry);
+                if (!gameModel.getPlayer().isLeft()) {
+                    gameModel.getPlayer().addX((3 * dirx));
+                } else {
+                    gameModel.getPlayer().addX((-3 * dirx));
+                }
             }
         }
     }
