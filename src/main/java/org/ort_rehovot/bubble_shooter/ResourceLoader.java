@@ -24,6 +24,9 @@ public class ResourceLoader {
 	@Getter
 	private final Image pauseImage;
 
+	@Getter
+	private final Image borderImage;
+
 
 	@Getter
 	private final Image[] explosion;
@@ -43,6 +46,7 @@ public class ResourceLoader {
 	private ResourceLoader() throws IOException{
 
 		bgImage = new ImageIcon(ResourceLoader.loadResource("bg.png")).getImage();
+		borderImage = new ImageIcon(ResourceLoader.loadResource("border.png")).getImage();
 		pauseImage = new ImageIcon(ResourceLoader.loadResource("pause.png")).getImage();
 		winImage = new ImageIcon(ResourceLoader.loadResource("win2.jpg")).getImage();
 		gameOverGif = new ImageIcon(ResourceLoader.loadResource("gameover2.gif")).getImage();

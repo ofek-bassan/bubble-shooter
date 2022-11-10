@@ -7,6 +7,9 @@ public class Constants {
     public static final int FIELD_SIZE_X = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final int FIELD_SIZE_Y = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
+    public static final int BORDER_X = 600;
+    public static final int BORDER_Y = -200;
+
     public static final int SPRITE_R = 50;
     //public static final int PLAYER_X = FIELD_SIZE_X / 2;
     //public static final int START_NUM_COLS = 28;

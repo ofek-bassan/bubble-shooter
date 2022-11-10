@@ -107,8 +107,8 @@ public class GameModel {
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
             }
-        //initRandomBalls();
-        initDebugBalls();
+        initRandomBalls();
+        //initDebugBalls();
     }
 
     public void printDebug() {

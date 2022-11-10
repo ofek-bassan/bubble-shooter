@@ -78,7 +78,8 @@ public class GameController {
         public void call(){
             owner.setInAnimation(true);
             val h = gameModel.getHeight();
-            val w = gameModel.getWidth();
+            val w = 970;
+            //val w = 970;
 
             double m = gameModel.getPlayer().getSlope();
             while (true) {
@@ -119,19 +120,19 @@ public class GameController {
 
         private void updateMovement(int h, int w, double m, int x, int y) {
             if (x + Constants.BALL_WIDTH / 2 > w) {
-                dirx = -1;
+                dirx *= -1;
             }
 
             if (x - Constants.BALL_WIDTH / 2 < 0) {
-                dirx = -1;
+                dirx *= -1;
             }
 
             if (y + Constants.BALL_WIDTH / 2 > h) {
-                diry = -1;
+                diry *= -1;
             }
 
             if (y - Constants.BALL_WIDTH / 2 < 0) {
-                diry = 1;
+                diry *= -1;
             }
 
             if (m > 8 || m < -8) {
