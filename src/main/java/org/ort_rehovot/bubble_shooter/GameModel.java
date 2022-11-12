@@ -11,7 +11,9 @@ import java.util.List;
 
 public class GameModel {
     @Getter
-    private Ball player;
+    private Ball player1;
+    @Getter
+    private Ball player2;
 
     private Ball[][] grid;
     private int rows = Constants.START_NUM_ROWS;
@@ -54,8 +56,13 @@ public class GameModel {
 
     private void initRandomBalls() {
         for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+            for (int c = 0; c < cols-1; c++) {
                 grid[r][c] = Ball.create(r, c, this);
+            }
+        }
+        for (int r = 0; r < rows; r++) {
+            for (int c = cols+1; c <Constants.MAX_COLS ; c++) {
+                grid[r][c] = Ball.create(r, c, this,grid[r][c-cols-1].getColor());
             }
         }
     }
@@ -404,12 +411,12 @@ public class GameModel {
             return;
         }
         for (int r = lastRow; r >= 1; r--) {
-            for (int c = 0; c < cols; c++) {
+            for (int c = 0; c < cols-1; c++) {
                 Ball ball = grid[r - 1][c];
                 grid[r][c] = Ball.create(r, c, this, ball.getColor());
             }
         }
-        for (int c = 0; c < cols; c++) {
+        for (int c = 0; c < cols-1; c++) {
             grid[0][c] = Ball.create(0, c, this);
             grid[0][c].reinitCoords();
         }
@@ -561,10 +568,11 @@ public class GameModel {
 
     public void setNewPlayer() {
         if (gameOver) {
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, false);
-            player.setInvisible();
+            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, false);
+            player1.setInvisible();
         } else {
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, true);
+            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, true);
+            player2 = new Ball(Constants.PLAYER2_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, true);
         }
     }
 

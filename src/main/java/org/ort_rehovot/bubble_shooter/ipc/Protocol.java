@@ -15,5 +15,5 @@ public interface Protocol {
         private int port;
     }
 
-    List<Reply> handleCommand(InetAddress address, String data, LinkedList<Integer> ports);
+    List<Reply> handleCommand(InetAddress address, String data);
 }

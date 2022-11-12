@@ -18,6 +18,9 @@ public class Arrow{
     private Point p;
 
     private static final int TIP_LENGTH = 20;
+    private int player_x = Constants.PLAYER1_X;
+    private int arrowX = Constants.PLAYER1_X - 50 / 2;
+    private static final int arrowY = Constants.PLAYER_Y - 140 - Constants.SPRITE_R/2;
     private static final int LENGTH = 80;
 
     /**
@@ -25,6 +28,14 @@ public class Arrow{
      */
     public Arrow(){
         p = new Point(Constants.FIELD_SIZE_X/2,600);
+    }
+    /**
+     * Constructor for the class arrow.
+     */
+    public Arrow(int x){
+        arrowX = x - 50 / 2;
+        player_x = Constants.PLAYER2_X;
+        p = new Point(x,600);
     }
 
     /**
@@ -43,12 +54,10 @@ public class Arrow{
         }
         x = p.x-base.x;
         y = p.y-base.y;
-        double angle = Math.atan((double)(x-Constants.PLAYER_X)/(Constants.PLAYER_Y));
-        g2d.rotate(angle,Constants.PLAYER_X,Constants.PLAYER_Y);
-        int w = 50;
-        int h = 140;
-        g2d.drawImage(ResourceLoader.getInstance().getArrow(), Constants.PLAYER_X - w / 2, Constants.PLAYER_Y - h - Constants.SPRITE_R/2, w, h, null);
-        g2d.rotate(-angle,Constants.PLAYER_X,Constants.PLAYER_Y);
+        double angle = Math.atan((double)(x-player_x)/(Constants.PLAYER_Y));
+        g2d.rotate(angle,player_x,Constants.PLAYER_Y);
+        g2d.drawImage(ResourceLoader.getInstance().getArrow(), arrowX, arrowY, 50, 140, null);
+        g2d.rotate(-angle,player_x,Constants.PLAYER_Y);
     }
 
 }

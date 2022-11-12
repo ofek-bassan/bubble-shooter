@@ -5,15 +5,21 @@ import java.io.IOException;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 
-public class Client implements Closeable {
+public class NetworkClient implements Closeable {
     private final DatagramSocket socket;
     private final InetAddress address;
     private final int port;
 
-    public Client(int port) throws SocketException, UnknownHostException {
+    public NetworkClient(int port) throws SocketException, UnknownHostException {
         socket = new DatagramSocket();
         address = InetAddress.getByName("localhost");
         this.port = port;
+    }
+
+    public NetworkClient(InetSocketAddress addr) throws SocketException, UnknownHostException {
+        socket = new DatagramSocket();
+        this.address = addr.getAddress();
+        this.port = addr.getPort();
     }
 
     public void send(String msg) throws IOException {
@@ -46,7 +52,7 @@ public class Client implements Closeable {
     }
 
     public static void main(String[] args) throws IOException {
-        try (Client client = new Client(4445)) {
+        try (NetworkClient client = new NetworkClient(4445)) {
             client.send("hello server");
             String echo = client.receive();
             System.out.println(echo);

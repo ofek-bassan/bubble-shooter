@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.val;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
+import org.ort_rehovot.bubble_shooter.ipc.Server;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.List;
 
 
@@ -13,9 +15,17 @@ public class GameController {
     private final GameModel gameModel;
     private boolean inAnimation1 = false;
     private final ActiveObject activeObject = new ActiveObject();
+    private final Server server;
 
-    public GameController(GameModel gameModel) {
+    public GameController(GameModel gameModel, int port) throws SocketException {
         this.gameModel = gameModel;
+        if (port != -1) {
+            System.out.println("Starting server on port " + port);
+            server = new Server(port, new GameProtocol());
+            server.start();
+        } else {
+            server = null;
+        }
     }
 
     public synchronized boolean isInAnimation() {
@@ -78,14 +88,14 @@ public class GameController {
         public void call(){
             owner.setInAnimation(true);
             val h = gameModel.getHeight();
-            val w = 970;
+            val w = 920;
             //val w = 970;
 
-            double m = gameModel.getPlayer().getSlope();
+            double m = gameModel.getPlayer1().getSlope();
             while (true) {
                 if (!GlobalState.getInstance().isPaused()) {
-                    int x = gameModel.getPlayer().getX();
-                    int y = gameModel.getPlayer().getY();
+                    int x = gameModel.getPlayer1().getX();
+                    int y = gameModel.getPlayer1().getY();
                     if (checkThrow(gameModel)) {
                         break;
                     }
@@ -136,13 +146,13 @@ public class GameController {
             }
 
             if (m > 8 || m < -8) {
-                gameModel.getPlayer().addY(-4);
+                gameModel.getPlayer1().addY(-4);
             } else if (m < 3) {
-                gameModel.getPlayer().setY(((int) (m * ((x + 3) - x) + y)) * diry);
-                if (!gameModel.getPlayer().isLeft()) {
-                    gameModel.getPlayer().addX((3 * dirx));
+                gameModel.getPlayer1().setY(((int) (m * ((x + 3) - x) + y)) * diry);
+                if (!gameModel.getPlayer1().isLeft()) {
+                    gameModel.getPlayer1().addX((3 * dirx));
                 } else {
-                    gameModel.getPlayer().addX((-3 * dirx));
+                    gameModel.getPlayer1().addX((-3 * dirx));
                 }
             }
         }
@@ -154,14 +164,14 @@ public class GameController {
      * @param y y position
      */
     public void shoot(int x, int y) {
-        val player = gameModel.getPlayer();
+        val player = gameModel.getPlayer1();
         if (isInAnimation() || player == null) {
             return;
         }
         double m = ((double) (y) - player.getY()) / (x - player.getX());
         //send "pressed" signal to controller
-        gameModel.getPlayer().setSlope(m);
-        gameModel.getPlayer().setActivated(true);
+        gameModel.getPlayer1().setSlope(m);
+        gameModel.getPlayer1().setActivated(true);
 
         activeObject.dispatch(new PlayerMoved(gameModel, this));
         setInAnimation(false);
@@ -174,14 +184,14 @@ public class GameController {
      */
     public static boolean checkThrow(GameModel gameModel) {
         return gameModel.checkCollision(
-                gameModel.getPlayer().getX(),
-                gameModel.getPlayer().getY()
+                gameModel.getPlayer1().getX(),
+                gameModel.getPlayer1().getY()
                 , 40,
-                gameModel.getPlayer().getColor());
+                gameModel.getPlayer1().getColor());
     }
 
     public void changeColor() {
-        Ball player = gameModel.getPlayer();
+        Ball player = gameModel.getPlayer1();
         player.changeColor();
         gameModel.getView().repaint();
     }

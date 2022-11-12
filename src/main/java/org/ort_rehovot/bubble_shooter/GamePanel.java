@@ -1,6 +1,7 @@
 package org.ort_rehovot.bubble_shooter;
 
-import org.ort_rehovot.bubble_shooter.ipc.Client;
+
+import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
 import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
 
 import javax.swing.*;
@@ -9,10 +10,13 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+
+
 public class GamePanel extends JPanel {
     GameModel gameModel;
     GameController gameController;
-    Arrow arrow;
+    Arrow arrowP1;
+    Arrow arrowP2;
     private final JLabel pauseLabel;
 
     public void setPauseVisible(boolean v) {
@@ -23,8 +27,9 @@ public class GamePanel extends JPanel {
         //hideMouseCursor();
         ResourceLoader.init();
         gameModel = new GameModel(this);
-        gameController = new GameController(gameModel);
-        arrow = new Arrow();
+        gameController = new GameController(gameModel, GlobalState.getInstance().getServerPort());
+        arrowP1 = new Arrow();
+        arrowP2 = new Arrow(Constants.PLAYER2_X);
         SoundSystem.getInstance().playBackgroundMusic();
 
         //  pause image
@@ -37,6 +42,8 @@ public class GamePanel extends JPanel {
             @Override
             public void mouseMoved(MouseEvent e) {
                 if (!GlobalState.getInstance().isPaused()) {
+                    Point locationOnScreen = getLocationOnScreen();
+                    GameProtocol.sendMove(e.getX(), e.getY());
                     repaint();
                 }
             }
@@ -75,10 +82,12 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
         g.drawImage(ResourceLoader.getInstance().getBorderImage(), Constants.BORDER_X, Constants.BORDER_Y
-                , getWidth() / 2, getHeight() * 2, null);
-        gameModel.getPlayer().draw(g);
+                , getWidth(), getHeight() * 2, null);
+        gameModel.getPlayer1().draw(g);
+        gameModel.getPlayer2().draw(g);
         Graphics2D g2d = (Graphics2D) g;
-        arrow.paintComponent(g2d, getLocationOnScreen());
+        arrowP1.paintComponent(g2d, getLocationOnScreen());
+        //arrowP2.paintComponent(g2d, getLocationOnScreen());
 
 
         for (int i = 0; i < Constants.MAX_ROWS; i++) {
@@ -100,21 +109,27 @@ public class GamePanel extends JPanel {
     }
 
     private static void waitForFriend(int port) throws IOException {
-        try (Client client = new Client(port)) {
+        int myServerPort = (int) (1000 + (65000 - 1000) * Math.random());
+
+        try (NetworkClient client = new NetworkClient(port)) {
             System.out.println("Sending discovery of " + port);
-            client.send(CommandFormatter.hello(port));
+            client.send(CommandFormatter.hello(myServerPort));
             String receive = client.receive();
             System.out.println(receive);
-            Constants.SEED = Long.parseLong(receive.split(" ")[3]);
+            String[] toks = receive.split(" ");
+            Constants.SEED = Long.parseLong(toks[3]);
+            int rivalPort = Integer.parseInt(toks[1]);
+            String rivalIp = toks[2];
+            GlobalState.getInstance().initMultiPlayer(myServerPort, rivalIp, rivalPort);
         }
     }
 
     public static void main(String[] args) throws IOException {
-		/*if (args.length == 1) {
+		if (args.length == 1) {
 			int port = Integer.parseInt(args[0]);
 			waitForFriend(port);
 		}
-		 */
+
         Constants.fc.ShowGame();
     }
 

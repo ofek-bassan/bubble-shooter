@@ -15,15 +15,15 @@ public class DiscoveryProtocol implements Protocol {
     }
 
     @Override
-    public List<Reply> handleCommand(InetAddress address, String data, LinkedList<Integer> ports) {
+    public List<Reply> handleCommand(InetAddress address, String data) {
         String[] tokens = data.split(" ");
         if (tokens[0].equals("H")) {
             int p = Integer.parseInt(tokens[1]);
             if (port1 == 0) {
-                port1 = ports.get(0);
+                port1 = p;
                 addr1 = address;
             } else {
-                port2 = ports.get(1);
+                port2 = Integer.parseInt(tokens[1]);
                 Random random = new Random();
                 long seed = random.nextLong();
                 Reply r1 = new Reply();
