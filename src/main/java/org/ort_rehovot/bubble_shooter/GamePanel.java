@@ -91,6 +91,7 @@ public class GamePanel extends JPanel {
         //System.out.println("("+GlobalState.getInstance().getRivalX()+","+GlobalState.getInstance().getRivalY()+")");
         arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
         for (int i = 0; i < Constants.MAX_ROWS; i++) {
+
             for (int j = 0; j < Constants.MAX_COLS; j++) {
                 gameModel.getGrid()[i][j].draw(g);
             }
