@@ -42,7 +42,6 @@ public class GamePanel extends JPanel {
             @Override
             public void mouseMoved(MouseEvent e) {
                 if (!GlobalState.getInstance().isPaused()) {
-                    Point locationOnScreen = getLocationOnScreen();
                     GameProtocol.sendMove(e.getX(), e.getY());
                     repaint();
                 }
@@ -73,6 +72,7 @@ public class GamePanel extends JPanel {
                 gameModel.setHeight(e.getComponent().getWidth());
             }
         });
+        GlobalState.getInstance().setGp(this);
     }
 
 
@@ -87,7 +87,17 @@ public class GamePanel extends JPanel {
         gameModel.getPlayer2().draw(g);
         Graphics2D g2d = (Graphics2D) g;
         arrowP1.paintComponent(g2d, getLocationOnScreen());
-        //arrowP2.paintComponent(g2d, getLocationOnScreen());
+        //System.out.println("("+GlobalState.getInstance().getRivalX()+","+GlobalState.getInstance().getRivalY()+")");
+        if(GlobalState.getInstance().getRivalX() != -1)
+        {
+            arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
+            GlobalState.getInstance().setRivalX(-1);
+        }
+        else
+        {
+            arrowP2.paintComponent(g2d, new Point(0,0));
+        }
+
 
 
         for (int i = 0; i < Constants.MAX_ROWS; i++) {
@@ -120,7 +130,7 @@ public class GamePanel extends JPanel {
             Constants.SEED = Long.parseLong(toks[3]);
             int rivalPort = Integer.parseInt(toks[1]);
             String rivalIp = toks[2];
-            GlobalState.getInstance().initMultiPlayer(myServerPort, rivalIp, rivalPort);
+            GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort);
         }
     }
 
