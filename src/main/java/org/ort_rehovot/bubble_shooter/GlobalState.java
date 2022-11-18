@@ -42,7 +42,10 @@ public class GlobalState {
 
     private int rivalX;
     private int rivalY;
+
+    @Getter
     private int rivalW;
+    @Getter
     private int rivalH;
 
 

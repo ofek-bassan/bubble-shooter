@@ -47,7 +47,7 @@ public class Server extends Thread {
                 String received = new String(buf, 0, len);
                 ports.add(packet.getPort());
                 List<Protocol.Reply> toSend = protocolHandler.handleCommand(address, received);
-                System.out.println("port:"+packet.getPort());
+                //System.out.println("port:"+packet.getPort());
                 if (toSend == null) {
                     System.out.println("Got end");
                     running = false;

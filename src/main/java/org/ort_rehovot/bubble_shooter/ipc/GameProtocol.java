@@ -15,11 +15,20 @@ public class GameProtocol implements Protocol {
 
         if (toks[0].equals("M")) {
             int x = Integer.parseInt(toks[1]);
-            GlobalState.getInstance().setRivalX(x- Constants.FIELD_SIZE_X-100);
             int y = Integer.parseInt(toks[2]);
-            GlobalState.getInstance().setRivalY(y);
+
+            int xscaled = (int)(x * (float)Constants.FIELD_SIZE_X / (float)GlobalState.getInstance().getRivalW());
+            int yscaled = (int)(y * (float)Constants.FIELD_SIZE_Y / (float)GlobalState.getInstance().getRivalH());
+
+
+
+            GlobalState.getInstance().setRivalX(xscaled /* + Constants.PLAYER2_X */);
+
+            System.out.printf("(%d, %d) -> (%d, %d) : %d %n", x, y, xscaled, yscaled, GlobalState.getInstance().getRivalX());
+
+            GlobalState.getInstance().setRivalY(yscaled);
             GlobalState.getInstance().getGp().repaint();
-            System.out.println(x + ":" + y);
+
         }
 
         return List.of();
