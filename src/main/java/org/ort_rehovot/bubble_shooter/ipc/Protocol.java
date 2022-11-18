@@ -13,6 +13,8 @@ public interface Protocol {
         private String value;
         private InetAddress address;
         private int port;
+        private int w;
+        private int h;
     }
 
     List<Reply> handleCommand(InetAddress address, String data);

@@ -1,6 +1,7 @@
 package org.ort_rehovot.bubble_shooter;
 
 
+import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
 import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
 
@@ -88,18 +89,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         arrowP1.paintComponent(g2d, getLocationOnScreen());
         //System.out.println("("+GlobalState.getInstance().getRivalX()+","+GlobalState.getInstance().getRivalY()+")");
-        if(GlobalState.getInstance().getRivalX() != -1)
-        {
-            arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
-            GlobalState.getInstance().setRivalX(-1);
-        }
-        else
-        {
-            arrowP2.paintComponent(g2d, new Point(0,0));
-        }
-
-
-
+        arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
         for (int i = 0; i < Constants.MAX_ROWS; i++) {
             for (int j = 0; j < Constants.MAX_COLS; j++) {
                 gameModel.getGrid()[i][j].draw(g);
@@ -123,14 +113,17 @@ public class GamePanel extends JPanel {
 
         try (NetworkClient client = new NetworkClient(port)) {
             System.out.println("Sending discovery of " + port);
-            client.send(CommandFormatter.hello(myServerPort));
+            client.send(CommandFormatter.hello(myServerPort, Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y));
             String receive = client.receive();
             System.out.println(receive);
             String[] toks = receive.split(" ");
             Constants.SEED = Long.parseLong(toks[3]);
             int rivalPort = Integer.parseInt(toks[1]);
+
             String rivalIp = toks[2];
-            GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort);
+            int w = Integer.parseInt(toks[4]);
+            int h = Integer.parseInt(toks[5]);
+            GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort, w, h);
         }
     }
 

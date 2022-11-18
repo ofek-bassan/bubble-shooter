@@ -55,6 +55,11 @@ public class Arrow{
         x = p.x-base.x;
         y = p.y-base.y;
         double angle = Math.atan((double)(x-player_x)/(Constants.PLAYER_Y));
+        /*if(player_x!=Constants.PLAYER1_X)
+        {
+            angle+=225;
+        }
+         */
         g2d.rotate(angle,player_x,Constants.PLAYER_Y);
         g2d.drawImage(ResourceLoader.getInstance().getArrow(), arrowX, arrowY, 50, 140, null);
         g2d.rotate(-angle,player_x,Constants.PLAYER_Y);

@@ -12,7 +12,7 @@ public class NetworkClient implements Closeable {
 
     public NetworkClient(int port) throws SocketException, UnknownHostException {
         socket = new DatagramSocket();
-        address = InetAddress.getByName("127.0.0.1");
+        address = InetAddress.getByName("192.168.1.26");
         this.port = port;
     }
 

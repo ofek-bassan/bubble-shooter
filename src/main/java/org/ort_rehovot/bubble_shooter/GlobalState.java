@@ -42,16 +42,21 @@ public class GlobalState {
 
     private int rivalX;
     private int rivalY;
+    private int rivalW;
+    private int rivalH;
+
 
     @Getter
     private InetSocketAddress rivalAddress;
 
-    void initMultiPlayer(int port, String rivalIP, int rivalPort) throws SocketException, UnknownHostException {
+    void initMultiPlayer(int port, String rivalIP, int rivalPort, int w, int h) throws SocketException, UnknownHostException {
         singlePlayer = false;
         serverPort = port;
         System.out.println("serverPort:"+serverPort);
-        rivalX = -1;
-        rivalY = -1;
+        rivalX = 0;
+        rivalY = 0;
+        rivalH = h;
+        rivalW = w;
         System.out.println("rivalIP:"+rivalIP);
         System.out.println("rivalPort:"+rivalPort);
         this.rivalAddress = new InetSocketAddress(rivalIP, rivalPort);

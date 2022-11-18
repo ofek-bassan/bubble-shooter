@@ -1,5 +1,7 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.ipc;
 
+import org.ort_rehovot.bubble_shooter.Constants;
+import org.ort_rehovot.bubble_shooter.GlobalState;
 import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
 import org.ort_rehovot.bubble_shooter.ipc.Protocol;
 
@@ -13,7 +15,7 @@ public class GameProtocol implements Protocol {
 
         if (toks[0].equals("M")) {
             int x = Integer.parseInt(toks[1]);
-            GlobalState.getInstance().setRivalX(x-960);
+            GlobalState.getInstance().setRivalX(x- Constants.FIELD_SIZE_X-100);
             int y = Integer.parseInt(toks[2]);
             GlobalState.getInstance().setRivalY(y);
             GlobalState.getInstance().getGp().repaint();

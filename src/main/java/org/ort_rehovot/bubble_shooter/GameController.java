@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.val;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
+import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 import org.ort_rehovot.bubble_shooter.ipc.Server;
 
 import java.io.IOException;
