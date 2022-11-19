@@ -38,7 +38,7 @@ public class Arrow{
         rival = true;
         arrowX = x - 50 / 2;
         player_x = Constants.PLAYER2_X;
-        p = new Point(x,600);
+        p = new Point(Constants.FIELD_SIZE_X/2,600);
         //p = new Point(Constants.FIELD_SIZE_X/2,600);
     }
 
