@@ -2,8 +2,6 @@ package org.ort_rehovot.bubble_shooter.ipc;
 
 import org.ort_rehovot.bubble_shooter.Constants;
 import org.ort_rehovot.bubble_shooter.GlobalState;
-import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
-import org.ort_rehovot.bubble_shooter.ipc.Protocol;
 
 import java.net.InetAddress;
 import java.util.List;
@@ -22,7 +20,7 @@ public class GameProtocol implements Protocol {
 
 
 
-            GlobalState.getInstance().setRivalX(xscaled /* + Constants.PLAYER2_X */);
+            GlobalState.getInstance().setRivalX(xscaled);
 
             System.out.printf("(%d, %d) -> (%d, %d) : %d %n", x, y, xscaled, yscaled, GlobalState.getInstance().getRivalX());
 
@@ -38,8 +36,6 @@ public class GameProtocol implements Protocol {
     public static void sendMove(int x , int y) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = String.format("M %d %d", x, y);
-           // System.out.println("address:" + GlobalState.getInstance().getRivalAddress().getAddress());
-           // System.out.println("port:" + GlobalState.getInstance().getRivalAddress().getPort());
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {

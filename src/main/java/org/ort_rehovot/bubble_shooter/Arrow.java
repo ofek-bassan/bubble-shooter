@@ -5,24 +5,17 @@ import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 
-/**
- * Realises the moving arrow at the bottom of the screen.
- * @author Barni
- *
- */
 public class Arrow{
 
     /**
      * current location of the mouse pointer
      */
     private Point p;
-
-    private static final int TIP_LENGTH = 20;
     private int player_x = Constants.PLAYER1_X;
     private int arrowX = Constants.PLAYER1_X - 50 / 2;
     private static final int arrowY = Constants.PLAYER_Y - 140 - Constants.SPRITE_R/2;
     private static final int LENGTH = 80;
-    private boolean rival;
+    private final boolean rival;
 
     /**
      * Constructor for the class arrow.
@@ -39,7 +32,6 @@ public class Arrow{
         arrowX = x - 50 / 2;
         player_x = Constants.PLAYER2_X;
         p = new Point(Constants.FIELD_SIZE_X/2,600);
-        //p = new Point(Constants.FIELD_SIZE_X/2,600);
     }
 
     /**
@@ -67,11 +59,6 @@ public class Arrow{
         }
         double angle = Math.atan((double)(x-player_x)/(Constants.PLAYER_Y));
         System.out.println(angle);
-        /*if(player_x!=Constants.PLAYER1_X)
-        {
-            angle+=225;
-        }
-         */
         g2d.rotate(angle,player_x,Constants.PLAYER_Y);
         g2d.drawImage(ResourceLoader.getInstance().getArrow(), arrowX, arrowY, 50, 140, null);
         g2d.rotate(-angle,player_x,Constants.PLAYER_Y);

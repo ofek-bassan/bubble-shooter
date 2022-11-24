@@ -35,7 +35,6 @@ public class Server extends Thread {
 
                 InetAddress address = packet.getAddress();
 
-                //packet = new DatagramPacket(buf, buf.length, address, port);
                 int len = 0;
                 for (byte b : buf) {
                     if (b == 0) {
@@ -47,7 +46,6 @@ public class Server extends Thread {
                 String received = new String(buf, 0, len);
                 ports.add(packet.getPort());
                 List<Protocol.Reply> toSend = protocolHandler.handleCommand(address, received);
-                //System.out.println("port:"+packet.getPort());
                 if (toSend == null) {
                     System.out.println("Got end");
                     running = false;
@@ -57,7 +55,6 @@ public class Server extends Thread {
                         reply(toSend.get(1).getAddress(),ports.get(1),toSend.get(1).getValue());
                     }
                 }
-                //reply(address,packet.getPort(),received);
 
             } catch (Exception ignored) {
                 System.out.println("Network error");

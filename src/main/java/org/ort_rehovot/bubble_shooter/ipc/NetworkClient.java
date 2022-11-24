@@ -1,5 +1,7 @@
 package org.ort_rehovot.bubble_shooter.ipc;
 
+import org.ort_rehovot.bubble_shooter.Constants;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.*;
@@ -12,7 +14,7 @@ public class NetworkClient implements Closeable {
 
     public NetworkClient(int port) throws SocketException, UnknownHostException {
         socket = new DatagramSocket();
-        address = InetAddress.getByName("192.168.1.26");
+        address = InetAddress.getByName(Constants.IP);
         this.port = port;
     }
 

@@ -2,9 +2,7 @@ package org.ort_rehovot.bubble_shooter;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -26,9 +24,6 @@ public class GlobalState {
     private GamePanel gp;
     @Getter
     private boolean singlePlayer;
-
-    //@Getter
-    //private NetworkClient networkClient = null;
 
     private GlobalState() {
         paused = false;
@@ -63,7 +58,6 @@ public class GlobalState {
         System.out.println("rivalIP:"+rivalIP);
         System.out.println("rivalPort:"+rivalPort);
         this.rivalAddress = new InetSocketAddress(rivalIP, rivalPort);
-        //  networkClient = new NetworkClient(port);
     }
 
     public synchronized boolean isPaused() {

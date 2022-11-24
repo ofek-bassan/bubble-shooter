@@ -24,7 +24,6 @@ public class GameFrame extends JFrame {
                     GlobalState.getInstance().setPaused(!GlobalState.getInstance().isPaused());
                     System.out.println("Paused");
                     repaint();
-                    //GamePanel.setPauseVisible(GlobalState.getInstance().isPaused());
                 }
             }
         });
@@ -39,14 +38,6 @@ public class GameFrame extends JFrame {
                 add(gop);
             }
         }
-        /*
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y);
-        setResizable(false);
-        setVisible(true);
-
-         */
-
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);

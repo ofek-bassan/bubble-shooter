@@ -40,8 +40,6 @@ public class Ball{
 	@Getter
 	@Setter
 	private int explosion = -1;
-
-	private final GameModel gameModel;
 	private boolean isThrowable;
 
 	@Getter
@@ -62,15 +60,14 @@ public class Ball{
 	 * creates a ball
 	 * @param r row
 	 * @param c col
-	 * @param gameModel panel
 	 * @return created ball
 	 */
-	public static Ball create(int r, int c, GameModel gameModel) {
+	public static Ball create(int r, int c) {
 		Ball ret;
 		if (r % 2 == 0) {
-			ret = new Ball(c * Constants.BALL_WIDTH + 50, r * Constants.BALL_WIDTH + 30, Constants.BALL_WIDTH,gameModel,false);
+			ret = new Ball(c * Constants.BALL_WIDTH + 50, r * Constants.BALL_WIDTH + 30,false);
 		} else {
-			ret = new Ball(c * Constants.BALL_WIDTH + 25, r * Constants.BALL_WIDTH + 30, Constants.BALL_WIDTH,gameModel,false);
+			ret = new Ball(c * Constants.BALL_WIDTH + 25, r * Constants.BALL_WIDTH + 30,false);
 		}
 		ret.setRow(r);
 		ret.setColumn(c);
@@ -94,7 +91,7 @@ public class Ball{
 	 * @return created ball
 	 */
 	public static Ball create(int r, int c, GameModel gameModel, int color) {
-		Ball ret = create(r,c,gameModel);
+		Ball ret = create(r,c);
 		ret.color = color;
 		if (color >= 0) {
 			ret.image = ResourceLoader.getInstance().getBallImage(color);
@@ -111,46 +108,19 @@ public class Ball{
 	 * constructor
 	 * @param x x position
 	 * @param y y position
-	 * @param width width
-	 * @param gameModel panel
 	 * @param throwable if the ball is throwable
 	 */
-	public Ball(int x, int y, int width,GameModel gameModel,boolean throwable) {
+	public Ball(int x, int y,boolean throwable) {
 
 		this.x = x;
 		this.y = y;
 		this.width = Constants.BALL_WIDTH;
-		this.gameModel = gameModel;
 		this.color = rnd.nextInt(6) + 1;
 		isThrowable = throwable;
 		isLeft = false;
 
 		image = ResourceLoader.getInstance().getBallImage(color);
 		activated = false;
-	}
-
-	/***
-	 * constructor with specific color
-	 * @param x x position
-	 * @param y y position
-	 * @param width width
-	 * @param color color of the ball
-	 * @param gameModel panel
-	 * @param throwable if the ball is throwable
-	 */
-	public Ball(int x, int y, int width,int color,GameModel gameModel,boolean throwable) {
-
-		this.x = x;
-		this.y = y;
-		this.width = Constants.BALL_WIDTH;
-		this.color = color;
-		this.gameModel = gameModel;
-		isThrowable = throwable;
-		isLeft = false;
-
-		if (color != -1) {
-			image = ResourceLoader.getInstance().getBallImage(color);
-		}
 	}
 
 	/***
@@ -180,24 +150,6 @@ public class Ball{
 	}
 
 	/***
-	 * check if the ball collided
-	 * @return true iff the ball collided with another ball
-	 */
-	public boolean checkThrow() {
-		if (isThrowable) {
-			boolean flag = gameModel.checkCollision(x, y, width, color);
-			if(flag)
-			{
-				isThrowable=false;
-				setInvisible();
-			}
-				
-			return flag;
-		}
-		return false;
-	}
-
-	/***
 	 * "destroys" the ball
 	 */
 	public void setInvisible () {
@@ -209,8 +161,6 @@ public class Ball{
 	 * @return true iff color is invisible
 	 */
 	public boolean isInvisible() { return color == -1 || explosion > -1; }
-
-	public boolean isNoneColor(){return color == -1;}
 
 	/***
 	 * check if a ball is destroyed

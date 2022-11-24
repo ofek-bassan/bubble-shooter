@@ -57,7 +57,7 @@ public class GameModel {
     private void initRandomBalls() {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols-1; c++) {
-                grid[r][c] = Ball.create(r, c, this);
+                grid[r][c] = Ball.create(r, c);
             }
         }
         for (int r = 0; r < rows; r++) {
@@ -68,32 +68,6 @@ public class GameModel {
     }
 
     private void initDebugBallsInternal() {
-        grid[0][2] = Ball.create(0, 2, this, 4);
-        grid[0][3] = Ball.create(0, 3, this, 5);
-        grid[0][4] = Ball.create(0, 4, this, 4);
-        grid[0][5] = Ball.create(0, 5, this, 6);
-        grid[0][6] = Ball.create(0, 6, this, 6);
-        grid[0][7] = Ball.create(0, 7, this, 4);
-        grid[0][9] = Ball.create(0, 9, this, 4);
-        grid[0][10] = Ball.create(0, 10, this, 5);
-        grid[0][11] = Ball.create(0, 11, this, 4);
-        grid[0][12] = Ball.create(0, 12, this, 6);
-        grid[1][0] = Ball.create(1, 0, this, 3);
-        grid[1][2] = Ball.create(1, 2, this, 6);
-        grid[1][3] = Ball.create(1, 3, this, 3);
-        grid[1][4] = Ball.create(1, 4, this, 1);
-        grid[1][5] = Ball.create(1, 5, this, 5);
-        grid[1][6] = Ball.create(1, 6, this, 4);
-        grid[1][7] = Ball.create(1, 7, this, 6);
-        grid[1][8] = Ball.create(1, 8, this, 3);
-        grid[1][10] = Ball.create(1, 10, this, 5);
-        grid[1][11] = Ball.create(1, 11, this, 6);
-        grid[2][1] = Ball.create(2, 1, this, 1);
-        grid[2][2] = Ball.create(2, 2, this, 1);
-        grid[2][3] = Ball.create(2, 3, this, 5);
-        grid[2][7] = Ball.create(2, 7, this, 6);
-        grid[3][4] = Ball.create(3, 4, this, 5);
-        grid[3][8] = Ball.create(3, 8, this, 2);
     }
 
     void initDebugBalls() {
@@ -109,7 +83,7 @@ public class GameModel {
         grid = new Ball[Constants.MAX_ROWS + 1][Constants.MAX_COLS];
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = new Ball(0, 0, 50, this, false);
+                grid[i][j] = new Ball(0, 0, false);
                 grid[i][j].setInvisible();
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
@@ -417,7 +391,7 @@ public class GameModel {
             }
         }
         for (int c = 0; c < cols-1; c++) {
-            grid[0][c] = Ball.create(0, c, this);
+            grid[0][c] = Ball.create(0, c);
             grid[0][c].reinitCoords();
         }
     }
@@ -568,11 +542,11 @@ public class GameModel {
 
     public void setNewPlayer() {
         if (gameOver) {
-            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, false);
+            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, false);
             player1.setInvisible();
         } else {
-            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, true);
-            player2 = new Ball(Constants.PLAYER2_X, Constants.PLAYER_Y, Constants.SPRITE_R, this, true);
+            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, true);
+            player2 = new Ball(Constants.PLAYER2_X, Constants.PLAYER_Y, true);
         }
     }
 

@@ -104,7 +104,6 @@ public class ResourceLoader {
 
 
 	private static byte[] loadResource(String path) throws IOException {
-		//try (InputStream res = ResourceLoader.class.getResourceAsStream("/resources/" + path) ) {
 		try (InputStream res = ResourceLoader.class.getResourceAsStream("/" + path) ) {
 			if (res == null) {
 				throw new IOException("Resource /resources/" + path + " not found");
