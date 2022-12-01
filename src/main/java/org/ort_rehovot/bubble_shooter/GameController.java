@@ -14,12 +14,14 @@ import java.util.List;
 
 public class GameController {
     private final GameModel gameModel;
+    private final AnimationSystem animationSystem;
     private boolean inAnimation1 = false;
     private final ActiveObject activeObject = new ActiveObject();
     private final Server server;
 
     public GameController(GameModel gameModel, int port) throws SocketException {
         this.gameModel = gameModel;
+        animationSystem = new AnimationSystem(gameModel);
         if (port != -1) {
             System.out.println("Starting server on port " + port);
             server = new Server(port, new GameProtocol());
@@ -89,7 +91,7 @@ public class GameController {
         public void call(){
             owner.setInAnimation(true);
             val h = gameModel.getHeight();
-            val w = 920;
+            val w = 720; // 920 for 1080p monitors
             //val w = 970;
 
             double m = gameModel.getPlayer1().getSlope();
@@ -165,6 +167,7 @@ public class GameController {
      * @param y y position
      */
     public void shoot(int x, int y) {
+        /*
         val player = gameModel.getPlayer1();
         if (isInAnimation() || player == null) {
             return;
@@ -176,6 +179,12 @@ public class GameController {
 
         activeObject.dispatch(new PlayerMoved(gameModel, this));
         setInAnimation(false);
+
+         */
+        val player = gameModel.getPlayer1();
+        double m = ((double) (y) - player.getY()) / (x - player.getX());
+        animationSystem.playerShoot(m,720,gameModel.getHeight(),gameModel.getPlayer1().getColor());
+        animationSystem.run();
     }
 
     /***
