@@ -14,7 +14,7 @@ public class AnimationSystem extends Thread{
         private final GameModel gameModel;
 
         @Override
-        public void call() throws IOException {
+        public void call() {
             List<Ball> ballsToExplode = gameModel.hasBallsToExplode();
             if (!ballsToExplode.isEmpty()) {
                 do {
@@ -84,54 +84,50 @@ public class AnimationSystem extends Thread{
     }
 
 
+    private void doMove (MovementState state, boolean isPlayer) {
+        if (state.checkThrow(gameModel)) {
+            endPlayerShoot();
+            setInternalState(State.DONE);
+            endOrBoom();
+            gameModel.setNewPlayerOrRival(isPlayer);
+            return;
+        }
+        state.update();
+        gameModel.getPlayer().setX(playerState.x);
+        gameModel.getPlayer().setY(playerState.y);
+
+    }
+
     @Override
     public void run () {
         State myState = getInternalStateState();
         System.out.println("==================================================");
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
-            gameModel.getView().repaint();
             myState = getInternalStateState();
             System.out.println(myState);
             switch (myState) {
                 case PLAYER_MOVING -> {
-                    if (playerState.checkThrow(gameModel)) {
-                        endPlayerShoot();
-                        internalState = State.DONE;
-                        endOrBoom();
-                        gameModel.setNewPlayerOrRival(true);
-                        break;
-                    }
-                    playerState.update();
-                    gameModel.getPlayer().setX(playerState.x);
-                    gameModel.getPlayer().setY(playerState.y);
+                    doMove(playerState, true);
                 }
                 case RIVAL_MOVING -> {
-                    if (rivalState.checkThrow(gameModel)) {
-                        endRivalShoot();
-                        internalState = State.DONE;
-                        gameModel.setNewPlayerOrRival(false);
-                        break;
-                    }
-                    rivalState.update();
-                    gameModel.getRivalPlayer().setX(rivalState.x);
-                    gameModel.getRivalPlayer().setY(rivalState.y);
+                    doMove(rivalState, false);
                 }
                 case BOTH_MOVING -> {
                     boolean player_collide = playerState.checkThrow(gameModel);
                     boolean rival_collide = rivalState.checkThrow(gameModel);
                     if (rival_collide && !player_collide) {
                         endRivalShoot();
-                        internalState = State.PLAYER_MOVING;
+                        setInternalState(State.PLAYER_MOVING);
                         gameModel.setNewPlayerOrRival(false);
                     } else if (!rival_collide && player_collide) {
                         endPlayerShoot();
-                        internalState = State.RIVAL_MOVING;
+                        setInternalState(State.RIVAL_MOVING);
                         gameModel.setNewPlayerOrRival(true);
-                    } else if (rival_collide && player_collide) {
+                    } else if (rival_collide) {
                         endRivalShoot();
                         endPlayerShoot();
-                        internalState = State.DONE;
+                        setInternalState(State.DONE);
                         gameModel.setNewPlayerOrRival(true);
                         gameModel.setNewPlayerOrRival(false);
                     }
@@ -157,10 +153,16 @@ public class AnimationSystem extends Thread{
         }
     }
 
+    private void setInternalState(State s) {
+        synchronized (this) {
+            internalState = s;
+        }
+    }
+
     private void endOrBoom()
     {
         boom();
-        internalState = State.IDLE;
+        setInternalState(State.IDLE);
         if(gameModel.isGameOver())
         {
             try {

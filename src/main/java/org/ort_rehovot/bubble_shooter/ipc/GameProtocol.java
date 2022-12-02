@@ -30,7 +30,9 @@ public class GameProtocol implements Protocol {
         }
 
         if (toks[0].equals("S")) {
-            GlobalState.getInstance().getGp().getGameController().shoot(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY(),false);
+            int rivalX = GlobalState.getInstance().getRivalX();
+            int rivalY = GlobalState.getInstance().getRivalY();
+            GlobalState.getInstance().getGp().getGameController().shoot(rivalX,rivalY,false);
 
         }
 

@@ -30,19 +30,6 @@ public class GameController {
      * @param y y position
      */
     public void shoot(int x, int y,boolean isPlayer) {
-        /*
-        val player = gameModel.getPlayer1();
-        if (isInAnimation() || player == null) {
-            return;
-        }
-        double m = ((double) (y) - player.getY()) / (x - player.getX());
-        //send "pressed" signal to controller
-        gameModel.getPlayer1().setSlope(m<0?m:m*-1);
-        gameModel.getPlayer1().setActivated(true);
-
-        activeObject.dispatch(new PlayerMoved(gameModel,m>0?-1:1, this));
-        setInAnimation(false);
-         */
         if(isPlayer)
         {
             Ball player = gameModel.getPlayer();
