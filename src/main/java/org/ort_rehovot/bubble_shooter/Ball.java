@@ -42,10 +42,6 @@ public class Ball{
 	private int explosion = -1;
 	private boolean isThrowable;
 
-	@Getter
-	@Setter
-	private boolean isLeft;
-
 	private double m;
 	private Image image;
 
@@ -117,7 +113,6 @@ public class Ball{
 		this.width = Constants.BALL_WIDTH;
 		this.color = rnd.nextInt(6) + 1;
 		isThrowable = throwable;
-		isLeft = false;
 
 		image = ResourceLoader.getInstance().getBallImage(color);
 		activated = false;
@@ -175,10 +170,6 @@ public class Ball{
 	 * @param m slope
 	 */
 	public void setSlope(double m) {
-		if (m > 0) {
-			m *= -1;
-			isLeft = true;
-		}
 		this.m = m;
 	}
 

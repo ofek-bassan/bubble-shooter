@@ -11,9 +11,9 @@ import java.util.List;
 
 public class GameModel {
     @Getter
-    private Ball player1;
+    private Ball player;
     @Getter
-    private Ball player2;
+    private Ball rivalPlayer;
 
     private Ball[][] grid;
     private int rows = Constants.START_NUM_ROWS;
@@ -79,7 +79,8 @@ public class GameModel {
      * initializes the game
      */
     public void initGame() {
-        setNewPlayer();
+        setNewPlayerOrRival(true);
+        setNewPlayerOrRival(false);
         grid = new Ball[Constants.MAX_ROWS + 1][Constants.MAX_COLS];
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++) {
@@ -219,7 +220,7 @@ public class GameModel {
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
             setGameOver(true);
             updateRows();
-            setNewPlayer();
+            setNewPlayerOrRival(column < cols + 1);
             return true;
         }
         if (newRow % 2 == 0) {
@@ -262,15 +263,13 @@ public class GameModel {
                 case 6:
                 case 7:
                 case 5:
-                    break;
                 case 8:
-                    //newRow--;
                     break;
                 default:
                     printDebug();
             }
         }
-        System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn, color);
+        //System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn, color);
 
         if (!grid[newRow][newColumn].isInvisible()) {
             switch (sector) {
@@ -289,11 +288,11 @@ public class GameModel {
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
             setGameOver(true);
             updateRows();
-            setNewPlayer();
+            setNewPlayerOrRival(column < cols + 1);
             return true;
         }
 
-        printGrid(row, column, newRow, newColumn);
+        //printGrid(row, column, newRow, newColumn);
 
         List<Ball> collisions = getCollisions(newRow, newColumn, color);
 
@@ -308,13 +307,14 @@ public class GameModel {
             SoundSystem.getInstance().playBoom();
             throwsCounter++;
         }
-        System.out.printf("Throws = %d\n", throwsCounter);
+        //System.out.printf("Throws = %d\n", throwsCounter);
 
         List<Ball> singletons = getClusters();
-
+        /*
         System.out.println("=========================================================");
         System.out.printf("Collisions %d singletons %d\n,", collisions.size(), singletons.size());
         System.out.println("=========================================================");
+         */
 
         if (!singletons.isEmpty()) {
             GlobalState.getInstance().updateScore(singletons.size());
@@ -326,7 +326,7 @@ public class GameModel {
         }
 
 
-        moveRowsDown(newRow);
+        moveRowsDown(newRow,column < cols + 1);
         singletons = getClusters();
 
         if (!singletons.isEmpty()) {
@@ -336,18 +336,21 @@ public class GameModel {
         if (exploded) {
             SoundSystem.getInstance().playExplosion();
         }
+        /*
         System.out.println("//////////////////////////////////////////////////////////////////");
         printDebug();
         System.out.println("//////////////////////////////////////////////////////////////////");
         printGrid(row, column, newRow, newColumn);
 
+         */
+
         updateRows();
         return true;
     }
 
-    private void moveRowsDown(int newRow) {
+    private void moveRowsDown(int newRow,boolean isPlayer) {
         if (throwsCounter >= Constants.MAX_BAD_THROWS) {
-            addRow(newRow);
+            addRow(newRow,isPlayer);
             throwsCounter = 0;
         }
     }
@@ -375,13 +378,12 @@ public class GameModel {
         }
     }
 
-    private void addRow(int lastRow) {
+    private void addRow(int lastRow,boolean isPlayer) {
         lastRow++;
-        System.out.println("last row:"+lastRow);
         if (lastRow >= Constants.MAX_ROWS || lastRow >= grid[lastRow].length) {
             setGameOver(true);
             updateRows();
-            setNewPlayer();
+            setNewPlayerOrRival(isPlayer);
             return;
         }
         for (int r = lastRow; r >= 1; r--) {
@@ -429,8 +431,6 @@ public class GameModel {
 
         for (int r = 0; r < grid.length; r++) {
             for (int c = 0; c < Constants.MAX_COLS ; c++) {
-                if(c == 0 && r == 1)
-                    System.out.println();
                 if (grid[r][c].isInvisible()) {
                     continue;
                 }
@@ -540,14 +540,11 @@ public class GameModel {
         }
     }
 
-    public void setNewPlayer() {
-        if (gameOver) {
-            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, false);
-            player1.setInvisible();
-        } else {
-            player1 = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, true);
-            player2 = new Ball(Constants.PLAYER2_X, Constants.PLAYER_Y, true);
-        }
+    public void setNewPlayerOrRival(boolean isPlayer) {
+        if(isPlayer)
+            player = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, true);
+        else
+            rivalPlayer = new Ball(Constants.PLAYER2_X, Constants.PLAYER_Y, true);
     }
 
     public Ball[][] getGrid() {

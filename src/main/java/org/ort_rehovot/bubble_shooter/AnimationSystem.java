@@ -5,11 +5,10 @@ import lombok.Data;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
-public class AnimationSystem implements Runnable{
+public class AnimationSystem extends Thread{
     @AllArgsConstructor
     private static class ExplodeCommand implements Command {
         private final GameModel gameModel;
@@ -36,7 +35,7 @@ public class AnimationSystem implements Runnable{
 
     @Data
     @AllArgsConstructor
-    private class MovementState {
+    private static class MovementState {
         int x;
         int y;
         double m;
@@ -47,7 +46,6 @@ public class AnimationSystem implements Runnable{
         int color;
 
         public void update() {
-            int dirx = 1;
             if (x + Constants.BALL_WIDTH / 2 > w) {
                 dirx *= -1;
             }
@@ -65,10 +63,10 @@ public class AnimationSystem implements Runnable{
             }
 
             if (m > 8 || m < -8) {
-                y-=4;
+                y-=5;
             } else if (m < 3) {
                 y = ((int) (m * ((x + 3) - x) + y)) * diry;
-                x+=3*dirx;
+                x += (3 * dirx);
             }
         }
 
@@ -88,25 +86,36 @@ public class AnimationSystem implements Runnable{
 
     @Override
     public void run () {
-        State myState = getState();
-        while (myState != State.DONE) {
-            myState = getState();
+        State myState = getInternalStateState();
+        System.out.println("==================================================");
+        gameModel.getView().repaint();
+        while (myState!=State.DONE) {
+            gameModel.getView().repaint();
+            myState = getInternalStateState();
+            System.out.println(myState);
             switch (myState) {
                 case PLAYER_MOVING -> {
                     if (playerState.checkThrow(gameModel)) {
                         endPlayerShoot();
                         internalState = State.DONE;
+                        endOrBoom();
+                        gameModel.setNewPlayerOrRival(true);
                         break;
                     }
                     playerState.update();
+                    gameModel.getPlayer().setX(playerState.x);
+                    gameModel.getPlayer().setY(playerState.y);
                 }
                 case RIVAL_MOVING -> {
                     if (rivalState.checkThrow(gameModel)) {
                         endRivalShoot();
                         internalState = State.DONE;
+                        gameModel.setNewPlayerOrRival(false);
                         break;
                     }
                     rivalState.update();
+                    gameModel.getRivalPlayer().setX(rivalState.x);
+                    gameModel.getRivalPlayer().setY(rivalState.y);
                 }
                 case BOTH_MOVING -> {
                     boolean player_collide = playerState.checkThrow(gameModel);
@@ -114,16 +123,22 @@ public class AnimationSystem implements Runnable{
                     if (rival_collide && !player_collide) {
                         endRivalShoot();
                         internalState = State.PLAYER_MOVING;
+                        gameModel.setNewPlayerOrRival(false);
                     } else if (!rival_collide && player_collide) {
                         endPlayerShoot();
                         internalState = State.RIVAL_MOVING;
+                        gameModel.setNewPlayerOrRival(true);
                     } else if (rival_collide && player_collide) {
                         endRivalShoot();
                         endPlayerShoot();
                         internalState = State.DONE;
+                        gameModel.setNewPlayerOrRival(true);
+                        gameModel.setNewPlayerOrRival(false);
                     }
-                    playerState.update();
-                    rivalState.update();
+                    if(!player_collide)
+                        playerState.update();
+                    if(!rival_collide)
+                        rivalState.update();
                 }
             }
             try {
@@ -131,9 +146,20 @@ public class AnimationSystem implements Runnable{
             } catch (InterruptedException ignored) {
                 return;
             }
-            gameModel.getView().repaint();
-            boom();
+            refresh();
         }
+
+    }
+
+    private State getInternalStateState() {
+        synchronized (this) {
+            return internalState;
+        }
+    }
+
+    private void endOrBoom()
+    {
+        boom();
         internalState = State.IDLE;
         if(gameModel.isGameOver())
         {
@@ -142,12 +168,6 @@ public class AnimationSystem implements Runnable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private State getState() {
-        synchronized (this) {
-            return internalState;
         }
     }
 
@@ -166,6 +186,7 @@ public class AnimationSystem implements Runnable{
         this.gameModel = gameModel;
         activeObject = new ActiveObject();
         internalState = State.IDLE;
+        gameModel.getView().repaint();
     }
 
     private void endPlayerShoot() {
@@ -186,7 +207,7 @@ public class AnimationSystem implements Runnable{
         synchronized (this) {
             if (playerState == null) {
                 playerState = new MovementState(Constants.PLAYER1_X,
-                        Constants.PLAYER_Y, m, w, h,m<0?1:-1,1,color);
+                        Constants.PLAYER_Y, m<0?m:m*-1, w, h, m>0?-1:1, 1, color);
                 if(internalState == State.IDLE)
                     internalState = State.PLAYER_MOVING;
                 else
@@ -197,9 +218,10 @@ public class AnimationSystem implements Runnable{
 
     public void rivalShoot(double m, int w, int h, int color) {
         synchronized (this) {
+            refresh();
             if (rivalState == null) {
                 rivalState = new MovementState(Constants.PLAYER1_X,
-                        Constants.PLAYER_Y, m, w, h,m<0?1:-1,1,color);
+                        Constants.PLAYER_Y, m<0?m:m*-1, w, h, m>0?-1:1, 1, color);
                 if(internalState == State.IDLE)
                     internalState = State.RIVAL_MOVING;
                 else
@@ -209,9 +231,10 @@ public class AnimationSystem implements Runnable{
     }
 
     public void boom(){
-        gameModel.getView().repaint();
         activeObject.dispatch(new ExplodeCommand(gameModel));
-        gameModel.setNewPlayer();
     }
 
+    private void refresh() {
+        gameModel.getView().repaint();
+    }
 }

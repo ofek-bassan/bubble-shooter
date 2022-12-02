@@ -1,6 +1,7 @@
 package org.ort_rehovot.bubble_shooter;
 
 
+import lombok.Getter;
 import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
 import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
@@ -18,6 +19,7 @@ public class GamePanel extends JPanel {
     GameController gameController;
     Arrow arrowP1;
     Arrow arrowP2;
+    @Getter
     private final JLabel pauseLabel;
 
     public void setPauseVisible(boolean v) {
@@ -56,7 +58,7 @@ public class GamePanel extends JPanel {
                     if (e.getButton() == 1) {
                         int x = e.getX();
                         int y = e.getY();
-                        gameController.shoot(x, y);
+                        gameController.shoot(x, y,true);
                     } else if (e.getButton() == 3) {
                         gameController.changeColor();
                     } else if (e.getButton() == 2) {
@@ -76,16 +78,15 @@ public class GamePanel extends JPanel {
         GlobalState.getInstance().setGp(this);
     }
 
-
     @Override
     public void paintComponent(Graphics g) {
-        setPauseVisible(GlobalState.getInstance().isPaused());
+        //setPauseVisible(GlobalState.getInstance().isPaused());
         super.paintComponent(g);
         g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
         g.drawImage(ResourceLoader.getInstance().getBorderImage(), Constants.BORDER_X, Constants.BORDER_Y
                 , getWidth(), getHeight() * 2, null);
-        gameModel.getPlayer1().draw(g);
-        gameModel.getPlayer2().draw(g);
+        gameModel.getPlayer().draw(g);
+        gameModel.getRivalPlayer().draw(g);
         Graphics2D g2d = (Graphics2D) g;
         arrowP1.paintComponent(g2d, getLocationOnScreen());
         //System.out.println("("+GlobalState.getInstance().getRivalX()+","+GlobalState.getInstance().getRivalY()+")");
@@ -134,10 +135,9 @@ public class GamePanel extends JPanel {
 			waitForFriend(port);
 		}
 		 */
-
-
         Constants.fc.ShowGame();
     }
+
 
 
 }
