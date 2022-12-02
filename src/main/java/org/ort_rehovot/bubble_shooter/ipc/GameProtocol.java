@@ -29,6 +29,11 @@ public class GameProtocol implements Protocol {
 
         }
 
+        if (toks[0].equals("S")) {
+            GlobalState.getInstance().getGp().getGameController().shoot(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY(),false);
+
+        }
+
         return List.of();
     }
 
@@ -36,6 +41,17 @@ public class GameProtocol implements Protocol {
     public static void sendMove(int x , int y) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = String.format("M %d %d", x, y);
+            try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
+                client.send(msg);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void sendShoot() {
+        if (!GlobalState.getInstance().isSinglePlayer()) {
+            String msg = "S";
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {

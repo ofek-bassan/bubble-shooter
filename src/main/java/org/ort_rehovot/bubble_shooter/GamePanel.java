@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class GamePanel extends JPanel {
     GameModel gameModel;
+    @Getter
     GameController gameController;
     Arrow arrowP1;
     Arrow arrowP2;
@@ -59,6 +60,7 @@ public class GamePanel extends JPanel {
                         int x = e.getX();
                         int y = e.getY();
                         gameController.shoot(x, y,true);
+                        GameProtocol.sendShoot();
                     } else if (e.getButton() == 3) {
                         gameController.changeColor();
                     } else if (e.getButton() == 2) {
@@ -130,11 +132,11 @@ public class GamePanel extends JPanel {
     }
 
     public static void main(String[] args) throws IOException {
-		/*if (args.length == 1) {
+		if (args.length == 1) {
 			int port = Integer.parseInt(args[0]);
 			waitForFriend(port);
 		}
-		 */
+
         Constants.fc.ShowGame();
     }
 
