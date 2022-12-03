@@ -93,26 +93,35 @@ public class AnimationSystem extends Thread{
             return;
         }
         state.update();
-        gameModel.getPlayer().setX(playerState.x);
-        gameModel.getPlayer().setY(playerState.y);
+        if (isPlayer) {
+            gameModel.getPlayer().setX(state.x);
+            gameModel.getPlayer().setY(state.y);
+        } else {
+            gameModel.getRivalPlayer().setX(state.x);
+            gameModel.getRivalPlayer().setY(state.y);
+        }
 
     }
 
     @Override
     public void run () {
         State myState = getInternalStateState();
-        System.out.println("==================================================");
+
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
             myState = getInternalStateState();
-            System.out.println(myState);
+//            if (myState != State.IDLE) {
+//                System.out.println(myState);
+//            }
             switch (myState) {
                 case PLAYER_MOVING -> {
                     doMove(playerState, true);
                 }
+
                 case RIVAL_MOVING -> {
                     doMove(rivalState, false);
                 }
+
                 case BOTH_MOVING -> {
                     boolean player_collide = playerState.checkThrow(gameModel);
                     boolean rival_collide = rivalState.checkThrow(gameModel);
@@ -137,6 +146,7 @@ public class AnimationSystem extends Thread{
                         rivalState.update();
                 }
             }
+
             try {
                 Thread.sleep(3);
             } catch (InterruptedException ignored) {
@@ -222,8 +232,8 @@ public class AnimationSystem extends Thread{
         synchronized (this) {
             refresh();
             if (rivalState == null) {
-                rivalState = new MovementState(Constants.PLAYER1_X,
-                        Constants.PLAYER_Y, m<0?m:m*-1, w, h, m>0?-1:1, 1, color);
+                rivalState = new MovementState(Constants.PLAYER2_X,
+                        Constants.PLAYER_Y, m < 0 ? m:-m, w, h, m>0?-1:1, 1, color);
                 if(internalState == State.IDLE)
                     internalState = State.RIVAL_MOVING;
                 else

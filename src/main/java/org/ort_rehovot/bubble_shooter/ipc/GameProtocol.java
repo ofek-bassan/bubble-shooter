@@ -9,6 +9,7 @@ import java.util.List;
 public class GameProtocol implements Protocol {
     @Override
     public List<Reply> handleCommand(InetAddress address, String data) {
+
         String[] toks = data.split(" ");
 
         if (toks[0].equals("M")) {
@@ -22,8 +23,6 @@ public class GameProtocol implements Protocol {
 
             GlobalState.getInstance().setRivalX(xscaled);
 
-            System.out.printf("(%d, %d) -> (%d, %d) : %d %n", x, y, xscaled, yscaled, GlobalState.getInstance().getRivalX());
-
             GlobalState.getInstance().setRivalY(yscaled);
             GlobalState.getInstance().getGp().repaint();
 
@@ -32,6 +31,7 @@ public class GameProtocol implements Protocol {
         if (toks[0].equals("S")) {
             int rivalX = GlobalState.getInstance().getRivalX();
             int rivalY = GlobalState.getInstance().getRivalY();
+
             GlobalState.getInstance().getGp().getGameController().shoot(rivalX,rivalY,false);
 
         }

@@ -34,12 +34,16 @@ public class GameController {
         {
             Ball player = gameModel.getPlayer();
             double m = ((double) (y) - player.getY()) / (x - player.getX());
+            System.out.println("slope player:"+m);
             animationSystem.playerShoot(m,Constants.BORDER_WIDTH,gameModel.getHeight(),player.getColor());
         }
         else
         {
-            Ball rivalPlayer = gameModel.getRivalPlayer();
-            double m = ((double) (y) - rivalPlayer.getY()) / (x - rivalPlayer.getX());
+            Ball rivalPlayer = gameModel.getPlayer();
+            int py = rivalPlayer.getY();
+            int px = rivalPlayer.getX();
+            double m = ((double) (y) - py) / (x - px);
+            System.out.printf("x: %d, px: %d | y: %d, py: %d, m = %f\n", x, px, y, py, m);
             animationSystem.rivalShoot(m,Constants.BORDER_WIDTH,gameModel.getHeight(),rivalPlayer.getColor());
         }
 

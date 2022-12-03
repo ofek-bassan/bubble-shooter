@@ -94,6 +94,7 @@ public class GameModel {
     }
 
     public void printDebug() {
+        /*
         for (int r = 0; r < grid.length; r++) {
             for (int c = 0; c < grid[r].length; c++) {
                 Ball ball = grid[r][c];
@@ -102,6 +103,8 @@ public class GameModel {
                 }
             }
         }
+
+         */
     }
 
     @AllArgsConstructor
