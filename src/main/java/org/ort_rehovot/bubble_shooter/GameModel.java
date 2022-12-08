@@ -545,9 +545,9 @@ public class GameModel {
 
     public void setNewPlayerOrRival(boolean isPlayer) {
         if(isPlayer)
-            player = new Ball(Constants.PLAYER1_X, Constants.PLAYER_Y, true);
+            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, true);
         else
-            rivalPlayer = new Ball(Constants.PLAYER2_X, Constants.PLAYER_Y, true);
+            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y, true);
     }
 
     public Ball[][] getGrid() {

@@ -164,38 +164,4 @@ public class Ball{
 	public boolean isValid() {
 		return color != -1;
 	}
-
-	/***
-	 * sets the slope of the direction
-	 * @param m slope
-	 */
-	public void setSlope(double m) {
-		this.m = m;
-	}
-
-	/***
-	 * get slope
-	 * @return slope
-	 */
-	public double getSlope()
-	{
-		return this.m;
-	}
-
-	/***
-	 * moves x position
-	 * @param x x position to move
-	 */
-	public void addX(int x)
-	{
-		this.x+=x;
-	}
-	/***
-	 * moves y position
-	 * @param y y position to move
-	 */
-	public void addY(int y)
-	{
-		this.y+=y;
-	}
 }

@@ -33,7 +33,7 @@ public class GamePanel extends JPanel {
         gameModel = new GameModel(this);
         gameController = new GameController(gameModel, GlobalState.getInstance().getServerPort());
         arrowP1 = new Arrow();
-        arrowP2 = new Arrow(Constants.PLAYER2_X);
+        arrowP2 = new Arrow(Constants.RIVAL_X);
         SoundSystem.getInstance().playBackgroundMusic();
 
         //  pause image
@@ -132,10 +132,12 @@ public class GamePanel extends JPanel {
     }
 
     public static void main(String[] args) throws IOException {
-		if (args.length == 1) {
+		/*if (args.length == 1) {
 			int port = Integer.parseInt(args[0]);
 			waitForFriend(port);
 		}
+
+		 */
 
         Constants.fc.ShowGame();
     }

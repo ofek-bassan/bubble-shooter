@@ -86,7 +86,10 @@ public class AnimationSystem extends Thread{
 
     private void doMove (MovementState state, boolean isPlayer) {
         if (state.checkThrow(gameModel)) {
-            endPlayerShoot();
+            if (isPlayer)
+                endPlayerShoot();
+            else
+                endRivalShoot();
             setInternalState(State.DONE);
             endOrBoom();
             gameModel.setNewPlayerOrRival(isPlayer);
@@ -218,7 +221,7 @@ public class AnimationSystem extends Thread{
     public void playerShoot(double m, int w, int h, int color) {
         synchronized (this) {
             if (playerState == null) {
-                playerState = new MovementState(Constants.PLAYER1_X,
+                playerState = new MovementState(Constants.PLAYER_X,
                         Constants.PLAYER_Y, m<0?m:m*-1, w, h, m>0?-1:1, 1, color);
                 if(internalState == State.IDLE)
                     internalState = State.PLAYER_MOVING;
@@ -232,7 +235,7 @@ public class AnimationSystem extends Thread{
         synchronized (this) {
             refresh();
             if (rivalState == null) {
-                rivalState = new MovementState(Constants.PLAYER2_X,
+                rivalState = new MovementState(Constants.RIVAL_X,
                         Constants.PLAYER_Y, m < 0 ? m:-m, w, h, m>0?-1:1, 1, color);
                 if(internalState == State.IDLE)
                     internalState = State.RIVAL_MOVING;

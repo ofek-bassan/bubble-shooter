@@ -11,8 +11,8 @@ public class Arrow{
      * current location of the mouse pointer
      */
     private Point p;
-    private int player_x = Constants.PLAYER1_X;
-    private int arrowX = Constants.PLAYER1_X - 50 / 2;
+    private int player_x = Constants.PLAYER_X;
+    private int arrowX = Constants.PLAYER_X - 50 / 2;
     private static final int arrowY = Constants.PLAYER_Y - 140 - Constants.SPRITE_R/2;
     private static final int LENGTH = 80;
     private final boolean rival;
@@ -30,7 +30,7 @@ public class Arrow{
     public Arrow(int x){
         rival = true;
         arrowX = x - 50 / 2;
-        player_x = Constants.PLAYER2_X;
+        player_x = Constants.RIVAL_X;
         p = new Point(Constants.FIELD_SIZE_X/2,600);
     }
 

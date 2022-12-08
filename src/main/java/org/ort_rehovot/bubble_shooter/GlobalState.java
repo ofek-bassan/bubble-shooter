@@ -47,7 +47,7 @@ public class GlobalState {
     @Getter
     private InetSocketAddress rivalAddress;
 
-    void initMultiPlayer(int port, String rivalIP, int rivalPort, int w, int h) throws SocketException, UnknownHostException {
+    void initMultiPlayer(int port, String rivalIP, int rivalPort, int w, int h) {
         singlePlayer = false;
         serverPort = port;
         System.out.println("serverPort:"+serverPort);
