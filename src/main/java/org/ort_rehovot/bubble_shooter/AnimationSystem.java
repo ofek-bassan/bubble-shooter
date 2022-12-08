@@ -8,7 +8,7 @@ import org.ort_rehovot.bubble_shooter.ao.Command;
 import java.io.IOException;
 import java.util.List;
 
-public class AnimationSystem extends Thread{
+public class AnimationSystem extends Thread {
     @AllArgsConstructor
     private static class ExplodeCommand implements Command {
         private final GameModel gameModel;
@@ -39,18 +39,21 @@ public class AnimationSystem extends Thread{
         int x;
         int y;
         double m;
-        int w;
+        int borderEnd;
+        int borderStart;
         int h;
         int dirx;
         int diry;
         int color;
+        boolean isPlayer;
 
         public void update() {
-            if (x + Constants.BALL_WIDTH / 2 > w) {
+            System.out.println("("+x+","+y+")");
+            if (x + Constants.BALL_WIDTH / 2 > borderEnd) {
                 dirx *= -1;
             }
 
-            if (x - Constants.BALL_WIDTH / 2 < 0) {
+            if (x - Constants.BALL_WIDTH / 2 < borderStart) {
                 dirx *= -1;
             }
 
@@ -58,20 +61,17 @@ public class AnimationSystem extends Thread{
                 diry *= -1;
             }
 
-            if (y - Constants.BALL_WIDTH / 2 < 0) {
-                diry *= -1;
-            }
-
             if (m > 8 || m < -8) {
-                y-=5;
+                y -= 5;
             } else if (m < 3) {
                 y = ((int) (m * ((x + 3) - x) + y)) * diry;
                 x += (3 * dirx);
             }
+            System.out.println("("+x+","+y+")");
         }
 
         public boolean checkThrow(GameModel gameModel) {
-            return gameModel.checkCollision(x, y, 40, color);
+            return gameModel.checkCollision(x, y, 40, color,isPlayer);
         }
     }
 
@@ -172,12 +172,10 @@ public class AnimationSystem extends Thread{
         }
     }
 
-    private void endOrBoom()
-    {
+    private void endOrBoom() {
         boom();
         setInternalState(State.IDLE);
-        if(gameModel.isGameOver())
-        {
+        if (gameModel.isGameOver()) {
             try {
                 Constants.fc.Lose();
             } catch (IOException e) {
@@ -217,13 +215,12 @@ public class AnimationSystem extends Thread{
     }
 
 
-
-    public void playerShoot(double m, int w, int h, int color) {
+    public void playerShoot(double m, int BorderEND,int borderStart, int h, int color) {
         synchronized (this) {
             if (playerState == null) {
                 playerState = new MovementState(Constants.PLAYER_X,
-                        Constants.PLAYER_Y, m<0?m:m*-1, w, h, m>0?-1:1, 1, color);
-                if(internalState == State.IDLE)
+                        Constants.PLAYER_Y, m < 0 ? m : m * -1, BorderEND,borderStart, h, m > 0 ? -1 : 1, 1, color,true);
+                if (internalState == State.IDLE)
                     internalState = State.PLAYER_MOVING;
                 else
                     internalState = State.BOTH_MOVING;
@@ -231,13 +228,13 @@ public class AnimationSystem extends Thread{
         }
     }
 
-    public void rivalShoot(double m, int w, int h, int color) {
+    public void rivalShoot(double m, int BorderEND,int borderStart, int h, int color) {
         synchronized (this) {
             refresh();
             if (rivalState == null) {
                 rivalState = new MovementState(Constants.RIVAL_X,
-                        Constants.PLAYER_Y, m < 0 ? m:-m, w, h, m>0?-1:1, 1, color);
-                if(internalState == State.IDLE)
+                        Constants.PLAYER_Y, m < 0 ? m : -m, BorderEND,borderStart, h, m > 0 ? -1 : 1, 1, color,false);
+                if (internalState == State.IDLE)
                     internalState = State.RIVAL_MOVING;
                 else
                     internalState = State.BOTH_MOVING;
@@ -245,7 +242,7 @@ public class AnimationSystem extends Thread{
         }
     }
 
-    public void boom(){
+    public void boom() {
         activeObject.dispatch(new ExplodeCommand(gameModel));
     }
 

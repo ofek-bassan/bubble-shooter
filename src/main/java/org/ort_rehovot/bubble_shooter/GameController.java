@@ -35,7 +35,7 @@ public class GameController {
             Ball player = gameModel.getPlayer();
             double m = ((double) (y) - player.getY()) / (x - player.getX());
             System.out.println("slope player:"+m);
-            animationSystem.playerShoot(m,Constants.BORDER_WIDTH,gameModel.getHeight(),player.getColor());
+            animationSystem.playerShoot(m,Constants.BORDER_WIDTH,0,gameModel.getHeight(),player.getColor());
         }
         else
         {
@@ -44,7 +44,8 @@ public class GameController {
             int px = rivalPlayer.getX();
             double m = ((double) (y) - py) / (x - px);
             System.out.printf("x: %d, px: %d | y: %d, py: %d, m = %f\n", x, px, y, py, m);
-            animationSystem.rivalShoot(m,Constants.BORDER_WIDTH,gameModel.getHeight(),rivalPlayer.getColor());
+            System.out.printf("FIELD_SIZE_X: %d, BORDER_WIDTH: %d\n", Constants.FIELD_SIZE_X, Constants.BORDER_WIDTH+200);
+            animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.BORDER_WIDTH+200,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
         }
 
     }

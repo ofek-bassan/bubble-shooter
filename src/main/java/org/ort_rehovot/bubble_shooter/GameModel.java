@@ -121,13 +121,20 @@ public class GameModel {
      * @param r radius
      * @return the collided ball
      */
-    private GridCoords collides(int x, int y, int r) {
+    private GridCoords collides(int x, int y, int r,boolean isPlayer) {
         if(y<=0)
         {
             return new GridCoords(-1,-1);
         }
+        if(isPlayer)
+            return getGridCoords(x, y, r,0,cols);
+        else
+            return getGridCoords(x, y, r,cols+1,Constants.MAX_COLS);
+    }
+
+    private GridCoords getGridCoords(int x, int y, int r,int startCol,int endCol) {
         for (int i = rows - 1; i >= 0; i--) {
-            for (int j = 0; j < cols; j++) {
+            for (int j = startCol; j < endCol; j++) {
                 if (grid[i][j].isInvisible()) {
                     continue;
                 }
@@ -193,9 +200,9 @@ public class GameModel {
      * @param color color of the player
      * @return true iff collides
      */
-    public boolean checkCollision(int x, int y, int width, int color) {
+    public boolean checkCollision(int x, int y, int width, int color,boolean isPlayer) {
 
-        GridCoords gridCoords = collides(x, y, width / 2);
+        GridCoords gridCoords = collides(x, y, width / 2,isPlayer);
 
         if (gridCoords == null) {
             return false;
