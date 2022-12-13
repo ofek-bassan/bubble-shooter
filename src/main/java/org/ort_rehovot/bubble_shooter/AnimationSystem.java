@@ -48,7 +48,6 @@ public class AnimationSystem extends Thread {
         boolean isPlayer;
 
         public void update() {
-            System.out.println("("+x+","+y+")");
             if (x + Constants.BALL_WIDTH / 2 > borderEnd) {
                 dirx *= -1;
             }
@@ -67,7 +66,6 @@ public class AnimationSystem extends Thread {
                 y = ((int) (m * ((x + 3) - x) + y)) * diry;
                 x += (3 * dirx);
             }
-            System.out.println("("+x+","+y+")");
         }
 
         public boolean checkThrow(GameModel gameModel) {
@@ -90,7 +88,7 @@ public class AnimationSystem extends Thread {
                 endPlayerShoot();
             else
                 endRivalShoot();
-            setInternalState(State.DONE);
+            setInternalState(State.IDLE);
             endOrBoom();
             gameModel.setNewPlayerOrRival(isPlayer);
             return;
@@ -114,7 +112,7 @@ public class AnimationSystem extends Thread {
         while (myState!=State.DONE) {
             myState = getInternalStateState();
 //            if (myState != State.IDLE) {
-//                System.out.println(myState);
+//                System.out.println("state ingame:"+myState);
 //            }
             switch (myState) {
                 case PLAYER_MOVING -> {
@@ -139,14 +137,15 @@ public class AnimationSystem extends Thread {
                     } else if (rival_collide) {
                         endRivalShoot();
                         endPlayerShoot();
-                        setInternalState(State.DONE);
+                        setInternalState(State.IDLE);
+                        endOrBoom();
                         gameModel.setNewPlayerOrRival(true);
                         gameModel.setNewPlayerOrRival(false);
                     }
                     if(!player_collide)
-                        playerState.update();
+                        doMove(playerState, true);
                     if(!rival_collide)
-                        rivalState.update();
+                        doMove(rivalState, false);
                 }
             }
 
@@ -157,7 +156,6 @@ public class AnimationSystem extends Thread {
             }
             refresh();
         }
-
     }
 
     private State getInternalStateState() {
@@ -217,7 +215,10 @@ public class AnimationSystem extends Thread {
 
     public void playerShoot(double m, int BorderEND,int borderStart, int h, int color) {
         synchronized (this) {
+            System.out.println(internalState);
+            refresh();
             if (playerState == null) {
+                System.out.println("new player");
                 playerState = new MovementState(Constants.PLAYER_X,
                         Constants.PLAYER_Y, m < 0 ? m : m * -1, BorderEND,borderStart, h, m > 0 ? -1 : 1, 1, color,true);
                 if (internalState == State.IDLE)
@@ -225,19 +226,29 @@ public class AnimationSystem extends Thread {
                 else
                     internalState = State.BOTH_MOVING;
             }
+            else
+            {
+                System.out.println("error");
+            }
         }
     }
 
     public void rivalShoot(double m, int BorderEND,int borderStart, int h, int color) {
         synchronized (this) {
+            System.out.println("state:"+internalState);
             refresh();
             if (rivalState == null) {
+                System.out.println("new rival");
                 rivalState = new MovementState(Constants.RIVAL_X,
                         Constants.PLAYER_Y, m < 0 ? m : -m, BorderEND,borderStart, h, m > 0 ? -1 : 1, 1, color,false);
                 if (internalState == State.IDLE)
                     internalState = State.RIVAL_MOVING;
                 else
                     internalState = State.BOTH_MOVING;
+            }
+            else
+            {
+                System.out.println("error");
             }
         }
     }

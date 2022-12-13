@@ -138,6 +138,8 @@ public class GamePanel extends JPanel {
 		}
 
 
+
+
         Constants.fc.ShowGame();
     }
 
