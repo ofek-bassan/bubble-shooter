@@ -1,5 +1,6 @@
 package org.ort_rehovot.bubble_shooter;
 
+import lombok.Getter;
 import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 import org.ort_rehovot.bubble_shooter.ipc.Server;
 
@@ -7,6 +8,7 @@ import java.net.SocketException;
 
 
 public class GameController {
+    @Getter
     private final GameModel gameModel;
     private final AnimationSystem animationSystem;
     private final Server server;
@@ -35,6 +37,7 @@ public class GameController {
         {
             Ball player = gameModel.getPlayer();
             double m = ((double) (y) - player.getY()) / (x - player.getX());
+            System.out.println("m:"+m);
             animationSystem.playerShoot(m,Constants.BORDER_WIDTH,0,gameModel.getHeight(),player.getColor());
         }
         else
@@ -43,6 +46,7 @@ public class GameController {
             int py = rivalPlayer.getY();
             int px = rivalPlayer.getX();
             double m = ((double) (y) - py) / (x - px);
+            System.out.println("m:"+m);
             animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.BORDER_WIDTH+200,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
         }
 

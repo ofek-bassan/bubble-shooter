@@ -18,13 +18,13 @@ public class Constants {
     public static final int PLAYER_Y = FIELD_SIZE_Y - 2 * SPRITE_R;
     //public static final int RIVAL_X = FIELD_SIZE_X / 2+SPRITE_R*10; 1080p
     public static final int RIVAL_X = FIELD_SIZE_X / 2+SPRITE_R*8;
-    public static final int BALL_WIDTH = 54; // -----54 for laptop 56 to school || 64 for 1080p-----
+    public static final int BALL_WIDTH = 56; // -----54 for laptop 56 to school || 64 for 1080p-----
     public static final int MAX_ROWS = 11;
     public static final int MAX_COLS = 28;
     public static final int MAX_BAD_THROWS = 3;
     public static final int START_NUM_ROWS = 3;
     public static final int START_NUM_COLS = 14;
-    public static final String IP = "192.168.1.61";
+    public static final String IP = "192.168.0.61";
     public static long SEED;
     public static final  FrameController fc;
 

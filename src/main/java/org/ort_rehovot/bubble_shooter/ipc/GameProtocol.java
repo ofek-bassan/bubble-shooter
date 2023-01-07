@@ -16,9 +16,8 @@ public class GameProtocol implements Protocol {
             int x = Integer.parseInt(toks[1]);
             int y = Integer.parseInt(toks[2]);
 
-            int xscaled = (int)(x * (float)Constants.FIELD_SIZE_X / (float)GlobalState.getInstance().getRivalW());
-            int yscaled = (int)(y * (float)Constants.FIELD_SIZE_Y / (float)GlobalState.getInstance().getRivalH());
-
+            int xscaled = (int) (x * (float) Constants.FIELD_SIZE_X / (float) GlobalState.getInstance().getRivalW());
+            int yscaled = (int) (y * (float) Constants.FIELD_SIZE_Y / (float) GlobalState.getInstance().getRivalH());
 
 
             GlobalState.getInstance().setRivalX(xscaled);
@@ -32,7 +31,14 @@ public class GameProtocol implements Protocol {
             int rivalX = GlobalState.getInstance().getRivalX();
             int rivalY = GlobalState.getInstance().getRivalY();
 
-            GlobalState.getInstance().getGp().getGameController().shoot(rivalX,rivalY,false);
+            GlobalState.getInstance().getGp().getGameController().shoot(rivalX, rivalY, false);
+
+        }
+
+        if (toks[0].equals("RD")) {
+            int newRow = Integer.parseInt(toks[1]);
+            System.out.println("wtf");
+            GlobalState.getInstance().getGp().getGameController().getGameModel().addRow(newRow, false);
 
         }
 
@@ -40,7 +46,7 @@ public class GameProtocol implements Protocol {
     }
 
 
-    public static void sendMove(int x , int y) {
+    public static void sendMove(int x, int y) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = String.format("M %d %d", x, y);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
@@ -54,6 +60,17 @@ public class GameProtocol implements Protocol {
     public static void sendShoot() {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = "S";
+            try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
+                client.send(msg);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void sendRowDown(int newRow) {
+        if (!GlobalState.getInstance().isSinglePlayer()) {
+            String msg = String.format("RD %d", newRow);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {

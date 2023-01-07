@@ -18,7 +18,7 @@ public class NetworkClient implements Closeable {
         this.port = port;
     }
 
-    public NetworkClient(InetSocketAddress addr) throws SocketException, UnknownHostException {
+    public NetworkClient(InetSocketAddress addr) throws SocketException {
         socket = new DatagramSocket();
         this.address = addr.getAddress();
         this.port = addr.getPort();

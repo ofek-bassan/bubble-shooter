@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
+import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,13 +57,13 @@ public class GameModel {
 
     private void initRandomBalls() {
         for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols-1; c++) {
+            for (int c = 0; c < cols - 1; c++) {
                 grid[r][c] = Ball.create(r, c);
             }
         }
         for (int r = 0; r < rows; r++) {
-            for (int c = cols+1; c <Constants.MAX_COLS ; c++) {
-                grid[r][c] = Ball.create(r, c, this,grid[r][c-cols-1].getColor());
+            for (int c = cols + 1; c < Constants.MAX_COLS; c++) {
+                grid[r][c] = Ball.create(r, c, this, grid[r][c - cols - 1].getColor());
             }
         }
     }
@@ -121,18 +122,17 @@ public class GameModel {
      * @param r radius
      * @return the collided ball
      */
-    private GridCoords collides(int x, int y, int r,boolean isPlayer) {
-        if(y<=0)
-        {
-            return new GridCoords(-1,-1);
+    private GridCoords collides(int x, int y, int r, boolean isPlayer) {
+        if (y <= 0) {
+            return new GridCoords(-1, -1);
         }
-        if(isPlayer)
-            return getGridCoords(x, y, r,0,cols);
+        if (isPlayer)
+            return getGridCoords(x, y, r, 0, cols);
         else
-            return getGridCoords(x, y, r,cols+1,Constants.MAX_COLS);
+            return getGridCoords(x, y, r, cols + 1, Constants.MAX_COLS);
     }
 
-    private GridCoords getGridCoords(int x, int y, int r,int startCol,int endCol) {
+    private GridCoords getGridCoords(int x, int y, int r, int startCol, int endCol) {
         for (int i = rows - 1; i >= 0; i--) {
             for (int j = startCol; j < endCol; j++) {
                 if (grid[i][j].isInvisible()) {
@@ -200,9 +200,9 @@ public class GameModel {
      * @param color color of the player
      * @return true iff collides
      */
-    public boolean checkCollision(int x, int y, int width, int color,boolean isPlayer) {
+    public boolean checkCollision(int x, int y, int width, int color, boolean isPlayer) {
 
-        GridCoords gridCoords = collides(x, y, width / 2,isPlayer);
+        GridCoords gridCoords = collides(x, y, width / 2, isPlayer);
 
         if (gridCoords == null) {
             return false;
@@ -215,13 +215,11 @@ public class GameModel {
         int newColumn = column;
 
         int sector = -1;
-        if(row == -1 && column == -1)
-        {
-            System.out.printf("Grid = (%d, %d)\n",(x-50)/Constants.BALL_WIDTH,0);
-            newColumn = (x-50)/Constants.BALL_WIDTH;
+        if (row == -1 && column == -1) {
+            System.out.printf("Grid = (%d, %d)\n", (x - 50) / Constants.BALL_WIDTH, 0);
+            newColumn = (x - 50) / Constants.BALL_WIDTH;
             newRow = 0;
-        }
-        else {
+        } else {
             int otherX = grid[row][column].getX();
             int otherY = grid[row][column].getY();
             sector = findSector(otherX, otherY, x, y);
@@ -236,7 +234,7 @@ public class GameModel {
         if (newRow % 2 == 0) {
             switch (sector) {
                 case 2:
-                    newRow-=2;
+                    newRow -= 2;
                     newColumn++;
                     break;
                 case 1:
@@ -260,7 +258,7 @@ public class GameModel {
         } else {
             switch (sector) {
                 case 2:
-                    newRow-=2;
+                    newRow -= 2;
                     newColumn++;
                     break;
                 case 1:
@@ -285,7 +283,8 @@ public class GameModel {
             switch (sector) {
                 case 5 -> {
                     newRow--;
-                    newColumn--;}
+                    newColumn--;
+                }
                 case 8, 7, 6, -1 -> newColumn++;
                 default -> {
                 }
@@ -312,10 +311,12 @@ public class GameModel {
             GlobalState.getInstance().updateScore(collisions.size());
             explode(collisions);
             exploded = true;
-            throwsCounter = 0;
+            if(isPlayer)
+                throwsCounter = 0;
         } else {
             SoundSystem.getInstance().playBoom();
-            throwsCounter++;
+            if(isPlayer)
+                throwsCounter++;
         }
         //System.out.printf("Throws = %d\n", throwsCounter);
 
@@ -336,7 +337,7 @@ public class GameModel {
         }
 
 
-        moveRowsDown(newRow,column < cols + 1);
+        moveRowsDown(newRow);
         singletons = getClusters();
 
         if (!singletons.isEmpty()) {
@@ -358,10 +359,11 @@ public class GameModel {
         return true;
     }
 
-    private void moveRowsDown(int newRow,boolean isPlayer) {
+    private void moveRowsDown(int newRow) {
         if (throwsCounter >= Constants.MAX_BAD_THROWS) {
-            addRow(newRow,isPlayer);
             throwsCounter = 0;
+            GameProtocol.sendRowDown(newRow);
+            addRow(newRow, true);
         }
     }
 
@@ -388,8 +390,19 @@ public class GameModel {
         }
     }
 
-    private void addRow(int lastRow,boolean isPlayer) {
+    public void addRow(int lastRow, boolean isPlayer) {
         lastRow++;
+        int startcol,endcol;
+        if(isPlayer)
+        {
+            startcol =0;
+            endcol = cols-1;
+        }
+        else
+        {
+            startcol = cols+1;
+            endcol = Constants.MAX_COLS;
+        }
         if (lastRow >= Constants.MAX_ROWS || lastRow >= grid[lastRow].length) {
             setGameOver(true);
             updateRows();
@@ -397,12 +410,12 @@ public class GameModel {
             return;
         }
         for (int r = lastRow; r >= 1; r--) {
-            for (int c = 0; c < cols-1; c++) {
+            for (int c = startcol; c < endcol; c++) {
                 Ball ball = grid[r - 1][c];
                 grid[r][c] = Ball.create(r, c, this, ball.getColor());
             }
         }
-        for (int c = 0; c < cols-1; c++) {
+        for (int c = startcol; c < endcol; c++) {
             grid[0][c] = Ball.create(0, c);
             grid[0][c].reinitCoords();
         }
@@ -440,7 +453,7 @@ public class GameModel {
         }
 
         for (int r = 0; r < grid.length; r++) {
-            for (int c = 0; c < Constants.MAX_COLS ; c++) {
+            for (int c = 0; c < Constants.MAX_COLS; c++) {
                 if (grid[r][c].isInvisible()) {
                     continue;
                 }
@@ -551,7 +564,7 @@ public class GameModel {
     }
 
     public void setNewPlayerOrRival(boolean isPlayer) {
-        if(isPlayer)
+        if (isPlayer)
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, true);
         else
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y, true);
