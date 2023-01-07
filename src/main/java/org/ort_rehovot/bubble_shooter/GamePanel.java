@@ -141,7 +141,7 @@ public class GamePanel extends JPanel {
 		}
 
         Constants.fc.ShowGame();
-        GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
+        //GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
     }
 
 
