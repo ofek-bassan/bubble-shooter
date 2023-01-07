@@ -578,9 +578,10 @@ public class GameModel {
 
     public void setRivalAndPlayerColor(int player_color,int rival_color)
     {
-        //rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
-        //rivalPlayer.setColor(color);
-        //System.out.println(color);
+        player = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
+        rivalPlayer.setColor(rival_color);
+        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
+        rivalPlayer.setColor(player_color);
     }
 
     public Ball[][] getGrid() {
