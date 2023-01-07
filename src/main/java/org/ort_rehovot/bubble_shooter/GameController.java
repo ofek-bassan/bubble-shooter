@@ -47,7 +47,7 @@ public class GameController {
             int px = rivalPlayer.getX();
             double m = ((double) (y) - py) / (x - px);
             System.out.println("m:"+m);
-            animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.BORDER_WIDTH+200,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
+            animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.RIVAL_BORDER_WIDTH,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
         }
 
         /*Ball player = gameModel.getPlayer();

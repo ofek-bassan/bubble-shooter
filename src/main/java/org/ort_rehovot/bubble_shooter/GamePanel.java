@@ -85,8 +85,10 @@ public class GamePanel extends JPanel {
         //setPauseVisible(GlobalState.getInstance().isPaused());
         super.paintComponent(g);
         g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
-        g.drawImage(ResourceLoader.getInstance().getBorderImage(), Constants.BORDER_X, Constants.BORDER_Y
-                , getWidth(), getHeight() * 2, null);
+        Image image = ResourceLoader.getInstance().getBorderImage();
+        Image img= image.getScaledInstance(28,28,Image.SCALE_DEFAULT);
+        g.drawImage(image, Constants.BORDER_X, Constants.BORDER_Y
+                , Constants.BORDER_WIDTH_DRAW, getHeight() * 2, null);
         gameModel.getPlayer().draw(g);
         gameModel.getRivalPlayer().draw(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -132,10 +134,13 @@ public class GamePanel extends JPanel {
     }
 
     public static void main(String[] args) throws IOException {
-		if (args.length == 1) {
+		/*if (args.length == 1) {
 			int port = Integer.parseInt(args[0]);
 			waitForFriend(port);
 		}
+
+		 */
+
 
 
 
