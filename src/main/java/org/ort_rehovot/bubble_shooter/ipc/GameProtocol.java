@@ -12,6 +12,11 @@ public class GameProtocol implements Protocol {
 
         String[] toks = data.split(" ");
 
+        if (toks[0].equals("NC")) {
+            int color = Integer.parseInt(toks[1]);
+            GlobalState.getInstance().getGp().getGameController().getGameModel().setRivalColor(color);
+        }
+        
         if (toks[0].equals("M")) {
             int x = Integer.parseInt(toks[1]);
             int y = Integer.parseInt(toks[2]);
@@ -38,10 +43,7 @@ public class GameProtocol implements Protocol {
             GlobalState.getInstance().getGp().getGameController().getGameModel().addRow(newRow, false);
         }
 
-        if (toks[0].equals("NC")) {
-            int color = Integer.parseInt(toks[1]);
-            GlobalState.getInstance().getGp().getGameController().getGameModel().setRivalColor(color);
-        }
+
 
         return List.of();
     }

@@ -40,7 +40,6 @@ public class Ball{
 	@Getter
 	@Setter
 	private int explosion = -1;
-	private boolean isThrowable;
 
 	private double m;
 	private Image image;
@@ -61,9 +60,9 @@ public class Ball{
 	public static Ball create(int r, int c) {
 		Ball ret;
 		if (r % 2 == 0) {
-			ret = new Ball(c * Constants.BALL_WIDTH + 50, r * Constants.BALL_WIDTH + 30,false);
+			ret = new Ball(c * Constants.BALL_WIDTH + 50, r * Constants.BALL_WIDTH + 30);
 		} else {
-			ret = new Ball(c * Constants.BALL_WIDTH + 25, r * Constants.BALL_WIDTH + 30,false);
+			ret = new Ball(c * Constants.BALL_WIDTH + 25, r * Constants.BALL_WIDTH + 30);
 		}
 		ret.setRow(r);
 		ret.setColumn(c);
@@ -83,10 +82,9 @@ public class Ball{
 	 * creates a ball with specific color
 	 * @param r row
 	 * @param c col
-	 * @param gameModel panel
 	 * @return created ball
 	 */
-	public static Ball create(int r, int c, GameModel gameModel, int color) {
+	public static Ball create(int r, int c, int color) {
 		Ball ret = create(r,c);
 		ret.color = color;
 		if (color >= 0) {
@@ -104,15 +102,24 @@ public class Ball{
 	 * constructor
 	 * @param x x position
 	 * @param y y position
-	 * @param throwable if the ball is throwable
 	 */
-	public Ball(int x, int y,boolean throwable) {
+	public Ball(int x, int y) {
 
 		this.x = x;
 		this.y = y;
 		this.width = Constants.BALL_WIDTH;
 		this.color = rnd.nextInt(6) + 1;
-		isThrowable = throwable;
+
+		image = ResourceLoader.getInstance().getBallImage(color);
+		activated = false;
+	}
+
+	public Ball(int x, int y,int color) {
+
+		this.x = x;
+		this.y = y;
+		this.width = Constants.BALL_WIDTH;
+		this.color = color;
 
 		image = ResourceLoader.getInstance().getBallImage(color);
 		activated = false;

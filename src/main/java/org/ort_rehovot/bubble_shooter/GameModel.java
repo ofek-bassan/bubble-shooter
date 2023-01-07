@@ -63,7 +63,7 @@ public class GameModel {
         }
         for (int r = 0; r < rows; r++) {
             for (int c = cols + 1; c < Constants.MAX_COLS; c++) {
-                grid[r][c] = Ball.create(r, c, this, grid[r][c - cols - 1].getColor());
+                grid[r][c] = Ball.create(r, c, grid[r][c - cols - 1].getColor());
             }
         }
     }
@@ -85,7 +85,7 @@ public class GameModel {
         grid = new Ball[Constants.MAX_ROWS + 1][Constants.MAX_COLS];
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = new Ball(0, 0, false);
+                grid[i][j] = new Ball(0, 0);
                 grid[i][j].setInvisible();
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
@@ -292,7 +292,7 @@ public class GameModel {
 
         }
 
-        grid[newRow][newColumn] = Ball.create(newRow, newColumn, this, color);
+        grid[newRow][newColumn] = Ball.create(newRow, newColumn, color);
 
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
             setGameOver(true);
@@ -412,7 +412,7 @@ public class GameModel {
         for (int r = lastRow; r >= 1; r--) {
             for (int c = startcol; c < endcol; c++) {
                 Ball ball = grid[r - 1][c];
-                grid[r][c] = Ball.create(r, c, this, ball.getColor());
+                grid[r][c] = Ball.create(r, c, ball.getColor());
             }
         }
         for (int c = startcol; c < endcol; c++) {
@@ -566,15 +566,17 @@ public class GameModel {
     public void setNewPlayerOrRival(boolean isPlayer) {
         if (isPlayer)
         {
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, true);
+            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
             Constants.PLAYER_COLOR = player.getColor();
+            GameProtocol.sendInitColor(Constants.PLAYER_COLOR);
         }
         else
-            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y, true);
+            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
     }
 
     public void setRivalColor(int color)
     {
+        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y, color);
         rivalPlayer.setColor(color);
     }
 

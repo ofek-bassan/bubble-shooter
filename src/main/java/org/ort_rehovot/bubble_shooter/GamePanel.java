@@ -140,11 +140,6 @@ public class GamePanel extends JPanel {
 			waitForFriend(port);
 		}
 
-
-
-
-
-        GameProtocol.sendInitColor(Constants.PLAYER_COLOR);
         Constants.fc.ShowGame();
     }
 
