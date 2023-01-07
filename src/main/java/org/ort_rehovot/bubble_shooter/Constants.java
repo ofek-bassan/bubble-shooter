@@ -29,7 +29,7 @@ public class Constants {
     public static final int BORDER_X = 890; // -----719 for laptop or school || 890 for 1080p-----
     public static final int BORDER_WIDTH_DRAW = 130;// -----95 for laptop or school || 130 for 1080p-----
     public static final int BORDER_WIDTH = 920; // -----720 for laptop or school || 920 for 1080p-----
-    public static final int RIVAL_BORDER_WIDTH = 970; // -----1120 for laptop or school || 920 for 1080p-----
+    public static final int RIVAL_BORDER_WIDTH = 1010; // -----820 for laptop or school || 1010 for 1080p-----
     public static final int RIVAL_X = FIELD_SIZE_X / 2+SPRITE_R*10; // ------ 8 for laptop || 10 for 1080p-----
     public static final int BALL_WIDTH = 68; // -----54 for laptop 56 to school || 68 for 1080p-----
     static {

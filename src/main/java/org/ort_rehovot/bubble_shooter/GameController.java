@@ -31,21 +31,15 @@ public class GameController {
      * @param x x position
      * @param y y position
      */
-    public void shoot(int x, int y,boolean isPlayer) {
+    public void shoot(double m,boolean isPlayer) {
 
         if(isPlayer)
         {
-            Ball player = gameModel.getPlayer();
-            double m = ((double) (y) - player.getY()) / (x - player.getX());
             System.out.println("m:"+m);
-            animationSystem.playerShoot(m,Constants.BORDER_WIDTH,0,gameModel.getHeight(),player.getColor());
+            animationSystem.playerShoot(m,Constants.BORDER_WIDTH,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
         }
         else
         {
-            Ball rivalPlayer = gameModel.getPlayer();
-            int py = rivalPlayer.getY();
-            int px = rivalPlayer.getX();
-            double m = ((double) (y) - py) / (x - px);
             System.out.println("m:"+m);
             animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.RIVAL_BORDER_WIDTH,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
         }

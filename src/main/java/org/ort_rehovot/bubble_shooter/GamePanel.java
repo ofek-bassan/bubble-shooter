@@ -59,8 +59,9 @@ public class GamePanel extends JPanel {
                     if (e.getButton() == 1) {
                         int x = e.getX();
                         int y = e.getY();
-                        gameController.shoot(x, y,true);
-                        GameProtocol.sendShoot();
+                        double m = ((double) (y) - gameModel.getPlayer().getY()) / (x - gameModel.getPlayer().getX());
+                        GameProtocol.sendShoot(m);
+                        gameController.shoot(m,true);
                     } else if (e.getButton() == 3) {
                         gameController.changeColor();
                     } else if (e.getButton() == 2) {
@@ -134,12 +135,11 @@ public class GamePanel extends JPanel {
     }
 
     public static void main(String[] args) throws IOException {
-		/*if (args.length == 1) {
+		if (args.length == 1) {
 			int port = Integer.parseInt(args[0]);
 			waitForFriend(port);
 		}
 
-		 */
 
 
 

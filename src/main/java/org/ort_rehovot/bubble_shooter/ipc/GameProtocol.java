@@ -28,10 +28,8 @@ public class GameProtocol implements Protocol {
         }
 
         if (toks[0].equals("S")) {
-            int rivalX = GlobalState.getInstance().getRivalX();
-            int rivalY = GlobalState.getInstance().getRivalY();
-
-            GlobalState.getInstance().getGp().getGameController().shoot(rivalX, rivalY, false);
+            double m = Double.parseDouble(toks[1]);
+            GlobalState.getInstance().getGp().getGameController().shoot(m, false);
 
         }
 
@@ -57,9 +55,9 @@ public class GameProtocol implements Protocol {
         }
     }
 
-    public static void sendShoot() {
+    public static void sendShoot(double m) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
-            String msg = "S";
+            String msg = String.format("S %f", m);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {
