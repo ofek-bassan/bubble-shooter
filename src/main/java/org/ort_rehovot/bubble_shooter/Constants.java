@@ -15,6 +15,7 @@ public class Constants {
     public static final int MAX_BAD_THROWS = 3;
     public static final int START_NUM_ROWS = 3;
     public static final int START_NUM_COLS = 14;
+    public static int PLAYER_COLOR;
 
     public static final String IP = "192.168.1.61";    //  server ip
     public static final int DEFAULT_DISCOVERY_PORT = 4445; // discovery server port

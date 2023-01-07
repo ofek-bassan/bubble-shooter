@@ -567,7 +567,7 @@ public class GameModel {
         if (isPlayer)
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, true);
-            GameProtocol.sendInitColor(player.getColor());
+            Constants.PLAYER_COLOR = player.getColor();
         }
         else
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y, true);
