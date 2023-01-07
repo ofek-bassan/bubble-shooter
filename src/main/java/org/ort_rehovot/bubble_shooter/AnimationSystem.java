@@ -199,7 +199,6 @@ public class AnimationSystem extends Thread {
         activeObject = new ActiveObject();
         internalState = State.IDLE;
         gameModel.getView().repaint();
-        GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
     }
 
     private void endPlayerShoot() {

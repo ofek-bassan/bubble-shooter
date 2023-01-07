@@ -578,8 +578,9 @@ public class GameModel {
 
     public void setRivalAndPlayerColor(int player_color,int rival_color)
     {
-        player = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
-        rivalPlayer.setColor(rival_color);
+        System.out.println("rival color:"+rival_color+" player_color:"+player_color);
+        player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
+        player.setColor(rival_color);
         rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
         rivalPlayer.setColor(player_color);
     }
