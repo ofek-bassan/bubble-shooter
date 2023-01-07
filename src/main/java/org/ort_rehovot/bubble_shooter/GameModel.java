@@ -576,7 +576,7 @@ public class GameModel {
         }
     }
 
-    public void setRivalColor(int color)
+    public void setRivalAndPlayerColor(int player_color,int rival_color)
     {
         //rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
         //rivalPlayer.setColor(color);

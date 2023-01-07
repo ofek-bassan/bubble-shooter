@@ -13,8 +13,9 @@ public class GameProtocol implements Protocol {
         String[] toks = data.split(" ");
 
         if (toks[0].equals("NC")) {
-            int color = Integer.parseInt(toks[1]);
-            GlobalState.getInstance().getGp().getGameController().getGameModel().setRivalColor(color);
+            int player_color = Integer.parseInt(toks[1]);
+            int rival_color = Integer.parseInt(toks[2]);
+            GlobalState.getInstance().getGp().getGameController().getGameModel().setRivalAndPlayerColor(player_color,rival_color);
         }
         
         if (toks[0].equals("M")) {
