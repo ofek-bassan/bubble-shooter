@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
+import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 
 import java.io.IOException;
 import java.util.List;
@@ -198,6 +199,7 @@ public class AnimationSystem extends Thread {
         activeObject = new ActiveObject();
         internalState = State.IDLE;
         gameModel.getView().repaint();
+        GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
     }
 
     private void endPlayerShoot() {

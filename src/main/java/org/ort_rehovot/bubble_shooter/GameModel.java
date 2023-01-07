@@ -568,16 +568,19 @@ public class GameModel {
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
             Constants.PLAYER_COLOR = player.getColor();
-            GameProtocol.sendInitColor(Constants.PLAYER_COLOR);
         }
         else
+        {
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
+            Constants.RIVAL_COLOR = rivalPlayer.getColor();
+        }
     }
 
     public void setRivalColor(int color)
     {
-        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y, color);
-        rivalPlayer.setColor(color);
+        //rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
+        //rivalPlayer.setColor(color);
+        //System.out.println(color);
     }
 
     public Ball[][] getGrid() {
