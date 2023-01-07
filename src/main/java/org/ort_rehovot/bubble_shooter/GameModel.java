@@ -565,9 +565,17 @@ public class GameModel {
 
     public void setNewPlayerOrRival(boolean isPlayer) {
         if (isPlayer)
+        {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, true);
+            GameProtocol.sendInitColor(player.getColor());
+        }
         else
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y, true);
+    }
+
+    public void setRivalColor(int color)
+    {
+        rivalPlayer.setColor(color);
     }
 
     public Ball[][] getGrid() {
