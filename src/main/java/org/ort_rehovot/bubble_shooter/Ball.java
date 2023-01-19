@@ -113,7 +113,11 @@ public class Ball{
 		image = ResourceLoader.getInstance().getBallImage(color);
 		activated = false;
 	}
-
+	/***
+	 * constructor
+	 * @param x x position
+	 * @param y y position
+	 */
 	public Ball(int x, int y,int color) {
 
 		this.x = x;
@@ -170,5 +174,10 @@ public class Ball{
 	 */
 	public boolean isValid() {
 		return color != -1;
+	}
+
+	public void refreshColor()
+	{
+		image = ResourceLoader.getInstance().getBallImage(color);
 	}
 }

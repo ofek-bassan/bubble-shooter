@@ -86,7 +86,6 @@ public class GameProtocol implements Protocol {
 
     public static void sendInitColor(int player_color,int rival_color) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
-            System.out.println(123456);
             String msg = String.format("NC %d %d", player_color,rival_color);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);

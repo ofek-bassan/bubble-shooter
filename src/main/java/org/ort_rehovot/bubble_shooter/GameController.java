@@ -40,7 +40,7 @@ public class GameController {
         }
         else
         {
-            System.out.println("m:"+m);
+            System.out.println("Constants.FIELD_SIZE_X:"+Constants.FIELD_SIZE_X);
             animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.RIVAL_BORDER_WIDTH,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
         }
 

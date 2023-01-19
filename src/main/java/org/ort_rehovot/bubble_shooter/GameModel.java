@@ -580,10 +580,10 @@ public class GameModel {
     public void setRivalAndPlayerColor(int player_color,int rival_color)
     {
         System.out.println("-----------------rival color:"+rival_color+" player_color:"+player_color+"-----------------");
-        player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
-        player.setColor(rival_color);
-        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
-        rivalPlayer.setColor(player_color);
+        player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,rival_color);
+        player.refreshColor();
+        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,player_color);
+        rivalPlayer.refreshColor();
         System.out.println("-----------------rival color:"+rivalPlayer.getColor()+" player_color:"+player.getColor()+"-----------------");
         GlobalState.getInstance().getGp().repaint();
     }

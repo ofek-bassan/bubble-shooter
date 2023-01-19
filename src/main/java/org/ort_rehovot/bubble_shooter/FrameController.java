@@ -1,5 +1,6 @@
 package org.ort_rehovot.bubble_shooter;
 
+import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 import org.ort_rehovot.bubble_shooter.state.Events;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class FrameController {
     public void ShowGame() throws IOException {
         //gf.setVisible(false);
         gf = new GameFrame(Events.START_GAME);
+        GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
     }
 
     public void Lose() throws IOException {
