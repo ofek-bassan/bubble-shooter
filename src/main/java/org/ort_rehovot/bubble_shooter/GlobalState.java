@@ -21,6 +21,9 @@ public class GlobalState {
     private int score;
     @Setter
     @Getter
+    private int rivalThrows;
+    @Setter
+    @Getter
     private GamePanel gp;
     @Getter
     private boolean singlePlayer;

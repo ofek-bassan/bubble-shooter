@@ -313,10 +313,14 @@ public class GameModel {
             exploded = true;
             if(isPlayer)
                 throwsCounter = 0;
+            else
+                GlobalState.getInstance().setRivalThrows(0);
         } else {
             SoundSystem.getInstance().playBoom();
             if(isPlayer)
                 throwsCounter++;
+            else
+                GlobalState.getInstance().setRivalThrows(GlobalState.getInstance().getRivalThrows());
         }
         //System.out.printf("Throws = %d\n", throwsCounter);
 
@@ -362,8 +366,12 @@ public class GameModel {
     private void moveRowsDown(int newRow) {
         if (throwsCounter >= Constants.MAX_BAD_THROWS) {
             throwsCounter = 0;
-            GameProtocol.sendRowDown(newRow);
             addRow(newRow, true);
+            //GameProtocol.sendRowDown(newRow);
+        }
+        if(GlobalState.getInstance().getRivalThrows() >= Constants.MAX_BAD_THROWS){
+            GlobalState.getInstance().setRivalThrows(0);
+            addRow(newRow, false);
         }
     }
 
