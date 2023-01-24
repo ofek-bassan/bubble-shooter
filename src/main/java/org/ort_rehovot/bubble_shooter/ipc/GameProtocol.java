@@ -11,13 +11,6 @@ public class GameProtocol implements Protocol {
     public List<Reply> handleCommand(InetAddress address, String data) {
 
         String[] toks = data.split(" ");
-        System.out.println(toks[0]);
-        if (toks[0].equals("NC")) {
-            int player_color = Integer.parseInt(toks[1]);
-            int rival_color = Integer.parseInt(toks[2]);
-            System.out.println("rival color:"+rival_color+" player_color:"+player_color);
-            GlobalState.getInstance().getGp().getGameController().getGameModel().setRivalAndPlayerColor(player_color,rival_color);
-        }
         
         if (toks[0].equals("M")) {
             int x = Integer.parseInt(toks[1]);
@@ -76,17 +69,6 @@ public class GameProtocol implements Protocol {
     public static void sendRowDown(int newRow) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = String.format("RD %d", newRow);
-            try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
-                client.send(msg);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public static void sendInitColor(int player_color,int rival_color) {
-        if (!GlobalState.getInstance().isSinglePlayer()) {
-            String msg = String.format("NC %d %d", player_color,rival_color);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {

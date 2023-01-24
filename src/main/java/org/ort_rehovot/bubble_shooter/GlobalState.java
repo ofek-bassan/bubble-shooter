@@ -58,6 +58,7 @@ public class GlobalState {
         rivalY = 0;
         rivalH = h;
         rivalW = w;
+        rivalThrows = 0;
         System.out.println("rivalIP:"+rivalIP);
         System.out.println("rivalPort:"+rivalPort);
         this.rivalAddress = new InetSocketAddress(rivalIP, rivalPort);

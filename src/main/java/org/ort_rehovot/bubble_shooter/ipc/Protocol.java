@@ -15,6 +15,7 @@ public interface Protocol {
         private int port;
         private int w;
         private int h;
+        private int color;
     }
 
     List<Reply> handleCommand(InetAddress address, String data);

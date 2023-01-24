@@ -11,10 +11,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
+import java.util.Random;
 
 
 public class GamePanel extends JPanel {
+    @Getter
     GameModel gameModel;
     @Getter
     GameController gameController;
@@ -119,17 +120,22 @@ public class GamePanel extends JPanel {
         int myServerPort = (int) (1000 + (65000 - 1000) * Math.random());
 
         try (NetworkClient client = new NetworkClient(port)) {
-            System.out.println("Sending discovery of " + port);
-            client.send(CommandFormatter.hello(myServerPort, Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y));
+            Random rnd = new Random();
+            int playerColor = rnd.nextInt(6) + 1;
+            client.send(CommandFormatter.hello(myServerPort, Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y,playerColor));
             String receive = client.receive();
             System.out.println(receive);
             String[] toks = receive.split(" ");
             Constants.SEED = Long.parseLong(toks[3]);
             int rivalPort = Integer.parseInt(toks[1]);
-
             String rivalIp = toks[2];
             int w = Integer.parseInt(toks[4]);
             int h = Integer.parseInt(toks[5]);
+            int rivalColor = Integer.parseInt(toks[6]);
+            Constants.PLAYER_COLOR = playerColor;
+            Constants.RIVAL_COLOR = rivalColor;
+            System.out.println("player color->"+playerColor);
+            System.out.println("rival color->"+rivalColor);
             GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort, w, h);
         }
     }

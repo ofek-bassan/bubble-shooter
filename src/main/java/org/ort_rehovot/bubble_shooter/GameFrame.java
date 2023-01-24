@@ -31,6 +31,7 @@ public class GameFrame extends JFrame {
             case GAME_WIN, START_GAME -> {
                 GamePanel bbp = new GamePanel();
                 add(bbp);
+                GlobalState.getInstance().getGp().getGameModel().setRivalAndPlayerColor();
             }
             case GAME_OVER -> {
                 setBackground(Color.black);

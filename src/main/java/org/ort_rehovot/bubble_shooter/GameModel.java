@@ -320,7 +320,7 @@ public class GameModel {
             if(isPlayer)
                 throwsCounter++;
             else
-                GlobalState.getInstance().setRivalThrows(GlobalState.getInstance().getRivalThrows());
+                GlobalState.getInstance().setRivalThrows(GlobalState.getInstance().getRivalThrows()+1);
         }
         //System.out.printf("Throws = %d\n", throwsCounter);
 
@@ -575,25 +575,22 @@ public class GameModel {
         if (isPlayer)
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
-            Constants.PLAYER_COLOR = player.getColor();
         }
         else
         {
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
-            Constants.RIVAL_COLOR = rivalPlayer.getColor();
         }
-        System.out.println("Constants.RIVAL_COLOR:"+Constants.RIVAL_COLOR+" Constants.PLAYER_COLOR:"+Constants.PLAYER_COLOR);
     }
 
-    public void setRivalAndPlayerColor(int player_color,int rival_color)
+    public void setRivalAndPlayerColor()
     {
-        System.out.println("-----------------rival color:"+rival_color+" player_color:"+player_color+"-----------------");
-        player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,rival_color);
+        player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_COLOR);
         player.refreshColor();
-        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,player_color);
+        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_COLOR);
         rivalPlayer.refreshColor();
-        System.out.println("-----------------rival color:"+rivalPlayer.getColor()+" player_color:"+player.getColor()+"-----------------");
         GlobalState.getInstance().getGp().repaint();
+        System.out.println("Constants.RIVAL_COLOR:"+Constants.RIVAL_COLOR+" Constants.PLAYER_COLOR:"+Constants.PLAYER_COLOR);
+        System.out.println("player:"+player.getColor()+" rivalPlayer"+rivalPlayer.getColor());
     }
 
     public Ball[][] getGrid() {

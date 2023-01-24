@@ -14,7 +14,7 @@ public class FrameController {
     public void ShowGame() throws IOException {
         //gf.setVisible(false);
         gf = new GameFrame(Events.START_GAME);
-        GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
+        //GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
     }
 
     public void Lose() throws IOException {
