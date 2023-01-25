@@ -28,8 +28,6 @@ public class GameController {
 
     /***
      * shoots the ball if there is no any other ball thrown when the ball was thrown
-     * @param x x position
-     * @param y y position
      */
     public void shoot(double m,boolean isPlayer) {
 
@@ -41,18 +39,10 @@ public class GameController {
         else
         {
             System.out.println("Constants.FIELD_SIZE_X:"+Constants.FIELD_SIZE_X);
+            System.out.println("rival m:"+m);
             animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.RIVAL_BORDER_WIDTH,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
         }
 
-        /*Ball player = gameModel.getPlayer();
-        double m = ((double) (y) - player.getY()) / (x - player.getX());
-        System.out.println("slope player:"+m);
-        animationSystem.playerShoot(m,Constants.BORDER_WIDTH,0,gameModel.getHeight(),player.getColor());
-        m = ((double) (y) - player.getY()) / (x - player.getX());
-        //System.out.printf("x: %d, px: %d | y: %d, py: %d, m = %f\n", x, px, y, py, m);
-        System.out.printf("FIELD_SIZE_X: %d, BORDER_WIDTH: %d\n", Constants.FIELD_SIZE_X, Constants.BORDER_WIDTH+200);
-        animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.BORDER_WIDTH+200,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
-         */
     }
 
     public void changeColor() {

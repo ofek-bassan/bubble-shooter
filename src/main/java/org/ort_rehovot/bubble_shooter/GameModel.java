@@ -213,16 +213,35 @@ public class GameModel {
 
         int newRow = row + 1;
         int newColumn = column;
-
+        if(!isPlayer)
+            x-=1026;
         int sector = -1;
         if (row == -1 && column == -1) {
             System.out.printf("Grid = (%d, %d)\n", (x - 50) / Constants.BALL_WIDTH, 0);
             newColumn = (x - 50) / Constants.BALL_WIDTH;
+            if(!isPlayer)
+            {
+                System.out.println("colum"+newColumn);
+                newColumn+=cols+1;
+                System.out.println("colum"+newColumn);
+            }
             newRow = 0;
         } else {
-            int otherX = grid[row][column].getX();
+            int otherX;
             int otherY = grid[row][column].getY();
+            otherX = grid[row][column].getX()-1020;
+            /*if((column-cols-1==12||column-cols-1==10)&&row%2==0)
+            {
+                System.out.println("11111111111");
+                    otherX=grid[row][column].getX()-1088;
+            }
+             */
+            System.out.println("grid:"+grid[row][column].getX()+","+grid[row][column].getY());
+            System.out.println("xy:"+x+","+y);
+            System.out.println("other:"+otherX+","+otherY);
+            System.out.println("rowncol:"+row+","+(column-cols-1));
             sector = findSector(otherX, otherY, x, y);
+            newColumn = (int) Math.round((double) (otherX - 50) / Constants.BALL_WIDTH)+cols+1;
         }
 
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
@@ -277,7 +296,7 @@ public class GameModel {
                     printDebug();
             }
         }
-        //System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn, color);
+        System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn, color);
 
         if (!grid[newRow][newColumn].isInvisible()) {
             switch (sector) {
@@ -301,12 +320,11 @@ public class GameModel {
             return true;
         }
 
-        //printGrid(row, column, newRow, newColumn);
+        printGrid(row, column, newRow, newColumn);
 
         List<Ball> collisions = getCollisions(newRow, newColumn, color);
 
         boolean exploded = false;
-
         if (collisions.size() >= MIN_NUM_TO_EXPLODE) {
             GlobalState.getInstance().updateScore(collisions.size());
             explode(collisions);
@@ -358,6 +376,9 @@ public class GameModel {
         printGrid(row, column, newRow, newColumn);
 
          */
+        System.out.println("//////////////////////////////////////////////////////////////////");
+        printGrid(row, column, newRow, newColumn);
+        System.out.println("//////////////////////////////////////////////////////////////////");
 
         updateRows();
         return true;
@@ -399,6 +420,7 @@ public class GameModel {
     }
 
     public void addRow(int lastRow, boolean isPlayer) {
+        System.out.println("-------------------------------drop-------------------------------");
         lastRow++;
         int startcol,endcol;
         if(isPlayer)
