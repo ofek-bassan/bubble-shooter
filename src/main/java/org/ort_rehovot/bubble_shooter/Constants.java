@@ -18,7 +18,7 @@ public class Constants {
     public static int PLAYER_COLOR=1;
     public static int RIVAL_COLOR=1;
 
-    public static final String IP = "192.168.0.42";    //  server ip
+    public static final String IP = "192.168.1.61";    //  server ip
     public static final int DEFAULT_DISCOVERY_PORT = 4445; // discovery server port
     public static long SEED;    //game seed
     public static final  FrameController fc; // frame controller

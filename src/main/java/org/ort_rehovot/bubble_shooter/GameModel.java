@@ -217,31 +217,26 @@ public class GameModel {
             x-=1026;
         int sector = -1;
         if (row == -1 && column == -1) {
-            System.out.printf("Grid = (%d, %d)\n", (x - 50) / Constants.BALL_WIDTH, 0);
             newColumn = (x - 50) / Constants.BALL_WIDTH;
+            newRow = 0;
             if(!isPlayer)
             {
-                System.out.println("colum"+newColumn);
                 newColumn+=cols+1;
-                System.out.println("colum"+newColumn);
             }
-            newRow = 0;
         } else {
-            int otherX;
+            int otherX = grid[row][column].getX();
             int otherY = grid[row][column].getY();
-            otherX = grid[row][column].getX()-1020;
-            /*if((column-cols-1==12||column-cols-1==10)&&row%2==0)
+            if(!isPlayer)
             {
-                System.out.println("11111111111");
-                    otherX=grid[row][column].getX()-1088;
+                otherX = grid[row][column].getX()-1020;
+                newColumn = (int) Math.round((double) (otherX - 50) / Constants.BALL_WIDTH)+cols+1;
             }
-             */
             System.out.println("grid:"+grid[row][column].getX()+","+grid[row][column].getY());
             System.out.println("xy:"+x+","+y);
             System.out.println("other:"+otherX+","+otherY);
             System.out.println("rowncol:"+row+","+(column-cols-1));
+            System.out.println("newColumn:"+newColumn);
             sector = findSector(otherX, otherY, x, y);
-            newColumn = (int) Math.round((double) (otherX - 50) / Constants.BALL_WIDTH)+cols+1;
         }
 
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
