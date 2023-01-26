@@ -95,7 +95,6 @@ public class GameModel {
     }
 
     public void printDebug() {
-        /*
         for (int r = 0; r < grid.length; r++) {
             for (int c = 0; c < grid[r].length; c++) {
                 Ball ball = grid[r][c];
@@ -104,8 +103,6 @@ public class GameModel {
                 }
             }
         }
-
-         */
     }
 
     @AllArgsConstructor
@@ -142,7 +139,7 @@ public class GameModel {
                 int ballY = grid[i][j].getY();
                 int dx = ballX - x;
                 int dy = ballY - y;
-                double d = dx * dx + dy * dy;
+                int d = dx * dx + dy * dy;
                 if (d < 4 * r * r) {
                     return new GridCoords(i, j);
                 }
@@ -193,6 +190,27 @@ public class GameModel {
         return 1 + alpha / 45;
     }
 
+    private void printStatus(int x, int y, boolean isPlayer, int row, int column, int otherX, int otherY) {
+        if(!isPlayer)
+        {
+            otherX +=6;
+            System.out.println("RIVAL:\n");
+            System.out.println("throwing ball:"+"("+ x +","+ y +")");
+            System.out.println("grid cord:"+"("+grid[row][column].getX()+","+grid[row][column].getY()+")");
+            System.out.println("collided ball:"+"("+ otherX +","+ otherY +")");
+            System.out.println("row and col hit:"+"("+ row +","+(column -cols-1)+")");
+        }
+        else
+        {
+            int dis=Constants.RIVAL_X-Constants.PLAYER_X;
+            System.out.println("PLAYER:\n");
+            System.out.println("throwing ball:"+"("+(x +dis)+","+ y +")");
+            System.out.println("grid cord:"+"("+(grid[row][column].getX())+","+grid[row][column].getY()+")");
+            System.out.println("collided ball:"+"("+(otherX +dis)+","+ otherY +")");
+            System.out.println("row and col hit:"+"("+ row +","+ column +")");
+        }
+
+    }
     /**
      * @param x     x - center of the player
      * @param y     y - center of the player
@@ -201,111 +219,101 @@ public class GameModel {
      * @return true iff collides
      */
     public boolean checkCollision(int x, int y, int width, int color, boolean isPlayer) {
-
+        /*if(!isPlayer)
+            x-=1026;
+         */
         GridCoords gridCoords = collides(x, y, width / 2, isPlayer);
 
         if (gridCoords == null) {
             return false;
         }
-
+        System.out.println(x+","+y);
         int row = gridCoords.getRow();
         int column = gridCoords.getColumn();
 
         int newRow = row + 1;
         int newColumn = column;
-        if(!isPlayer)
-            x-=1026;
         int sector = -1;
-        if (row == -1 && column == -1) {
-            newColumn = (x - 50) / Constants.BALL_WIDTH;
-            newRow = 0;
-            if(!isPlayer)
-            {
-                newColumn+=cols+1;
+        if(isPlayer)
+        {
+            if (row == -1 && column == -1) {
+                newColumn = (x - 50) / Constants.BALL_WIDTH;
+                newRow = 0;
+            } else {
+                int otherX = grid[row][column].getX();
+                int otherY = grid[row][column].getY();
+                sector = findSector(otherX, otherY, x, y);
             }
-        } else {
-            int otherX = grid[row][column].getX();
-            int otherY = grid[row][column].getY();
-            if(!isPlayer)
-            {
-                otherX = grid[row][column].getX()-1020;
-                newColumn = (int) Math.round((double) (otherX - 50) / Constants.BALL_WIDTH)+cols+1;
-            }
-            System.out.println("grid:"+grid[row][column].getX()+","+grid[row][column].getY());
-            System.out.println("xy:"+x+","+y);
-            System.out.println("other:"+otherX+","+otherY);
-            System.out.println("rowncol:"+row+","+(column-cols-1));
-            System.out.println("newColumn:"+newColumn);
-            sector = findSector(otherX, otherY, x, y);
-        }
 
-        if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
-            setGameOver(true);
-            updateRows();
-            setNewPlayerOrRival(column < cols + 1);
-            return true;
-        }
-        if (newRow % 2 == 0) {
-            switch (sector) {
-                case 2:
-                    newRow -= 2;
-                    newColumn++;
-                    break;
-                case 1:
-                    newRow--;
-                    newColumn++;
-                    break;
-                case 4:
-                    newColumn--;
-                    newRow--;
-                    break;
-                case 5:
-                case 6:
-                    newColumn--;
-                    break;
-                case 7:
-                case 8:
-                    break;
-                default:
-                    printDebug();
+            if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
+                setGameOver(true);
+                updateRows();
+                setNewPlayerOrRival(column < cols + 1);
+                return true;
             }
-        } else {
-            switch (sector) {
-                case 2:
-                    newRow -= 2;
-                    newColumn++;
-                    break;
-                case 1:
-                    newColumn++;
-                    newRow--;
-                    break;
-                case 4:
-                    newColumn--;
-                    newRow--;
-                case 6:
-                case 7:
-                case 5:
-                case 8:
-                    break;
-                default:
-                    printDebug();
-            }
-        }
-        System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn, color);
-
-        if (!grid[newRow][newColumn].isInvisible()) {
-            switch (sector) {
-                case 5 -> {
-                    newRow--;
-                    newColumn--;
+            if (newRow % 2 == 0) {
+                switch (sector) {
+                    case 2:
+                        newRow -= 2;
+                        newColumn++;
+                        break;
+                    case 1:
+                        newRow--;
+                        newColumn++;
+                        break;
+                    case 4:
+                        newColumn--;
+                        newRow--;
+                        break;
+                    case 5:
+                    case 6:
+                        newColumn--;
+                        break;
+                    case 7:
+                    case 8:
+                        break;
                 }
-                case 8, 7, 6, -1 -> newColumn++;
-                default -> {
+            } else {
+                switch (sector) {
+                    case 2:
+                        newRow -= 2;
+                        newColumn++;
+                        break;
+                    case 1:
+                        newColumn++;
+                        newRow--;
+                        break;
+                    case 4:
+                        newColumn--;
+                        newRow--;
+                    case 6:
+                    case 7:
+                    case 5:
+                    case 8:
+                        break;
                 }
             }
+            System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn, color);
 
+            if (!grid[newRow][newColumn].isInvisible()) {
+                switch (sector) {
+                    case 5 -> {
+                        newRow--;
+                        newColumn--;
+                    }
+                    case 8, 7, 6, -1 -> newColumn++;
+                    default -> {
+                    }
+                }
+
+            }
+            GameProtocol.sendSectorCord(sector,newRow,newColumn);
         }
-
+        else
+        {
+            newRow = Constants.ROW;
+            newColumn = Constants.COLUMN + cols+1;
+        }
         grid[newRow][newColumn] = Ball.create(newRow, newColumn, color);
 
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
@@ -371,13 +379,11 @@ public class GameModel {
         printGrid(row, column, newRow, newColumn);
 
          */
-        System.out.println("//////////////////////////////////////////////////////////////////");
-        printGrid(row, column, newRow, newColumn);
-        System.out.println("//////////////////////////////////////////////////////////////////");
 
         updateRows();
         return true;
     }
+
 
     private void moveRowsDown(int newRow) {
         if (throwsCounter >= Constants.MAX_BAD_THROWS) {
@@ -606,8 +612,8 @@ public class GameModel {
         rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_COLOR);
         rivalPlayer.refreshColor();
         GlobalState.getInstance().getGp().repaint();
-        System.out.println("Constants.RIVAL_COLOR:"+Constants.RIVAL_COLOR+" Constants.PLAYER_COLOR:"+Constants.PLAYER_COLOR);
-        System.out.println("player:"+player.getColor()+" rivalPlayer"+rivalPlayer.getColor());
+        //System.out.println("Constants.RIVAL_COLOR:"+Constants.RIVAL_COLOR+" Constants.PLAYER_COLOR:"+Constants.PLAYER_COLOR);
+        //System.out.println("player:"+player.getColor()+" rivalPlayer"+rivalPlayer.getColor());
     }
 
     public Ball[][] getGrid() {

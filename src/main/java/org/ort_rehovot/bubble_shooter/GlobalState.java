@@ -53,14 +53,11 @@ public class GlobalState {
     void initMultiPlayer(int port, String rivalIP, int rivalPort, int w, int h) {
         singlePlayer = false;
         serverPort = port;
-        System.out.println("serverPort:"+serverPort);
         rivalX = 0;
         rivalY = 0;
         rivalH = h;
         rivalW = w;
         rivalThrows = 0;
-        System.out.println("rivalIP:"+rivalIP);
-        System.out.println("rivalPort:"+rivalPort);
         this.rivalAddress = new InetSocketAddress(rivalIP, rivalPort);
     }
 

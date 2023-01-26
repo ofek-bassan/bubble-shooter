@@ -61,7 +61,7 @@ public class AnimationSystem extends Thread {
                 diry *= -1;
             }
 
-            if (m > 8 || m < -8) {
+            if (m > 9 || m < -9) {
                 y -= 5;
             } else if (m < 3) {
                 y = ((int) (m * ((x + 3) - x) + y)) * diry;
@@ -69,8 +69,8 @@ public class AnimationSystem extends Thread {
             }
         }
 
-        public boolean checkThrow(GameModel gameModel) {
-            return gameModel.checkCollision(x, y, 40, color,isPlayer);
+        public synchronized boolean checkThrow(GameModel gameModel) {
+            return gameModel.checkCollision(x, y, Constants.BALL_WIDTH, color,isPlayer);
         }
     }
 
@@ -83,7 +83,7 @@ public class AnimationSystem extends Thread {
     }
 
 
-    private void doMove (MovementState state, boolean isPlayer) {
+    private synchronized void doMove (MovementState state, boolean isPlayer) {
         if (state.checkThrow(gameModel)) {
             if (isPlayer)
                 endPlayerShoot();
@@ -111,16 +111,17 @@ public class AnimationSystem extends Thread {
 
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
-            myState = getInternalStateState();
-//            if (myState != State.IDLE) {
-//                System.out.println("state ingame:"+myState);
-//            }
             switch (myState) {
                 case PLAYER_MOVING -> {
                     doMove(playerState, true);
                 }
 
                 case RIVAL_MOVING -> {
+                    try {
+                        Thread.sleep(3);
+                    } catch (InterruptedException ignored) {
+                        return;
+                    }
                     doMove(rivalState, false);
                 }
 
@@ -149,13 +150,13 @@ public class AnimationSystem extends Thread {
                         doMove(rivalState, false);
                 }
             }
-
             try {
                 Thread.sleep(3);
             } catch (InterruptedException ignored) {
                 return;
             }
             refresh();
+            myState = getInternalStateState();
         }
     }
 
@@ -171,7 +172,7 @@ public class AnimationSystem extends Thread {
         }
     }
 
-    private void endOrBoom() {
+    private synchronized void endOrBoom() {
         boom();
         setInternalState(State.IDLE);
         if (gameModel.isGameOver()) {
@@ -199,7 +200,6 @@ public class AnimationSystem extends Thread {
         activeObject = new ActiveObject();
         internalState = State.IDLE;
         gameModel.getView().repaint();
-        //GameProtocol.sendInitColor(Constants.PLAYER_COLOR,Constants.RIVAL_COLOR);
     }
 
     private void endPlayerShoot() {
@@ -217,7 +217,7 @@ public class AnimationSystem extends Thread {
 
     public void playerShoot(double m, int BorderEND,int borderStart, int h, int color) {
         synchronized (this) {
-            System.out.println(internalState);
+            //System.out.println(internalState);
             refresh();
             if (playerState == null) {
                 System.out.println("new player");
@@ -237,7 +237,7 @@ public class AnimationSystem extends Thread {
 
     public void rivalShoot(double m, int BorderEND,int borderStart, int h, int color) {
         synchronized (this) {
-            System.out.println("state:"+internalState);
+            //System.out.println("state:"+internalState);
             refresh();
             if (rivalState == null) {
                 System.out.println("new rival");

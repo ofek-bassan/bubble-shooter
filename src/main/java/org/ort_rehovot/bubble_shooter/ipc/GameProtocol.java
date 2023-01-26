@@ -33,6 +33,12 @@ public class GameProtocol implements Protocol {
 
         }
 
+        if (toks[0].equals("SC")) {
+            Constants.SECTOR = Integer.parseInt(toks[1]);
+            Constants.ROW =Integer.parseInt(toks[2]);
+            Constants.COLUMN =Integer.parseInt(toks[3]);
+        }
+
         if (toks[0].equals("RD")) {
             int newRow = Integer.parseInt(toks[1]);
             GlobalState.getInstance().getGp().getGameController().getGameModel().addRow(newRow, false);
@@ -66,9 +72,9 @@ public class GameProtocol implements Protocol {
         }
     }
 
-    public static void sendRowDown(int newRow) {
+    public static void sendSectorCord(int sector,int i, int j) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
-            String msg = String.format("RD %d", newRow);
+            String msg = String.format("SC %d %d %d", sector,i,j);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {

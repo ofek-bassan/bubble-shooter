@@ -24,10 +24,6 @@ public class GamePanel extends JPanel {
     @Getter
     private final JLabel pauseLabel;
 
-    public void setPauseVisible(boolean v) {
-        pauseLabel.setVisible(v);
-    }
-
     public GamePanel() throws IOException {
         //hideMouseCursor();
         ResourceLoader.init();
@@ -88,14 +84,12 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
         Image image = ResourceLoader.getInstance().getBorderImage();
-        Image img= image.getScaledInstance(28,28,Image.SCALE_DEFAULT);
         g.drawImage(image, Constants.BORDER_X, Constants.BORDER_Y
                 , Constants.BORDER_WIDTH_DRAW, getHeight() * 2, null);
         gameModel.getPlayer().draw(g);
         gameModel.getRivalPlayer().draw(g);
         Graphics2D g2d = (Graphics2D) g;
         arrowP1.paintComponent(g2d, getLocationOnScreen());
-        //System.out.println("("+GlobalState.getInstance().getRivalX()+","+GlobalState.getInstance().getRivalY()+")");
         arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
         for (int i = 0; i < Constants.MAX_ROWS; i++) {
 
@@ -124,18 +118,16 @@ public class GamePanel extends JPanel {
             int playerColor = rnd.nextInt(6) + 1;
             client.send(CommandFormatter.hello(myServerPort, Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y,playerColor));
             String receive = client.receive();
-            System.out.println(receive);
+            //System.out.println(receive);
             String[] toks = receive.split(" ");
-            Constants.SEED = Long.parseLong(toks[3]);
             int rivalPort = Integer.parseInt(toks[1]);
             String rivalIp = toks[2];
+            Constants.SEED = Long.parseLong(toks[3]);
             int w = Integer.parseInt(toks[4]);
             int h = Integer.parseInt(toks[5]);
             int rivalColor = Integer.parseInt(toks[6]);
             Constants.PLAYER_COLOR = playerColor;
             Constants.RIVAL_COLOR = rivalColor;
-            System.out.println("player color->"+playerColor);
-            System.out.println("rival color->"+rivalColor);
             GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort, w, h);
         }
     }

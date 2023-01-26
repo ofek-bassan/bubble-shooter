@@ -17,6 +17,9 @@ public class Constants {
     public static final int START_NUM_COLS = 14;
     public static int PLAYER_COLOR=1;
     public static int RIVAL_COLOR=1;
+    public static int SECTOR=1;
+    public static int ROW=1;
+    public static int COLUMN=1;
 
     public static final String IP = "192.168.1.61";    //  server ip
     public static final int DEFAULT_DISCOVERY_PORT = 4445; // discovery server port
@@ -28,12 +31,11 @@ public class Constants {
 
 
     //setting that needs to be changed depends on the resolution
-    public static final int BORDER_X = 893; // -----719 for laptop or school || 890 for 1080p || 742 for school-----
-    public static final int BORDER_WIDTH_DRAW = 130;// -----95 for laptop or school || 130 for 1080p || 100 for school-----
-    public static final int BORDER_WIDTH = 900; // -----719 for laptop or school || 890 for 1080p-----
-    public static final int RIVAL_BORDER_WIDTH = 1023; // -----814 for laptop or school || 1020 for 1080p-----
+    public static final int BORDER_X = 894; // -----719 for laptop or school || 890 for 1080p || 742 for school-----
+    public static final int BORDER_WIDTH_DRAW = 132;// -----95 for laptop or school || 130 for 1080p || 100 for school-----
     public static final int RIVAL_X = FIELD_SIZE_X / 2+SPRITE_R*10; // ------ 8 for laptop || 10 for 1080p-----
     public static final int BALL_WIDTH = 68; // -----54 for laptop 56 to school || 68 for 1080p-----
+    public static final int RIVAL_BORDER_WIDTH = BORDER_X+BORDER_WIDTH_DRAW;
     static {
         try {
             fc = new FrameController();
