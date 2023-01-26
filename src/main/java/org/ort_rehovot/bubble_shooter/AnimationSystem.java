@@ -117,11 +117,6 @@ public class AnimationSystem extends Thread {
                 }
 
                 case RIVAL_MOVING -> {
-                    try {
-                        Thread.sleep(3);
-                    } catch (InterruptedException ignored) {
-                        return;
-                    }
                     doMove(rivalState, false);
                 }
 

@@ -227,15 +227,17 @@ public class GameModel {
         if (gridCoords == null) {
             return false;
         }
+        if((Constants.ROW ==-1 || Constants.COLUMN == -1 || Constants.SECTOR == -1) && !isPlayer)
+            return false;
         System.out.println(x+","+y);
         int row = gridCoords.getRow();
         int column = gridCoords.getColumn();
 
         int newRow = row + 1;
         int newColumn = column;
-        int sector = -1;
         if(isPlayer)
         {
+            int sector = -1;
             if (row == -1 && column == -1) {
                 newColumn = (x - 50) / Constants.BALL_WIDTH;
                 newRow = 0;
@@ -313,6 +315,11 @@ public class GameModel {
         {
             newRow = Constants.ROW;
             newColumn = Constants.COLUMN + cols+1;
+            Constants.SEED = -1;
+            Constants.ROW = -1;
+            Constants.COLUMN = -1;
+            System.out.println("sector:"+Constants.SEED+" i:"+newRow+" j:"+(newColumn-cols-1));
+            System.out.println("sector:"+Constants.SEED+" i:"+newRow+" j:"+newColumn);
         }
         grid[newRow][newColumn] = Ball.create(newRow, newColumn, color);
 
