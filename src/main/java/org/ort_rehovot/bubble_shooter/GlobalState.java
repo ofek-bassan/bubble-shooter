@@ -46,6 +46,18 @@ public class GlobalState {
     @Getter
     private int rivalH;
 
+    private boolean remoteAnimationFinished = true;
+
+    public synchronized void setRemoteAnimationFinished(boolean remoteAnimationFinished) {
+        this.remoteAnimationFinished = remoteAnimationFinished;
+    }
+
+    public synchronized boolean isRemoteAnimationFinished() {
+        if (!singlePlayer) {
+            return remoteAnimationFinished;
+        }
+        return true;
+    }
 
     @Getter
     private InetSocketAddress rivalAddress;

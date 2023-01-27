@@ -52,7 +52,7 @@ public class GamePanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!GlobalState.getInstance().isPaused()) {
+                if (!GlobalState.getInstance().isPaused() && GlobalState.getInstance().isRemoteAnimationFinished()) {
                     if (e.getButton() == 1) {
                         int x = e.getX();
                         int y = e.getY();

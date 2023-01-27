@@ -388,6 +388,9 @@ public class GameModel {
          */
 
         updateRows();
+        if (!isPlayer) {
+            GameProtocol.sendAnimationFinished();
+        }
         return true;
     }
 

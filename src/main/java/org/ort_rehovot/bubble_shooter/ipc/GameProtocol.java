@@ -33,6 +33,10 @@ public class GameProtocol implements Protocol {
 
         }
 
+        if (toks[0].equals("A")) {
+            GlobalState.getInstance().setRemoteAnimationFinished(true);
+        }
+
         if (toks[0].equals("SC")) {
             Constants.SECTOR = Integer.parseInt(toks[1]);
             Constants.ROW =Integer.parseInt(toks[2]);
@@ -66,6 +70,7 @@ public class GameProtocol implements Protocol {
             String msg = String.format("S %f", m);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
+                GlobalState.getInstance().setRemoteAnimationFinished(false);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -75,6 +80,16 @@ public class GameProtocol implements Protocol {
     public static void sendSectorCord(int sector,int i, int j) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = String.format("SC %d %d %d", sector,i,j);
+            try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
+                client.send(msg);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    public static void sendAnimationFinished() {
+        if (!GlobalState.getInstance().isSinglePlayer()) {
+            String msg = "A";
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {

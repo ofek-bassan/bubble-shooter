@@ -34,18 +34,10 @@ public class GameController {
         if(isPlayer)
         {
             m = Double.parseDouble(String.format("%.5f",m));
-            //System.out.println("m:"+m);
-            //System.out.println(Constants.PLAYER_X);
-            //System.out.println(Constants.BORDER_X-Constants.PLAYER_X);
-            //System.out.println(Constants.BORDER_X);
             animationSystem.playerShoot(m,Constants.BORDER_X,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
         }
         else
         {
-            //System.out.println("rival m:"+m);
-            //System.out.println(Constants.RIVAL_X - Constants.RIVAL_BORDER_WIDTH);
-            //System.out.println(Constants.FIELD_SIZE_X-Constants.RIVAL_X);
-            //System.out.println(Constants.FIELD_SIZE_X-Constants.RIVAL_BORDER_WIDTH);
             animationSystem.rivalShoot(m,Constants.FIELD_SIZE_X,Constants.RIVAL_BORDER_WIDTH,gameModel.getHeight(),gameModel.getRivalPlayer().getColor());
         }
 
