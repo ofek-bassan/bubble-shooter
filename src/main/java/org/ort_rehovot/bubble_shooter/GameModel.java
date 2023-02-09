@@ -219,15 +219,12 @@ public class GameModel {
      * @return true iff collides
      */
     public boolean checkCollision(int x, int y, int width, int color, boolean isPlayer) {
-        /*if(!isPlayer)
-            x-=1026;
-         */
         GridCoords gridCoords = collides(x, y, width / 2, isPlayer);
 
         if (gridCoords == null) {
             return false;
         }
-        if((Constants.ROW ==-1 || Constants.COLUMN == -1 || Constants.SECTOR == -1) && !isPlayer)
+        if((Constants.ROW ==-2 || Constants.COLUMN == -2 || Constants.SECTOR == -2) && !isPlayer)
             return false;
         System.out.println(x+","+y);
         int row = gridCoords.getRow();
@@ -315,9 +312,9 @@ public class GameModel {
         {
             newRow = Constants.ROW;
             newColumn = Constants.COLUMN + cols+1;
-            Constants.SEED = -1;
-            Constants.ROW = -1;
-            Constants.COLUMN = -1;
+            Constants.SEED = -2;
+            Constants.ROW = -2;
+            Constants.COLUMN = -2;
             System.out.println("sector:"+Constants.SEED+" i:"+newRow+" j:"+(newColumn-cols-1));
             System.out.println("sector:"+Constants.SEED+" i:"+newRow+" j:"+newColumn);
         }

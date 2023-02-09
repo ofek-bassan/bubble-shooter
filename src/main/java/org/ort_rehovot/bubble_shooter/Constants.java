@@ -17,11 +17,11 @@ public class Constants {
     public static final int START_NUM_COLS = 14;
     public static int PLAYER_COLOR=1;
     public static int RIVAL_COLOR=1;
-    public static int SECTOR=-1;
-    public static int ROW=-1;
-    public static int COLUMN=-1;
+    public static int SECTOR=-2;
+    public static int ROW=-2;
+    public static int COLUMN=-2;
 
-    public static final String IP = "192.168.1.61";    //  server ip
+    public static final String IP = "192.168.1.76";    //  server ip
     public static final int DEFAULT_DISCOVERY_PORT = 4445; // discovery server port
     public static long SEED;    //game seed
     public static final  FrameController fc; // frame controller
