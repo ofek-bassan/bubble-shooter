@@ -101,6 +101,7 @@ public class AnimationSystem extends Thread {
         } else {
             gameModel.getRivalPlayer().setX(state.x);
             gameModel.getRivalPlayer().setY(state.y);
+            GameProtocol.sendAnimationFinished();
         }
 
     }
