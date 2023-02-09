@@ -226,7 +226,6 @@ public class GameModel {
         }
         if((Constants.ROW ==-2 || Constants.COLUMN == -2 || Constants.SECTOR == -2) && !isPlayer)
             return false;
-        System.out.println(x+","+y);
         int row = gridCoords.getRow();
         int column = gridCoords.getColumn();
 
@@ -292,7 +291,6 @@ public class GameModel {
                         break;
                 }
             }
-            System.out.printf("OldGrid = (%d, %d) Sector = %d NewGrid (%d, %d) color = %d\n", row, column, sector, newRow, newColumn, color);
 
             if (!grid[newRow][newColumn].isInvisible()) {
                 switch (sector) {
@@ -315,8 +313,6 @@ public class GameModel {
             Constants.SEED = -2;
             Constants.ROW = -2;
             Constants.COLUMN = -2;
-            System.out.println("sector:"+Constants.SEED+" i:"+newRow+" j:"+(newColumn-cols-1));
-            System.out.println("sector:"+Constants.SEED+" i:"+newRow+" j:"+newColumn);
         }
         grid[newRow][newColumn] = Ball.create(newRow, newColumn, color);
 
@@ -326,8 +322,6 @@ public class GameModel {
             setNewPlayerOrRival(column < cols + 1);
             return true;
         }
-
-        printGrid(row, column, newRow, newColumn);
 
         List<Ball> collisions = getCollisions(newRow, newColumn, color);
 
@@ -347,14 +341,7 @@ public class GameModel {
             else
                 GlobalState.getInstance().setRivalThrows(GlobalState.getInstance().getRivalThrows()+1);
         }
-        //System.out.printf("Throws = %d\n", throwsCounter);
-
         List<Ball> singletons = getClusters();
-        /*
-        System.out.println("=========================================================");
-        System.out.printf("Collisions %d singletons %d\n,", collisions.size(), singletons.size());
-        System.out.println("=========================================================");
-         */
 
         if (!singletons.isEmpty()) {
             GlobalState.getInstance().updateScore(singletons.size());
@@ -376,13 +363,6 @@ public class GameModel {
         if (exploded) {
             SoundSystem.getInstance().playExplosion();
         }
-        /*
-        System.out.println("//////////////////////////////////////////////////////////////////");
-        printDebug();
-        System.out.println("//////////////////////////////////////////////////////////////////");
-        printGrid(row, column, newRow, newColumn);
-
-         */
 
         updateRows();
         return true;
@@ -599,6 +579,7 @@ public class GameModel {
     }
 
     public void setNewPlayerOrRival(boolean isPlayer) {
+        System.out.println("NEW BALL");
         if (isPlayer)
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
