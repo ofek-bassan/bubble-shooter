@@ -13,6 +13,7 @@ public class AnimationSystem extends Thread {
     @AllArgsConstructor
     private static class ExplodeCommand implements Command {
         private final GameModel gameModel;
+        private final boolean isPlayer;
 
         @Override
         public void call() {
@@ -31,6 +32,8 @@ public class AnimationSystem extends Thread {
                     ballsToExplode = gameModel.hasBallsToExplode();
                 } while (!ballsToExplode.isEmpty());
             }
+            if(!isPlayer)
+                GameProtocol.sendAnimationFinished();
         }
     }
 
@@ -88,9 +91,11 @@ public class AnimationSystem extends Thread {
             if (isPlayer)
                 endPlayerShoot();
             else
+            {
                 endRivalShoot();
+            }
             setInternalState(State.IDLE);
-            endOrBoom();
+            endOrBoom(isPlayer);
             gameModel.setNewPlayerOrRival(isPlayer);
             return;
         }
@@ -127,15 +132,17 @@ public class AnimationSystem extends Thread {
                         endRivalShoot();
                         setInternalState(State.PLAYER_MOVING);
                         gameModel.setNewPlayerOrRival(false);
+                        endOrBoom(false);
                     } else if (!rival_collide && player_collide) {
                         endPlayerShoot();
                         setInternalState(State.RIVAL_MOVING);
                         gameModel.setNewPlayerOrRival(true);
+                        endOrBoom(true);
                     } else if (rival_collide) {
                         endRivalShoot();
                         endPlayerShoot();
                         setInternalState(State.IDLE);
-                        endOrBoom();
+                        endOrBoom(false);
                         gameModel.setNewPlayerOrRival(true);
                         gameModel.setNewPlayerOrRival(false);
                     }
@@ -167,8 +174,8 @@ public class AnimationSystem extends Thread {
         }
     }
 
-    private synchronized void endOrBoom() {
-        boom();
+    private synchronized void endOrBoom(boolean isPlayer) {
+        boom(isPlayer);
         setInternalState(State.IDLE);
         if (gameModel.isGameOver()) {
             try {
@@ -250,8 +257,8 @@ public class AnimationSystem extends Thread {
         }
     }
 
-    public void boom() {
-        activeObject.dispatch(new ExplodeCommand(gameModel));
+    public void boom(boolean isPlayer) {
+        activeObject.dispatch(new ExplodeCommand(gameModel,isPlayer));
     }
 
     private void refresh() {

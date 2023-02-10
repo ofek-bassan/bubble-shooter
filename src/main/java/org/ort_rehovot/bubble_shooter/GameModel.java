@@ -363,8 +363,8 @@ public class GameModel {
         if (exploded) {
             SoundSystem.getInstance().playExplosion();
         }
-        if(!isPlayer)
-            GameProtocol.sendAnimationFinished();
+        //if(!isPlayer)
+           // GameProtocol.sendAnimationFinished();
         updateRows();
         return true;
     }
