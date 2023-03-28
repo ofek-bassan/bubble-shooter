@@ -34,6 +34,8 @@ public class AnimationSystem extends Thread {
             }
             if(!isPlayer)
                 GameProtocol.sendAnimationFinished();
+            else
+                System.out.println("rival boomed!!!!!!");
         }
     }
 
@@ -94,7 +96,15 @@ public class AnimationSystem extends Thread {
             {
                 endRivalShoot();
             }
-            setInternalState(State.IDLE);
+            if(getInternalStateState() == State.BOTH_MOVING)
+            {
+                if(isPlayer)
+                    setInternalState(State.RIVAL_MOVING);
+                else
+                    setInternalState(State.PLAYER_MOVING);
+            }
+            else
+                setInternalState(State.IDLE);
             endOrBoom(isPlayer);
             gameModel.setNewPlayerOrRival(isPlayer);
             return;
@@ -119,26 +129,24 @@ public class AnimationSystem extends Thread {
             if(myState!=State.IDLE)
                 System.out.println(myState);
             switch (myState) {
-                case PLAYER_MOVING -> {
-                    doMove(playerState, true);
-                }
+                case PLAYER_MOVING -> doMove(playerState, true);
 
-                case RIVAL_MOVING -> {
-                    doMove(rivalState, false);
-                }
+                case RIVAL_MOVING -> doMove(rivalState, false);
 
                 case BOTH_MOVING -> {
-                    boolean player_collide = playerState.checkThrow(gameModel);
-                    boolean rival_collide = rivalState.checkThrow(gameModel);
-                    if (rival_collide && !player_collide) {
+                    doMove(playerState, true);
+                    doMove(rivalState, false);
+                    /*boolean player_collide = playerState.checkThrow(gameModel); // true if collided else false
+                    boolean rival_collide = rivalState.checkThrow(gameModel);  // true if collided else false
+                    if (rival_collide && !player_collide) { // rival collided
                         endRivalShoot();
                         setInternalState(State.PLAYER_MOVING);
                         gameModel.setNewPlayerOrRival(false);
-                    } else if (!rival_collide && player_collide) {
+                    } else if (!rival_collide && player_collide) { // player collided
                         endPlayerShoot();
                         setInternalState(State.RIVAL_MOVING);
                         gameModel.setNewPlayerOrRival(true);
-                    } else if (rival_collide) {
+                    } else if (rival_collide) { // rival and player collided
                         endRivalShoot();
                         endPlayerShoot();
                         setInternalState(State.IDLE);
@@ -148,7 +156,7 @@ public class AnimationSystem extends Thread {
                     if(!player_collide)
                         doMove(playerState, true);
                     if(!rival_collide)
-                        doMove(rivalState, false);
+                        doMove(rivalState, false);*/
                 }
             }
             try {

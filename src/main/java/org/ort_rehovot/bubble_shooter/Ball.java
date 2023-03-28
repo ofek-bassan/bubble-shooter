@@ -147,8 +147,6 @@ public class Ball{
 
 	public void advanceExplosionAnimation() {
 		explosion++;
-		if(row==5 && column == 21)
-			System.out.println(explosion);
 		if (explosion >= ResourceLoader.getInstance().getExplosion().length) {
 			explosion = -1;
 			setInvisible();
