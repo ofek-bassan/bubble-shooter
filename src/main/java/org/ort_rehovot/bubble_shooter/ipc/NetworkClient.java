@@ -52,16 +52,4 @@ public class NetworkClient implements Closeable {
     public void close() {
         socket.close();
     }
-
-    public static void main(String[] args) throws IOException {
-        try (NetworkClient client = new NetworkClient(4445)) {
-            client.send("hello server");
-            String echo = client.receive();
-            System.out.println(echo);
-            if (echo.equals("hello server")) {
-                System.out.println("0-0000");
-            }
-            client.send("end");
-        }
-    }
 }

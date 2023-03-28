@@ -21,7 +21,7 @@ public class Constants {
     public static int ROW=-2;
     public static int COLUMN=-2;
 
-    public static final String IP = "192.168.1.76";    //  server ip
+    public static final String IP = "192.168.1.70";    //  server ip
     public static final int DEFAULT_DISCOVERY_PORT = 4445; // discovery server port
     public static long SEED;    //game seed
     public static final  FrameController fc; // frame controller

@@ -116,6 +116,8 @@ public class AnimationSystem extends Thread {
 
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
+            if(myState!=State.IDLE)
+                System.out.println(myState);
             switch (myState) {
                 case PLAYER_MOVING -> {
                     doMove(playerState, true);
@@ -132,17 +134,14 @@ public class AnimationSystem extends Thread {
                         endRivalShoot();
                         setInternalState(State.PLAYER_MOVING);
                         gameModel.setNewPlayerOrRival(false);
-                        endOrBoom(false);
                     } else if (!rival_collide && player_collide) {
                         endPlayerShoot();
                         setInternalState(State.RIVAL_MOVING);
                         gameModel.setNewPlayerOrRival(true);
-                        endOrBoom(true);
                     } else if (rival_collide) {
                         endRivalShoot();
                         endPlayerShoot();
                         setInternalState(State.IDLE);
-                        endOrBoom(false);
                         gameModel.setNewPlayerOrRival(true);
                         gameModel.setNewPlayerOrRival(false);
                     }
@@ -222,7 +221,6 @@ public class AnimationSystem extends Thread {
             //System.out.println(internalState);
             refresh();
             if (playerState == null) {
-                System.out.println("new player");
                 playerState = new MovementState(Constants.PLAYER_X,
                         Constants.PLAYER_Y, m < 0 ? m : m * -1, BorderEND,borderStart, h, m > 0 ? -1 : 1, 1, color,true);
                 if (internalState == State.IDLE)
