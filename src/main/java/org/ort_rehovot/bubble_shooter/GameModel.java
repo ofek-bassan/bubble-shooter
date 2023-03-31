@@ -584,7 +584,6 @@ public class GameModel {
             System.out.print("new player ball:");
         else
             System.out.print("new rival ball:");
-        System.out.println("=======================");
         if (isPlayer)
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
@@ -595,6 +594,7 @@ public class GameModel {
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
             System.out.println(rivalPlayer.getColor());
         }
+        System.out.println("=======================");
     }
 
     public void setRivalAndPlayerColor()
