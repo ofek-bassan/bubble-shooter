@@ -69,6 +69,32 @@ public class GameModel {
     }
 
     private void initDebugBallsInternal() {
+        grid[0][0] = Ball.create(0, 0, 3);
+        grid[0][1] = Ball.create(0, 1, 2);
+        grid[0][2] = Ball.create(0, 2, 6);
+        grid[0][3] = Ball.create(0, 3, 1);
+        grid[0][4] = Ball.create(0, 4, 6);
+        grid[0][5] = Ball.create(0, 5, 5);
+        grid[0][6] = Ball.create(0, 6, 5);
+        grid[0][7] = Ball.create(0, 7, 4);
+        grid[0][8] = Ball.create(0, 8, 2);
+        grid[0][9] = Ball.create(0, 9, 1);
+        grid[0][10] = Ball.create(0, 10, 3);
+        grid[0][11] = Ball.create(0, 11, 3);
+        grid[0][12] = Ball.create(0, 12, 3);
+        grid[0][15] = Ball.create(0, 15, 3);
+        grid[0][16] = Ball.create(0, 16, 2);
+        grid[0][17] = Ball.create(0, 17, 6);
+        grid[0][18] = Ball.create(0, 18, 1);
+        grid[0][19] = Ball.create(0, 19, 6);
+        grid[0][20] = Ball.create(0, 20, 5);
+        grid[0][21] = Ball.create(0, 21, 5);
+        grid[0][22] = Ball.create(0, 22, 4);
+        grid[0][23] = Ball.create(0, 23, 2);
+        grid[0][24] = Ball.create(0, 24, 1);
+        grid[0][25] = Ball.create(0, 25, 3);
+        grid[0][26] = Ball.create(0, 26, 3);
+        grid[0][27] = Ball.create(0, 27, 3);
     }
 
     void initDebugBalls() {
@@ -90,8 +116,9 @@ public class GameModel {
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
             }
-        initRandomBalls();
-        //initDebugBalls();
+        //initRandomBalls();
+        //printDebug();
+        initDebugBalls();
     }
 
     public void printDebug() {
