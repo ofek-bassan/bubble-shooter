@@ -273,7 +273,7 @@ public class GameModel {
             if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
                 setGameOver(true);
                 updateRows();
-                setNewPlayerOrRival(column < cols + 1);
+                //setNewPlayerOrRival(column < cols + 1);
                 return true;
             }
             if (newRow % 2 == 0) {
@@ -346,7 +346,7 @@ public class GameModel {
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
             setGameOver(true);
             updateRows();
-            setNewPlayerOrRival(column < cols + 1);
+            //setNewPlayerOrRival(column < cols + 1);
             return true;
         }
 
@@ -448,7 +448,7 @@ public class GameModel {
         if (lastRow >= Constants.MAX_ROWS || lastRow >= grid[lastRow].length) {
             setGameOver(true);
             updateRows();
-            setNewPlayerOrRival(isPlayer);
+            //setNewPlayerOrRival(isPlayer);
             return;
         }
         for (int r = lastRow; r >= 1; r--) {
