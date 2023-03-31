@@ -34,8 +34,6 @@ public class AnimationSystem extends Thread {
             }
             if(!isPlayer)
                 GameProtocol.sendAnimationFinished();
-            else
-                System.out.println("rival boomed!!!!!!");
         }
     }
 
@@ -126,16 +124,17 @@ public class AnimationSystem extends Thread {
 
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
-            if(myState!=State.IDLE)
+            /*if(myState!=State.IDLE)
                 System.out.println(myState);
+             */
             switch (myState) {
                 case PLAYER_MOVING -> doMove(playerState, true);
 
                 case RIVAL_MOVING -> doMove(rivalState, false);
 
                 case BOTH_MOVING -> {
-                    doMove(playerState, true);
                     doMove(rivalState, false);
+                    doMove(playerState, true);
                 }
             }
             try {
@@ -233,10 +232,6 @@ public class AnimationSystem extends Thread {
                     internalState = State.RIVAL_MOVING;
                 else
                     internalState = State.BOTH_MOVING;
-            }
-            else
-            {
-                System.out.println("error");
             }
         }
     }

@@ -406,7 +406,6 @@ public class GameModel {
     }
 
     public void addRow(int lastRow, boolean isPlayer) {
-        System.out.println("-------------------------------drop-------------------------------");
         lastRow++;
         int startcol,endcol;
         if(isPlayer)
@@ -580,14 +579,19 @@ public class GameModel {
     }
 
     public void setNewPlayerOrRival(boolean isPlayer) {
-        System.out.println("NEW BALL");
+        if(isPlayer)
+            System.out.print("new player ball:");
+        else
+            System.out.print("new rival ball:");
         if (isPlayer)
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
+            System.out.println(player.getColor());
         }
         else
         {
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
+            System.out.println(rivalPlayer.getColor());
         }
     }
 
