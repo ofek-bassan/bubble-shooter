@@ -136,27 +136,6 @@ public class AnimationSystem extends Thread {
                 case BOTH_MOVING -> {
                     doMove(playerState, true);
                     doMove(rivalState, false);
-                    /*boolean player_collide = playerState.checkThrow(gameModel); // true if collided else false
-                    boolean rival_collide = rivalState.checkThrow(gameModel);  // true if collided else false
-                    if (rival_collide && !player_collide) { // rival collided
-                        endRivalShoot();
-                        setInternalState(State.PLAYER_MOVING);
-                        gameModel.setNewPlayerOrRival(false);
-                    } else if (!rival_collide && player_collide) { // player collided
-                        endPlayerShoot();
-                        setInternalState(State.RIVAL_MOVING);
-                        gameModel.setNewPlayerOrRival(true);
-                    } else if (rival_collide) { // rival and player collided
-                        endRivalShoot();
-                        endPlayerShoot();
-                        setInternalState(State.IDLE);
-                        gameModel.setNewPlayerOrRival(true);
-                        gameModel.setNewPlayerOrRival(false);
-                    }
-                    if(!player_collide)
-                        doMove(playerState, true);
-                    if(!rival_collide)
-                        doMove(rivalState, false);*/
                 }
             }
             try {
@@ -183,7 +162,6 @@ public class AnimationSystem extends Thread {
 
     private synchronized void endOrBoom(boolean isPlayer) {
         boom(isPlayer);
-        setInternalState(State.IDLE);
         if (gameModel.isGameOver()) {
             try {
                 Constants.fc.Lose();
