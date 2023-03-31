@@ -225,7 +225,6 @@ public class AnimationSystem extends Thread {
             //System.out.println("state:"+internalState);
             refresh();
             if (rivalState == null) {
-                System.out.println("new rival");
                 rivalState = new MovementState(Constants.RIVAL_X,
                         Constants.PLAYER_Y, m < 0 ? m : -m, BorderEND,borderStart, h, m > 0 ? -1 : 1, 1, color,false);
                 if (internalState == State.IDLE)

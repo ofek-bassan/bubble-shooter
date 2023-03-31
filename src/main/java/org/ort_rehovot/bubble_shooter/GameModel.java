@@ -579,10 +579,12 @@ public class GameModel {
     }
 
     public void setNewPlayerOrRival(boolean isPlayer) {
+        System.out.println("=======================");
         if(isPlayer)
             System.out.print("new player ball:");
         else
             System.out.print("new rival ball:");
+        System.out.println("=======================");
         if (isPlayer)
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
