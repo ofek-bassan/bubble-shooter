@@ -43,10 +43,12 @@ public class GameProtocol implements Protocol {
             Constants.COLUMN =Integer.parseInt(toks[3]);
         }
 
-        if (toks[0].equals("RD")) {
+        /*if (toks[0].equals("RD")) {
             int newRow = Integer.parseInt(toks[1]);
             GlobalState.getInstance().getGp().getGameController().getGameModel().addRow(newRow, false);
         }
+
+         */
 
 
 

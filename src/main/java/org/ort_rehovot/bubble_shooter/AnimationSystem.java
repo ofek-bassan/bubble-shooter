@@ -133,8 +133,8 @@ public class AnimationSystem extends Thread {
                 case RIVAL_MOVING -> doMove(rivalState, false);
 
                 case BOTH_MOVING -> {
-                    doMove(rivalState, false);
                     doMove(playerState, true);
+                    doMove(rivalState, false);
                 }
             }
             try {
