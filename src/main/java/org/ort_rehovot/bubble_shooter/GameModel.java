@@ -116,9 +116,9 @@ public class GameModel {
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
             }
-        //initRandomBalls();
+        initRandomBalls();
         //printDebug();
-        initDebugBalls();
+        //initDebugBalls();
     }
 
     public void printDebug() {
@@ -621,7 +621,6 @@ public class GameModel {
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
             System.out.println(rivalPlayer.getColor());
         }
-        System.out.println("=======================");
     }
 
     public void setRivalAndPlayerColor()

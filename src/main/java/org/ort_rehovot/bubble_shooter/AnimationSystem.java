@@ -103,8 +103,8 @@ public class AnimationSystem extends Thread {
             }
             else
                 setInternalState(State.IDLE);
-            endOrBoom(isPlayer);
             gameModel.setNewPlayerOrRival(isPlayer);
+            endOrBoom(isPlayer);
             return;
         }
         state.update();
@@ -124,9 +124,8 @@ public class AnimationSystem extends Thread {
 
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
-            /*if(myState!=State.IDLE)
+            if(myState!=State.IDLE)
                 System.out.println(myState);
-             */
             switch (myState) {
                 case PLAYER_MOVING -> doMove(playerState, true);
 
