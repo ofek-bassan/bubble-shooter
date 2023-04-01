@@ -5,6 +5,7 @@ import org.ort_rehovot.bubble_shooter.GlobalState;
 
 import java.net.InetAddress;
 import java.util.List;
+import java.util.Timer;
 
 public class GameProtocol implements Protocol {
     @Override
@@ -28,6 +29,11 @@ public class GameProtocol implements Protocol {
         }
 
         if (toks[0].equals("S")) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
             double m = Double.parseDouble(toks[1]);
             GlobalState.getInstance().getGp().getGameController().shoot(m, false);
 
