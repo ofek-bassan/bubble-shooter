@@ -9,7 +9,6 @@ import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class GameModel {
     @Getter
@@ -28,7 +27,6 @@ public class GameModel {
     @Getter
     @Setter
     private int height;
-    private final Random rnd = new Random(Constants.SEED);
     private final GamePanel view;
 
     private final static int MIN_NUM_TO_EXPLODE = 3;
@@ -615,12 +613,12 @@ public class GameModel {
             System.out.print("new rival ball:");
         if (isPlayer)
         {
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y, rnd.nextInt(6) + 1);
+            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
             System.out.println(player.getColor());
         }
         else
         {
-            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,rnd.nextInt(6) + 1);
+            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
             System.out.println(rivalPlayer.getColor());
         }
     }
