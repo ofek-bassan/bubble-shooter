@@ -124,8 +124,6 @@ public class AnimationSystem extends Thread {
 
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
-            if(myState!=State.IDLE)
-                System.out.println(myState);
             switch (myState) {
                 case PLAYER_MOVING -> doMove(playerState, true);
 

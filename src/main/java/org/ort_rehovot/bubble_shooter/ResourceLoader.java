@@ -17,10 +17,25 @@ public class ResourceLoader {
 	private final Image [] balls;
 	@Getter
 	private final Image bgImage;
+
+	@Getter
+	private final Image exit;
+
+	@Getter
+	private final Image logo;
+
+	@Getter
+	private final Image offline;
+
+	@Getter
+	private final Image online;
+
 	@Getter
 	private final Image arrow;
+
 	@Getter
 	private final Image winImage;
+
 	@Getter
 	private final Image pauseImage;
 
@@ -45,14 +60,18 @@ public class ResourceLoader {
 
 	private ResourceLoader() throws IOException{
 
-		bgImage = new ImageIcon(ResourceLoader.loadResource("bg.png")).getImage();
-		borderImage = new ImageIcon(ResourceLoader.loadResource("border.png")).getImage();
-		pauseImage = new ImageIcon(ResourceLoader.loadResource("pause.png")).getImage();
-		winImage = new ImageIcon(ResourceLoader.loadResource("win2.jpg")).getImage();
-		gameOverGif = new ImageIcon(ResourceLoader.loadResource("gameover2.gif")).getImage();
+		bgImage = new ImageIcon(ResourceLoader.loadResource("screen/bg.png")).getImage();
+		logo = new ImageIcon(ResourceLoader.loadResource("screen/BubbleShooterLogo.png")).getImage();
+		exit = new ImageIcon(ResourceLoader.loadResource("screen/exit.png")).getImage();
+		offline = new ImageIcon(ResourceLoader.loadResource("screen/offline.png")).getImage();
+		online = new ImageIcon(ResourceLoader.loadResource("screen/online.png")).getImage();
+		borderImage = new ImageIcon(ResourceLoader.loadResource("screen/border.png")).getImage();
+		pauseImage = new ImageIcon(ResourceLoader.loadResource("screen/pause.png")).getImage();
+		winImage = new ImageIcon(ResourceLoader.loadResource("screen/win2.jpg")).getImage();
+		gameOverGif = new ImageIcon(ResourceLoader.loadResource("screen/gameover2.gif")).getImage();
 		balls = new Image[NUM_BALLS];
 		for (int i=1; i<=NUM_BALLS; i++) {
-			balls[i-1] = new ImageIcon(ResourceLoader.loadResource("Ball"+i+".png")).getImage();
+			balls[i-1] = new ImageIcon(ResourceLoader.loadResource("balls/Ball"+i+".png")).getImage();
 		}
 
 		explosion = new Image[NUM_EXPLOSIONS];
@@ -60,7 +79,7 @@ public class ResourceLoader {
 			explosion[i] = new ImageIcon(ResourceLoader.loadResource("explosion/tile" + i + ".png")).getImage();
 		}
 
-		arrow = new ImageIcon(ResourceLoader.loadResource("arrow.png")).getImage();
+		arrow = new ImageIcon(ResourceLoader.loadResource("screen/arrow.png")).getImage();
 
 		boom = loadMusicResource("boom.wav");
 

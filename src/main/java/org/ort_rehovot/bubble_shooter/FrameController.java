@@ -10,9 +10,14 @@ public class FrameController {
         //gf = new GameFrame(Events.START_GAME);
     }
 
+    public void ShowMenu() throws IOException {
+        //gf.setVisible(false);
+        gf = new GameFrame(Events.ShowMenu);
+    }
+
     public void ShowGame() throws IOException {
         //gf.setVisible(false);
-        gf = new GameFrame(Events.START_GAME);
+        gf = new GameFrame(Events.ONLINE);
     }
 
     public void Lose() throws IOException {

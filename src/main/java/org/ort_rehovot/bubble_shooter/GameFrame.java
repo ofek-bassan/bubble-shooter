@@ -28,7 +28,11 @@ public class GameFrame extends JFrame {
             }
         });
         switch (ev) {
-            case GAME_WIN, START_GAME -> {
+            case ShowMenu -> {
+                MenuPanel bbp = new MenuPanel();
+                add(bbp);
+            }
+            case GAME_WIN, ONLINE -> {
                 GamePanel bbp = new GamePanel();
                 add(bbp);
                 GlobalState.getInstance().getGp().getGameModel().setRivalAndPlayerColor();
