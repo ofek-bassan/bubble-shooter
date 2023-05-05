@@ -11,12 +11,11 @@ public class FrameController {
     }
 
     public void ShowMenu() throws IOException {
-        //gf.setVisible(false);
         gf = new GameFrame(Events.ShowMenu);
     }
 
     public void ShowGame() throws IOException {
-        //gf.setVisible(false);
+        gf.dispose();
         gf = new GameFrame(Events.START_GAME);
     }
 

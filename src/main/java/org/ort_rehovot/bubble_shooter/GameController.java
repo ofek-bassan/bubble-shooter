@@ -30,11 +30,13 @@ public class GameController {
      * shoots the ball if there is no any other ball thrown when the ball was thrown
      */
     public void shoot(double m,boolean isPlayer) {
-
         if(isPlayer)
         {
             m = Double.parseDouble(String.format("%.5f",m));
-            animationSystem.playerShoot(m,Constants.BORDER_X,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
+            if(!GlobalState.getInstance().isSinglePlayer())
+                animationSystem.playerShoot(m,Constants.BORDER_X,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
+            if(GlobalState.getInstance().isSinglePlayer())
+                animationSystem.playerShoot(m,Constants.FIELD_SIZE_X,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
         }
         else
         {

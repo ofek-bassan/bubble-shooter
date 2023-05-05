@@ -8,7 +8,7 @@ public class Constants {
     public static final int FIELD_SIZE_Y = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     // game settings
     public static final int SPRITE_R = 50;
-    public static final int PLAYER_X = FIELD_SIZE_X / 5+SPRITE_R;
+    public static int PLAYER_X = FIELD_SIZE_X / 5+SPRITE_R;
     public static final int PLAYER_Y = FIELD_SIZE_Y - 2 * SPRITE_R;
     public static final int MAX_ROWS = 11;
     public static final int MAX_COLS = 28;
@@ -21,8 +21,10 @@ public class Constants {
     public static int ROW=-2;
     public static int COLUMN=-2;
 
+    //server side
     public static final String IP = "192.168.1.70";    //  server ip
     public static final int DEFAULT_DISCOVERY_PORT = 4445; // discovery server port
+    public static int SERVER_PORT;
     public static long SEED;    //game seed
     public static final  FrameController fc; // frame controller
 

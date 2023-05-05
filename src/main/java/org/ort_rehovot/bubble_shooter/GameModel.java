@@ -55,7 +55,7 @@ public class GameModel {
         return view;
     }
 
-    private void initRandomBalls() {
+    private void initRandomBallsOnline() {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols - 1; c++) {
                 grid[r][c] = Ball.create(r, c);
@@ -68,33 +68,15 @@ public class GameModel {
         }
     }
 
+    private void initRandomBallsOffline() {
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < Constants.MAX_COLS; c++) {
+                grid[r][c] = Ball.create(r, c);
+            }
+        }
+    }
+
     private void initDebugBallsInternal() {
-        grid[0][0] = Ball.create(0, 0, 3);
-        grid[0][1] = Ball.create(0, 1, 2);
-        grid[0][2] = Ball.create(0, 2, 6);
-        grid[0][3] = Ball.create(0, 3, 1);
-        grid[0][4] = Ball.create(0, 4, 6);
-        grid[0][5] = Ball.create(0, 5, 5);
-        grid[0][6] = Ball.create(0, 6, 5);
-        grid[0][7] = Ball.create(0, 7, 4);
-        grid[0][8] = Ball.create(0, 8, 2);
-        grid[0][9] = Ball.create(0, 9, 1);
-        grid[0][10] = Ball.create(0, 10, 3);
-        grid[0][11] = Ball.create(0, 11, 3);
-        grid[0][12] = Ball.create(0, 12, 3);
-        grid[0][15] = Ball.create(0, 15, 3);
-        grid[0][16] = Ball.create(0, 16, 2);
-        grid[0][17] = Ball.create(0, 17, 6);
-        grid[0][18] = Ball.create(0, 18, 1);
-        grid[0][19] = Ball.create(0, 19, 6);
-        grid[0][20] = Ball.create(0, 20, 5);
-        grid[0][21] = Ball.create(0, 21, 5);
-        grid[0][22] = Ball.create(0, 22, 4);
-        grid[0][23] = Ball.create(0, 23, 2);
-        grid[0][24] = Ball.create(0, 24, 1);
-        grid[0][25] = Ball.create(0, 25, 3);
-        grid[0][26] = Ball.create(0, 26, 3);
-        grid[0][27] = Ball.create(0, 27, 3);
     }
 
     void initDebugBalls() {
@@ -107,7 +89,6 @@ public class GameModel {
      */
     public void initGame() {
         setNewPlayerOrRival(true);
-        setNewPlayerOrRival(false);
         grid = new Ball[Constants.MAX_ROWS + 1][Constants.MAX_COLS];
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++) {
@@ -116,7 +97,15 @@ public class GameModel {
                 grid[i][j].setRow(i);
                 grid[i][j].setColumn(j);
             }
-        initRandomBalls();
+        if(!GlobalState.getInstance().isSinglePlayer())
+        {
+            setNewPlayerOrRival(false);
+            initRandomBallsOnline();
+        }
+        else
+        {
+            initRandomBallsOffline();
+        }
         //printDebug();
         //initDebugBalls();
     }
@@ -150,7 +139,9 @@ public class GameModel {
         if (y <= 0) {
             return new GridCoords(-1, -1);
         }
-        if (isPlayer)
+        if(GlobalState.getInstance().isSinglePlayer())
+            return getGridCoords(x, y, r, 0, Constants.MAX_COLS);
+        else if (isPlayer)
             return getGridCoords(x, y, r, 0, cols);
         else
             return getGridCoords(x, y, r, cols + 1, Constants.MAX_COLS);
@@ -251,6 +242,8 @@ public class GameModel {
         if (gridCoords == null) {
             return false;
         }
+        System.out.print(gridCoords.getRow()+",");
+        System.out.println(gridCoords.getColumn());
         if((Constants.ROW ==-2 || Constants.COLUMN == -2 || Constants.SECTOR == -2) && !isPlayer)
             return false;
         int row = gridCoords.getRow();

@@ -2,21 +2,21 @@ package org.ort_rehovot.bubble_shooter;
 
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
-import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
-import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
 
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements ActionListener{
     @Getter
     GameModel gameModel;
+
+    private final JButton exit;
     @Getter
     GameController gameController;
     Arrow arrowP1;
@@ -24,14 +24,25 @@ public class GamePanel extends JPanel {
     @Getter
     private final JLabel pauseLabel;
 
-    public GamePanel() throws IOException {
+    public GamePanel() throws IOException  {
         // hideMouseCursor();
         // ResourceLoader.init();
+        setLayout(null);
+
         gameModel = new GameModel(this);
         gameController = new GameController(gameModel, GlobalState.getInstance().getServerPort());
         arrowP1 = new Arrow();
-        arrowP2 = new Arrow(Constants.RIVAL_X);
+        if(!GlobalState.getInstance().isSinglePlayer())
+            arrowP2 = new Arrow(Constants.RIVAL_X);
         SoundSystem.getInstance().playBackgroundMusic();
+
+        exit = new JButton (new ImageIcon(ResourceLoader.getInstance().getExit()));
+        exit.setBorderPainted(false);
+        exit.setContentAreaFilled(false);
+        exit.setFocusPainted(false);
+        exit.setBounds(0, Constants.FIELD_SIZE_Y-Constants.SPRITE_R, 200, 50);
+        exit.addActionListener(this);
+        add(exit);
 
         //  pause image
         pauseLabel = new JLabel(new ImageIcon(ResourceLoader.getInstance().getPauseImage()));
@@ -78,24 +89,32 @@ public class GamePanel extends JPanel {
         GlobalState.getInstance().setGp(this);
     }
 
+    @SneakyThrows
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Constants.fc.ShowMenu();
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         //setPauseVisible(GlobalState.getInstance().isPaused());
         super.paintComponent(g);
         g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
-        Image image = ResourceLoader.getInstance().getBorderImage();
-        g.drawImage(image, Constants.BORDER_X, Constants.BORDER_Y
-                , Constants.BORDER_WIDTH_DRAW, getHeight() * 2, null);
         gameModel.getPlayer().draw(g);
-        gameModel.getRivalPlayer().draw(g);
         Graphics2D g2d = (Graphics2D) g;
         arrowP1.paintComponent(g2d, getLocationOnScreen());
-        arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
         for (int i = 0; i < Constants.MAX_ROWS; i++) {
-
             for (int j = 0; j < Constants.MAX_COLS; j++) {
                 gameModel.getGrid()[i][j].draw(g);
             }
+        }
+        if(!GlobalState.getInstance().isSinglePlayer())
+        {
+            arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
+            Image image = ResourceLoader.getInstance().getBorderImage();
+            g.drawImage(image, Constants.BORDER_X, Constants.BORDER_Y
+                    , Constants.BORDER_WIDTH_DRAW, getHeight() * 2, null);
+            gameModel.getRivalPlayer().draw(g);
         }
     }
 

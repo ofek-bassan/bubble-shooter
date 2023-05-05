@@ -2,40 +2,42 @@ package org.ort_rehovot.bubble_shooter;
 
 
 import lombok.SneakyThrows;
+import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
+import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Random;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
     //  buttons
-    private JButton exit;
-    private JButton online;
-    private JButton offline;
+    private final JButton exit;
+    private final JButton online;
+    private final JButton offline;
 
     public MenuPanel() throws IOException {
         super();
-        ResourceLoader.init();
         setLayout(null);
 
-        JButton  exit = new JButton (new ImageIcon(ResourceLoader.getInstance().getExit()));
+        exit = new JButton (new ImageIcon(ResourceLoader.getInstance().getExit()));
         exit.setBorderPainted(false);
         exit.setContentAreaFilled(false);
         exit.setFocusPainted(false);
         exit.setBounds(890, 500, 200, 50);
         exit.addActionListener(this);
 
-        JButton  online = new JButton (new ImageIcon(ResourceLoader.getInstance().getOnline()));
+        online = new JButton (new ImageIcon(ResourceLoader.getInstance().getOnline()));
         online.setBorderPainted(false);
         online.setContentAreaFilled(false);
         online.setFocusPainted(false);
         online.setBounds(890, 400, 200, 50);
         online.addActionListener(this);
 
-        JButton  offline = new JButton (new ImageIcon(ResourceLoader.getInstance().getOffline()));
+        offline = new JButton (new ImageIcon(ResourceLoader.getInstance().getOffline()));
         offline.setBorderPainted(false);
         offline.setContentAreaFilled(false);
         offline.setFocusPainted(false);
@@ -46,6 +48,29 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(online);
         add(offline);
 
+    }
+
+
+    private static void waitForFriend() throws IOException {
+        int myServerPort = (int) (1000 + (65000 - 1000) * Math.random());
+
+        try (NetworkClient client = new NetworkClient(Constants.SERVER_PORT)) {
+            Random rnd = new Random();
+            int playerColor = rnd.nextInt(6) + 1;
+            client.send(CommandFormatter.hello(myServerPort, Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y,playerColor));
+            String receive = client.receive();
+            //System.out.println(receive);
+            String[] toks = receive.split(" ");
+            int rivalPort = Integer.parseInt(toks[1]);
+            String rivalIp = toks[2];
+            Constants.SEED = Long.parseLong(toks[3]);
+            int w = Integer.parseInt(toks[4]);
+            int h = Integer.parseInt(toks[5]);
+            int rivalColor = Integer.parseInt(toks[6]);
+            Constants.PLAYER_COLOR = playerColor;
+            Constants.RIVAL_COLOR = rivalColor;
+            GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort, w, h);
+        }
     }
 
     @SneakyThrows
@@ -63,12 +88,14 @@ public class MenuPanel extends JPanel implements ActionListener {
         {
             GlobalState.getInstance().setSinglePlayer(false);
             Constants.fc.ShowGame();
+            waitForFriend();
         }
 
         //  offline
         if(e.getSource() == offline)
         {
             GlobalState.getInstance().setSinglePlayer(true);
+            Constants.PLAYER_X = Constants.FIELD_SIZE_X/2;
             Constants.fc.ShowGame();
         }
 
