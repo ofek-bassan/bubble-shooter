@@ -17,7 +17,7 @@ public class FrameController {
 
     public void ShowGame() throws IOException {
         //gf.setVisible(false);
-        gf = new GameFrame(Events.ONLINE);
+        gf = new GameFrame(Events.START_GAME);
     }
 
     public void Lose() throws IOException {

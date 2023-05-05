@@ -12,6 +12,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame(Events ev) throws IOException {
         super();
+        setFocusable(true);
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -28,11 +29,11 @@ public class GameFrame extends JFrame {
             }
         });
         switch (ev) {
-            case ShowMenu -> {
+            case ShowMenu,GAME_WIN -> {
                 MenuPanel bbp = new MenuPanel();
                 add(bbp);
             }
-            case GAME_WIN, ONLINE -> {
+            case START_GAME -> {
                 GamePanel bbp = new GamePanel();
                 add(bbp);
                 GlobalState.getInstance().getGp().getGameModel().setRivalAndPlayerColor();

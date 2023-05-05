@@ -26,6 +26,7 @@ public class GlobalState {
     @Getter
     private GamePanel gp;
     @Getter
+    @Setter
     private boolean singlePlayer;
 
     private GlobalState() {
