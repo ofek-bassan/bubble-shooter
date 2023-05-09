@@ -1,7 +1,10 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.panels;
 
 
 import lombok.SneakyThrows;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
+import org.ort_rehovot.bubble_shooter.globals.GlobalState;
+import org.ort_rehovot.bubble_shooter.resourceLoad.ResourceLoader;
 import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
 import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
 
@@ -70,6 +73,7 @@ public class MenuPanel extends JPanel implements ActionListener {
             Constants.PLAYER_COLOR = playerColor;
             Constants.RIVAL_COLOR = rivalColor;
             GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort, w, h);
+            System.out.println("good");
         }
     }
 
@@ -87,8 +91,8 @@ public class MenuPanel extends JPanel implements ActionListener {
         if(e.getSource() == online)
         {
             GlobalState.getInstance().setSinglePlayer(false);
-            Constants.fc.ShowGame();
             waitForFriend();
+            Constants.fc.ShowGame();
         }
 
         //  offline

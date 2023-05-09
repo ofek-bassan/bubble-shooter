@@ -1,6 +1,6 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.threads;
 
-import org.ort_rehovot.bubble_shooter.state.Events;
+import org.ort_rehovot.bubble_shooter.panels.GameFrame;
 
 import java.io.IOException;
 

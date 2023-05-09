@@ -1,8 +1,12 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.threads;
 
 import lombok.Getter;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
+import org.ort_rehovot.bubble_shooter.globals.GlobalState;
 import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 import org.ort_rehovot.bubble_shooter.ipc.Server;
+import org.ort_rehovot.bubble_shooter.logic.Ball;
+import org.ort_rehovot.bubble_shooter.logic.GameModel;
 
 import java.net.SocketException;
 
@@ -34,7 +38,7 @@ public class GameController {
         {
             m = Double.parseDouble(String.format("%.5f",m));
             if(!GlobalState.getInstance().isSinglePlayer())
-                animationSystem.playerShoot(m,Constants.BORDER_X,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
+                animationSystem.playerShoot(m, Constants.BORDER_X,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
             if(GlobalState.getInstance().isSinglePlayer())
                 animationSystem.playerShoot(m,Constants.FIELD_SIZE_X,0,gameModel.getHeight(),gameModel.getPlayer().getColor());
         }

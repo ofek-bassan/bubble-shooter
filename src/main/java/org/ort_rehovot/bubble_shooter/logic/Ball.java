@@ -1,8 +1,10 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.logic;
 
 //23-5-2021
 import lombok.Getter;
 import lombok.Setter;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
+import org.ort_rehovot.bubble_shooter.resourceLoad.ResourceLoader;
 
 import java.awt.*;
 import java.util.Random;

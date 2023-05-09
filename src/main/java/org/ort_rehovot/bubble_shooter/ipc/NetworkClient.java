@@ -1,6 +1,6 @@
 package org.ort_rehovot.bubble_shooter.ipc;
 
-import org.ort_rehovot.bubble_shooter.Constants;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
 
 import java.io.Closeable;
 import java.io.IOException;

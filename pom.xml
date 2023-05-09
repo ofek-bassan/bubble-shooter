@@ -70,7 +70,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.ort_rehovot.bubble_shooter.GamePanel</mainClass>
+                            <mainClass>org.ort_rehovot.bubble_shooter.panels.GamePanel</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

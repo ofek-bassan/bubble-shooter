@@ -1,4 +1,4 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.resourceLoad;
 
 import lombok.Getter;
 

@@ -1,4 +1,7 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.panels;
+
+import org.ort_rehovot.bubble_shooter.globals.Constants;
+import org.ort_rehovot.bubble_shooter.resourceLoad.ResourceLoader;
 
 import javax.swing.*;
 import java.awt.*;

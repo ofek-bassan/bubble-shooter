@@ -1,4 +1,4 @@
-package org.ort_rehovot.bubble_shooter.state;
+package org.ort_rehovot.bubble_shooter.threads;
 
 public enum Events {
     ShowMenu,

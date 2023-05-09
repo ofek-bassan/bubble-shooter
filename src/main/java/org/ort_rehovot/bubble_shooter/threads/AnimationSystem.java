@@ -1,10 +1,13 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.threads;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
 import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
+import org.ort_rehovot.bubble_shooter.logic.Ball;
+import org.ort_rehovot.bubble_shooter.logic.GameModel;
 
 import java.io.IOException;
 import java.util.List;

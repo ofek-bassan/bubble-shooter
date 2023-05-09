@@ -1,4 +1,7 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.logic;
+
+import org.ort_rehovot.bubble_shooter.resourceLoad.ResourceLoader;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

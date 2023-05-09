@@ -1,11 +1,10 @@
 package org.ort_rehovot.bubble_shooter.ipc;
 
-import org.ort_rehovot.bubble_shooter.Constants;
-import org.ort_rehovot.bubble_shooter.GlobalState;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
+import org.ort_rehovot.bubble_shooter.globals.GlobalState;
 
 import java.net.InetAddress;
 import java.util.List;
-import java.util.Timer;
 
 public class GameProtocol implements Protocol {
     @Override

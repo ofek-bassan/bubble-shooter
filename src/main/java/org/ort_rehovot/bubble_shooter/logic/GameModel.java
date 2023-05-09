@@ -1,11 +1,15 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.logic;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
+import org.ort_rehovot.bubble_shooter.globals.GlobalState;
 import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
+import org.ort_rehovot.bubble_shooter.panels.GamePanel;
+import org.ort_rehovot.bubble_shooter.threads.SoundSystem;
 
 import java.util.ArrayList;
 import java.util.List;

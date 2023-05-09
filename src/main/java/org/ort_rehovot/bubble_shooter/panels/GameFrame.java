@@ -1,6 +1,7 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.panels;
 
-import org.ort_rehovot.bubble_shooter.state.Events;
+import org.ort_rehovot.bubble_shooter.globals.GlobalState;
+import org.ort_rehovot.bubble_shooter.threads.Events;
 
 import javax.swing.*;
 import java.awt.*;

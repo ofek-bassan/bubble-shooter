@@ -1,4 +1,6 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.globals;
+
+import org.ort_rehovot.bubble_shooter.threads.FrameController;
 
 import java.awt.*;
 import java.io.IOException;
@@ -26,7 +28,7 @@ public class Constants {
     public static final int DEFAULT_DISCOVERY_PORT = 4445; // discovery server port
     public static int SERVER_PORT;
     public static long SEED;    //game seed
-    public static final  FrameController fc; // frame controller
+    public static final FrameController fc; // frame controller
 
     //border default settings
     public static final int BORDER_Y = -200;

@@ -1,10 +1,9 @@
 package org.ort_rehovot.bubble_shooter;
-
-import org.ort_rehovot.bubble_shooter.ipc.CommandFormatter;
-import org.ort_rehovot.bubble_shooter.ipc.NetworkClient;
+import org.ort_rehovot.bubble_shooter.globals.Constants;
+import org.ort_rehovot.bubble_shooter.resourceLoad.ResourceLoader;
 
 import java.io.IOException;
-import java.util.Random;
+
 
 public class App {
 

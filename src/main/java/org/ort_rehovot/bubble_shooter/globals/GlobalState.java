@@ -1,11 +1,10 @@
-package org.ort_rehovot.bubble_shooter;
+package org.ort_rehovot.bubble_shooter.globals;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ort_rehovot.bubble_shooter.panels.GamePanel;
 
 import java.net.InetSocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class GlobalState {
     private static GlobalState instance = null;
@@ -63,7 +62,7 @@ public class GlobalState {
     @Getter
     private InetSocketAddress rivalAddress;
 
-    void initMultiPlayer(int port, String rivalIP, int rivalPort, int w, int h) {
+    public void initMultiPlayer(int port, String rivalIP, int rivalPort, int w, int h) {
         singlePlayer = false;
         serverPort = port;
         rivalX = 0;
