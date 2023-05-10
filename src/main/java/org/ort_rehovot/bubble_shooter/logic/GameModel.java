@@ -615,12 +615,12 @@ public class GameModel {
             System.out.print("new rival ball:");
         if (isPlayer)
         {
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y);
+            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_BALL_LIST.pop());
             System.out.println(player.getColor());
         }
         else
         {
-            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y);
+            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_BALL_LIST.pop());
             System.out.println(rivalPlayer.getColor());
         }
     }

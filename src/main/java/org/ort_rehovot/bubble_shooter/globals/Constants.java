@@ -4,6 +4,7 @@ import org.ort_rehovot.bubble_shooter.panels.FrameController;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Constants {
     public static final int FIELD_SIZE_X = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -17,6 +18,8 @@ public class Constants {
     public static final int MAX_BAD_THROWS = 1000;
     public static final int START_NUM_ROWS = 3;
     public static final int START_NUM_COLS = 14;
+    public static LinkedList<Integer> PLAYER_BALL_LIST;
+    public static LinkedList<Integer> RIVAL_BALL_LIST;
     public static int PLAYER_COLOR=1;
     public static int RIVAL_COLOR=1;
     public static int SECTOR=-2;

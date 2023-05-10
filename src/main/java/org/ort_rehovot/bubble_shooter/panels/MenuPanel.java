@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class MenuPanel extends JPanel implements ActionListener {
@@ -53,16 +54,25 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     }
 
+    private static LinkedList<Integer> makeBallList()
+    {
+        Random rnd = new Random(Constants.SEED);
+        LinkedList<Integer> ballsToThrow = new LinkedList<>();
+        for (int i = 0; i < 1024; i++) {
+            ballsToThrow.add(rnd.nextInt(6) + 1);
+        }
+        return ballsToThrow;
+    }
 
     private static void waitForFriend() throws IOException {
         int myServerPort = (int) (1000 + (65000 - 1000) * Math.random());
-        //Constants.PLAYER_BALL_LIST = makeBallList();
+
         try (NetworkClient client = new NetworkClient(Constants.SERVER_PORT)) {
             Random rnd = new Random();
             int playerColor = rnd.nextInt(6) + 1;
             client.send(CommandFormatter.hello(myServerPort, Constants.FIELD_SIZE_X, Constants.FIELD_SIZE_Y,playerColor));
             String receive = client.receive();
-            //System.out.println(receive);
+
             String[] toks = receive.split(" ");
             int rivalPort = Integer.parseInt(toks[1]);
             String rivalIp = toks[2];
@@ -70,9 +80,12 @@ public class MenuPanel extends JPanel implements ActionListener {
             int w = Integer.parseInt(toks[4]);
             int h = Integer.parseInt(toks[5]);
             int rivalColor = Integer.parseInt(toks[6]);
+
             Constants.PLAYER_COLOR = playerColor;
             Constants.RIVAL_COLOR = rivalColor;
-            //Constants.RIVAL_BALL_LIST = makeBallList();
+            Constants.PLAYER_BALL_LIST = makeBallList();
+            Constants.RIVAL_BALL_LIST = makeBallList();
+
             GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort, w, h);
             System.out.println("good");
         }
