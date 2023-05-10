@@ -31,7 +31,7 @@ public class NetworkClient implements Closeable {
         socket.send(packet);
     }
 
-    public String receive() throws IOException {
+        public String receive() throws IOException {
         System.out.println("receiving the data....");
         byte[] buf = new byte[256];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);

@@ -1,6 +1,6 @@
 package org.ort_rehovot.bubble_shooter.globals;
 
-import org.ort_rehovot.bubble_shooter.threads.FrameController;
+import org.ort_rehovot.bubble_shooter.panels.FrameController;
 
 import java.awt.*;
 import java.io.IOException;

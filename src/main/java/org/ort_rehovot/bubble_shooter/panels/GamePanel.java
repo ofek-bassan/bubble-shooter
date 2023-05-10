@@ -19,7 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
-public class GamePanel extends JPanel implements ActionListener{
+    public class GamePanel extends JPanel implements ActionListener{
     @Getter
     GameModel gameModel;
 

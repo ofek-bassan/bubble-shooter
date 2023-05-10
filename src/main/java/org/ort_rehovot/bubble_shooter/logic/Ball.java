@@ -11,7 +11,7 @@ import java.util.Random;
 
 
 
-public class Ball{
+	public class Ball{
 	@Getter
 	@Setter
 	private int x;

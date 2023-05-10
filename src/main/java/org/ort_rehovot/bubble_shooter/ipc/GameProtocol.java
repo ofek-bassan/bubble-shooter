@@ -43,20 +43,13 @@ public class GameProtocol implements Protocol {
             Constants.COLUMN =Integer.parseInt(toks[3]);
         }
 
-        /*if (toks[0].equals("RD")) {
-            int newRow = Integer.parseInt(toks[1]);
-            GlobalState.getInstance().getGp().getGameController().getGameModel().addRow(newRow, false);
-        }
-
-         */
-
 
 
         return List.of();
     }
 
 
-    public static void sendMove(int x, int y) {
+        public static void sendMove(int x, int y) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = String.format("M %d %d", x, y);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
@@ -67,7 +60,7 @@ public class GameProtocol implements Protocol {
         }
     }
 
-    public static void sendShoot(double m) {
+        public static void sendShoot(double m) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
             String msg = String.format("S %f", m);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {

@@ -80,7 +80,7 @@ public class GameModel {
         }
     }
 
-    private void initDebugBallsInternal() {
+        private void initDebugBallsInternal() {
     }
 
     void initDebugBalls() {
@@ -334,7 +334,7 @@ public class GameModel {
         {
             newRow = Constants.ROW;
             newColumn = Constants.COLUMN + cols+1;
-            Constants.SEED = -2;
+            Constants.SECTOR = -2;
             Constants.ROW = -2;
             Constants.COLUMN = -2;
         }
@@ -437,9 +437,14 @@ public class GameModel {
             startcol =0;
             endcol = cols-1;
         }
-        else
+        else if(!isPlayer && !GlobalState.getInstance().isSinglePlayer())
         {
             startcol = cols+1;
+            endcol = Constants.MAX_COLS;
+        }
+        else
+        {
+            startcol =0;
             endcol = Constants.MAX_COLS;
         }
         if (lastRow >= Constants.MAX_ROWS || lastRow >= grid[lastRow].length) {

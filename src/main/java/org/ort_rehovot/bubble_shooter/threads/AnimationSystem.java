@@ -54,7 +54,7 @@ public class AnimationSystem extends Thread {
         int color;
         boolean isPlayer;
 
-        public synchronized void update() {
+            public synchronized void update() {
             if (x + Constants.BALL_WIDTH / 2 > borderEnd) {
                 dirx *= -1;
             }

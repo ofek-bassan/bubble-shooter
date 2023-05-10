@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     private final JButton online;
     private final JButton offline;
 
-    public MenuPanel() throws IOException {
+    public MenuPanel(){
         super();
         setLayout(null);
 
@@ -56,7 +56,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private static void waitForFriend() throws IOException {
         int myServerPort = (int) (1000 + (65000 - 1000) * Math.random());
-
+        //Constants.PLAYER_BALL_LIST = makeBallList();
         try (NetworkClient client = new NetworkClient(Constants.SERVER_PORT)) {
             Random rnd = new Random();
             int playerColor = rnd.nextInt(6) + 1;
@@ -72,6 +72,7 @@ public class MenuPanel extends JPanel implements ActionListener {
             int rivalColor = Integer.parseInt(toks[6]);
             Constants.PLAYER_COLOR = playerColor;
             Constants.RIVAL_COLOR = rivalColor;
+            //Constants.RIVAL_BALL_LIST = makeBallList();
             GlobalState.getInstance().initMultiPlayer(myServerPort,rivalIp,rivalPort, w, h);
             System.out.println("good");
         }

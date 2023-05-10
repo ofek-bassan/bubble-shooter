@@ -23,7 +23,7 @@ public class Server extends Thread {
         this.protocolHandler = protocolHandler;
     }
 
-    public void run() {
+        public void run() {
         running = true;
         System.out.println("Discovery server is up and running...");
         while (running) {

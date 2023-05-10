@@ -55,10 +55,8 @@ public class Arrow{
                 p = mouseLoc;
             }
             x = p.x - base.x;
-            y = p.y - base.y;
         } else {
             x = p.x + base.x;
-            y = p.y + base.y;
         }
         double angle = Math.atan((double)(x-player_x)/(Constants.PLAYER_Y));
         g2d.rotate(angle,player_x,Constants.PLAYER_Y);

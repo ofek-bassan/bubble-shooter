@@ -1,10 +1,12 @@
-package org.ort_rehovot.bubble_shooter.threads;
+package org.ort_rehovot.bubble_shooter.panels;
 
 import org.ort_rehovot.bubble_shooter.panels.GameFrame;
+import org.ort_rehovot.bubble_shooter.threads.Events;
+import org.ort_rehovot.bubble_shooter.threads.SoundSystem;
 
 import java.io.IOException;
 
-public class FrameController {
+    public class FrameController {
     private GameFrame gf;
     public FrameController() throws IOException {
         //gf = new GameFrame(Events.START_GAME);
