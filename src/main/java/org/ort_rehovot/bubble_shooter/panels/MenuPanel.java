@@ -114,6 +114,8 @@ public class MenuPanel extends JPanel implements ActionListener {
         {
             GlobalState.getInstance().setSinglePlayer(true);
             Constants.PLAYER_X = Constants.FIELD_SIZE_X/2;
+            Constants.SEED = new Random().nextLong();
+            Constants.PLAYER_BALL_LIST = makeBallList();
             Constants.fc.ShowGame();
         }
 

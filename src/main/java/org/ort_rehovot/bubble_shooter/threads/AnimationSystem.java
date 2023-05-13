@@ -5,6 +5,7 @@ import lombok.Data;
 import org.ort_rehovot.bubble_shooter.globals.Constants;
 import org.ort_rehovot.bubble_shooter.ao.ActiveObject;
 import org.ort_rehovot.bubble_shooter.ao.Command;
+import org.ort_rehovot.bubble_shooter.globals.GlobalState;
 import org.ort_rehovot.bubble_shooter.ipc.GameProtocol;
 import org.ort_rehovot.bubble_shooter.logic.Ball;
 import org.ort_rehovot.bubble_shooter.logic.GameModel;
@@ -127,24 +128,26 @@ public class AnimationSystem extends Thread {
 
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
-            switch (myState) {
-                case PLAYER_MOVING -> doMove(playerState, true);
+            if(!GlobalState.getInstance().isPaused()) {
+                switch (myState) {
+                    case PLAYER_MOVING -> doMove(playerState, true);
 
-                case RIVAL_MOVING -> doMove(rivalState, false);
+                    case RIVAL_MOVING -> doMove(rivalState, false);
 
-                case BOTH_MOVING -> {
-                    doMove(rivalState, false);
-                    doMove(playerState, true);
+                    case BOTH_MOVING -> {
+                        doMove(rivalState, false);
+                        doMove(playerState, true);
 
+                    }
                 }
-            }
-            try {
-                Thread.sleep(3);
-            } catch (InterruptedException ignored) {
-                return;
+                try {
+                    Thread.sleep(3);
+                } catch (InterruptedException ignored) {
+                    return;
+                }
+                myState = getInternalStateState();
             }
             refresh();
-            myState = getInternalStateState();
         }
     }
 

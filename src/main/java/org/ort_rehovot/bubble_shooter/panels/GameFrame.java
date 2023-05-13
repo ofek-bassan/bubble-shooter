@@ -22,7 +22,7 @@ public class GameFrame extends JFrame {
                 {
                     System.exit(0);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE && GlobalState.getInstance().isSinglePlayer()) {
                     GlobalState.getInstance().setPaused(!GlobalState.getInstance().isPaused());
                     System.out.println("Paused");
                     repaint();

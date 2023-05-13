@@ -41,7 +41,6 @@ import java.io.IOException;
         arrowP1 = new Arrow();
         if(!GlobalState.getInstance().isSinglePlayer())
             arrowP2 = new Arrow(Constants.RIVAL_X);
-        SoundSystem.getInstance().playBackgroundMusic();
 
         exit = new JButton (new ImageIcon(ResourceLoader.getInstance().getExit()));
         exit.setBorderPainted(false);
@@ -53,7 +52,7 @@ import java.io.IOException;
 
         //  pause image
         pauseLabel = new JLabel(new ImageIcon(ResourceLoader.getInstance().getPauseImage()));
-        pauseLabel.setBounds(0, 0, 500, 500);
+        pauseLabel.setBounds(700, 0, 1000, 1000);
         pauseLabel.setVisible(false);
         add(pauseLabel);
 
@@ -99,6 +98,7 @@ import java.io.IOException;
     @SneakyThrows
     @Override
     public void actionPerformed(ActionEvent e) {
+        GlobalState.getInstance().setPaused(false);
         Constants.fc.ShowMenu();
     }
 
@@ -106,18 +106,21 @@ import java.io.IOException;
     public void paintComponent(Graphics g) {
         //setPauseVisible(GlobalState.getInstance().isPaused());
         super.paintComponent(g);
+        pauseLabel.setVisible(GlobalState.getInstance().isPaused());
         g.drawImage(ResourceLoader.getInstance().getBgImage(), 0, 0, getWidth(), getHeight(), null);
         gameModel.getPlayer().draw(g);
         Graphics2D g2d = (Graphics2D) g;
-        arrowP1.paintComponent(g2d, getLocationOnScreen());
+        if(!GlobalState.getInstance().isPaused())
+        {
+            arrowP1.paintComponent(g2d, getLocationOnScreen());
+        }
         for (int i = 0; i < Constants.MAX_ROWS; i++) {
             for (int j = 0; j < Constants.MAX_COLS; j++) {
                 gameModel.getGrid()[i][j].draw(g);
             }
         }
-        if(!GlobalState.getInstance().isSinglePlayer())
-        {
-            arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(),GlobalState.getInstance().getRivalY()));
+        if (!GlobalState.getInstance().isSinglePlayer()) {
+            arrowP2.paintComponent(g2d, new Point(GlobalState.getInstance().getRivalX(), GlobalState.getInstance().getRivalY()));
             Image image = ResourceLoader.getInstance().getBorderImage();
             g.drawImage(image, Constants.BORDER_X, Constants.BORDER_Y
                     , Constants.BORDER_WIDTH_DRAW, getHeight() * 2, null);
