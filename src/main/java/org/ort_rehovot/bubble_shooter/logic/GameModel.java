@@ -438,7 +438,7 @@ public class GameModel {
         int startcol,endcol;
         if(isPlayer && !GlobalState.getInstance().isSinglePlayer())
         {
-            startcol =0;
+            startcol = 0;
             endcol = cols-1;
         }
         else if(!GlobalState.getInstance().isSinglePlayer())
@@ -612,7 +612,24 @@ public class GameModel {
     }
 
     public boolean checkEnd(boolean isPlayer) {
-        for (int i = 0; i < Constants.MAX_COLS; i++) {
+        int startcol,endcol;
+        if(isPlayer && !GlobalState.getInstance().isSinglePlayer())
+        {
+            startcol = 0;
+            endcol = cols-1;
+        }
+        else if(!GlobalState.getInstance().isSinglePlayer())
+        {
+            startcol = cols+1;
+            endcol = Constants.MAX_COLS;
+        }
+        else
+        {
+            startcol =0;
+            endcol = Constants.MAX_COLS;
+        }
+
+        for (int i = startcol; i < endcol; i++) {
             System.out.println("color:"+grid[0][i].getColor());
             if(grid[0][i].getColor()!=-1)
             {
