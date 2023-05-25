@@ -432,12 +432,12 @@ public class GameModel {
     public void addRow(int lastRow, boolean isPlayer) {
         lastRow++;
         int startcol,endcol;
-        if(isPlayer)
+        if(isPlayer && !GlobalState.getInstance().isSinglePlayer())
         {
             startcol =0;
             endcol = cols-1;
         }
-        else if(!isPlayer && !GlobalState.getInstance().isSinglePlayer())
+        else if(!GlobalState.getInstance().isSinglePlayer())
         {
             startcol = cols+1;
             endcol = Constants.MAX_COLS;
