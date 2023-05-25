@@ -30,7 +30,7 @@ public class GameFrame extends JFrame {
             }
         });
         switch (ev) {
-            case ShowMenu,GAME_WIN -> {
+            case ShowMenu -> {
                 MenuPanel bbp = new MenuPanel();
                 add(bbp);
             }
@@ -41,7 +41,12 @@ public class GameFrame extends JFrame {
             }
             case GAME_OVER -> {
                 setBackground(Color.black);
-                GameOverPanel gop = new GameOverPanel();
+                GameOverPanel gop = new GameOverPanel("YOU LOSE!!!!!");
+                add(gop);
+            }
+            case GAME_WIN -> {
+                setBackground(Color.black);
+                GameOverPanel gop = new GameOverPanel("YOU WIN!!!!!");
                 add(gop);
             }
         }

@@ -165,9 +165,12 @@ public class AnimationSystem extends Thread {
 
     private synchronized void endOrBoom(boolean isPlayer) {
         boom(isPlayer);
-        if (gameModel.isGameOver()) {
+        if (gameModel.checkEnd(false) || gameModel.isGameOver()) {
             try {
-                Constants.fc.Lose();
+                if ((gameModel.isGameOver()))
+                    Constants.fc.Lose();
+                else
+                    Constants.fc.Win();
             } catch (IOException e) {
                 e.printStackTrace();
             }

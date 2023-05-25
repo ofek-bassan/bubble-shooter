@@ -81,6 +81,8 @@ public class GameModel {
     }
 
         private void initDebugBallsInternal() {
+            grid[0][1] = Ball.create(0, 1, 1);
+            grid[0][2] = Ball.create(0, 2, 1);
     }
 
     void initDebugBalls() {
@@ -108,7 +110,9 @@ public class GameModel {
         }
         else
         {
-            initRandomBallsOffline();
+            //initRandomBallsOffline();
+            initDebugBalls();
+            //printDebug();
         }
         //printDebug();
         //initDebugBalls();
@@ -471,7 +475,7 @@ public class GameModel {
      */
     private void explode(List<Ball> balls) {
         for (val b : balls) {
-            //b.setInvisible();
+            b.setInvisible();
             b.setExplosion((int) (100 * Math.random()) % 3);
         }
     }
@@ -607,21 +611,25 @@ public class GameModel {
         }
     }
 
+    public boolean checkEnd(boolean isPlayer) {
+        for (int i = 0; i < Constants.MAX_COLS; i++) {
+            System.out.println("color:"+grid[0][i].getColor());
+            if(grid[0][i].getColor()!=-1)
+            {
+               return false;
+            }
+        }
+        return true;
+    }
+
     public void setNewPlayerOrRival(boolean isPlayer) {
-        System.out.println("=======================");
-        if(isPlayer)
-            System.out.print("new player ball:");
-        else
-            System.out.print("new rival ball:");
         if (isPlayer)
         {
             player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_BALL_LIST.pop());
-            System.out.println(player.getColor());
         }
         else
         {
             rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_BALL_LIST.pop());
-            System.out.println(rivalPlayer.getColor());
         }
     }
 

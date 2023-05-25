@@ -27,6 +27,12 @@ import java.io.IOException;
         gf = new GameFrame(Events.GAME_OVER);
     }
 
+    public void WIN() throws IOException {
+        SoundSystem.getInstance().stopBackgroundMusic();
+        gf.dispose();
+        gf = new GameFrame(Events.GAME_WIN);
+    }
+
     public void Win() throws IOException {
         gf.dispose();
         gf = new GameFrame(Events.GAME_WIN);

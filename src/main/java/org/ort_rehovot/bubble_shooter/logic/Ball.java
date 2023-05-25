@@ -139,7 +139,8 @@ import java.util.Random;
 		if (!isInvisible())
 		{
 			g.drawImage(image, x - width / 2, y - width / 2, width, width, null);
-		} else {
+		}
+		else {
 			if (explosion > -1) {
 				g.drawImage(ResourceLoader.getInstance().getExplosion()[explosion], x - width / 2, y - width / 2, width, width, null);
 			}
