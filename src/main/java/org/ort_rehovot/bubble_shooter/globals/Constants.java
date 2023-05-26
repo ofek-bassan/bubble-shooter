@@ -22,9 +22,9 @@ public class Constants {
     public static LinkedList<Integer> RIVAL_BALL_LIST;
     public static int PLAYER_COLOR=1;
     public static int RIVAL_COLOR=1;
-    public static int SECTOR=-2;
-    public static int ROW=-2;
-    public static int COLUMN=-2;
+    public static int SECTOR=-1;
+    public static int ROW=-1;
+    public static int COLUMN=-1;
 
     //server side
     public static final String IP = "192.168.1.70";    //  server ip

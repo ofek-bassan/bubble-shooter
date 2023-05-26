@@ -250,7 +250,8 @@ public class GameModel {
         if (gridCoords == null) {
             return false;
         }
-
+        if((Constants.ROW ==-1 || Constants.COLUMN == -1 || Constants.SECTOR == -1) && !isPlayer)
+            return false;
         int row = gridCoords.getRow();
         int column = gridCoords.getColumn();
 
@@ -335,9 +336,9 @@ public class GameModel {
         {
             newRow = Constants.ROW;
             newColumn = Constants.COLUMN + cols+1;
-           /* Constants.SECTOR = -2;
-            Constants.ROW = -2;
-            Constants.COLUMN = -2;*/
+            Constants.SECTOR = -1;
+            Constants.ROW = -1;
+            Constants.COLUMN = -1;
         }
         grid[newRow][newColumn] = Ball.create(newRow, newColumn, color);
 
