@@ -129,7 +129,6 @@ public class AnimationSystem extends Thread {
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
             if(!GlobalState.getInstance().isPaused()) {
-                checkWinGameOver();
                 switch (myState) {
                     case PLAYER_MOVING -> doMove(playerState, true);
 
@@ -146,7 +145,7 @@ public class AnimationSystem extends Thread {
                 } catch (InterruptedException ignored) {
                     return;
                 }
-                myState = getInternalStateState();
+                myState = checkWinGameOver();
             }
             refresh();
         }
