@@ -105,8 +105,8 @@ public class GameModel {
         if(!GlobalState.getInstance().isSinglePlayer())
         {
             setNewPlayerOrRival(false);
-            //initRandomBallsOnline();
-            initDebugBalls();
+            initRandomBallsOnline();
+            //initDebugBalls();
         }
         else
         {
@@ -637,13 +637,13 @@ public class GameModel {
     public void setNewPlayerOrRival(boolean isPlayer) {
         if (isPlayer)
         {
-            //player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_BALL_LIST.pop());
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,1);
+            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_BALL_LIST.pop());
+            //player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,1);
         }
         else
         {
-            //rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_BALL_LIST.pop());
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,1);
+            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_BALL_LIST.pop());
+            //rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,1);
         }
     }
 
