@@ -81,8 +81,6 @@ public class MenuPanel extends JPanel implements ActionListener {
             int h = Integer.parseInt(toks[5]);
             int rivalColor = Integer.parseInt(toks[6]);
 
-            Constants.PLAYER_COLOR = playerColor;
-            Constants.RIVAL_COLOR = rivalColor;
             Constants.PLAYER_BALL_LIST = makeBallList();
             Constants.RIVAL_BALL_LIST = makeBallList();
 

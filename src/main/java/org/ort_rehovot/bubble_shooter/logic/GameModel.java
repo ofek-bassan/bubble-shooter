@@ -647,15 +647,6 @@ public class GameModel {
         }
     }
 
-    public void setRivalAndPlayerColor()
-    {
-        player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_COLOR);
-        player.refreshColor();
-        rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_COLOR);
-        rivalPlayer.refreshColor();
-        GlobalState.getInstance().getGp().repaint();
-    }
-
     public Ball[][] getGrid() {
         return grid;
     }
