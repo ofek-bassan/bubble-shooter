@@ -39,8 +39,7 @@ import java.io.IOException;
         gameModel = new GameModel(this);
         gameController = new GameController(gameModel, GlobalState.getInstance().getServerPort());
         arrowP1 = new Arrow();
-        if(!GlobalState.getInstance().isSinglePlayer())
-            arrowP2 = new Arrow(Constants.RIVAL_X);
+        arrowP2 = new Arrow(Constants.RIVAL_X);
 
         exit = new JButton (new ImageIcon(ResourceLoader.getInstance().getExit()));
         exit.setBorderPainted(false);
