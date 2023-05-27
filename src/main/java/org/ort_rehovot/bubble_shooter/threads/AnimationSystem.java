@@ -168,7 +168,7 @@ public class AnimationSystem extends Thread {
         boolean gamewinPlayer =gameModel.checkEnd(true),gamewinRival=gameModel.checkEnd(false);
         if (gamewinPlayer || gamewinRival || GlobalState.getInstance().isPlayerGameOver()) {
             try {
-                if (gamewinPlayer) // if player wins
+                if (gamewinPlayer || GlobalState.getInstance().isRivalGameOver()) // if player wins
                     Constants.fc.Win();
                 else if (gamewinRival && !GlobalState.getInstance().isSinglePlayer()|| GlobalState.getInstance().isPlayerGameOver()) //if rival wins or player loses
                     Constants.fc.Lose();
