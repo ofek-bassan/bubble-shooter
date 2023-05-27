@@ -20,8 +20,6 @@ public class Constants {
     public static final int START_NUM_COLS = 14;
     public static LinkedList<Integer> PLAYER_BALL_LIST;
     public static LinkedList<Integer> RIVAL_BALL_LIST;
-    public static int PLAYER_COLOR=1;
-    public static int RIVAL_COLOR=1;
     public static int SECTOR=-1;
     public static int ROW=-1;
     public static int COLUMN=-1;
