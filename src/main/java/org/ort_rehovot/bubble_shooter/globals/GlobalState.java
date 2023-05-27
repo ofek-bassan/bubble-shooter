@@ -21,6 +21,15 @@ public class GlobalState {
     @Setter
     @Getter
     private int rivalThrows;
+
+    @Setter
+    @Getter
+    private boolean rivalGameOver = false;
+
+
+    @Getter
+    @Setter
+    private boolean playerGameOver = false;
     @Setter
     @Getter
     private GamePanel gp;

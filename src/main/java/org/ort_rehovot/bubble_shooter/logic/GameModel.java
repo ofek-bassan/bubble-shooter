@@ -35,9 +35,6 @@ public class GameModel {
 
     private final static int MIN_NUM_TO_EXPLODE = 3;
 
-    @Getter
-    @Setter
-    private boolean gameOver = false;
 
     private int throwsCounter = 0;
 
@@ -270,7 +267,7 @@ public class GameModel {
             }
 
             if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
-                setGameOver(true);
+                GlobalState.getInstance().setPlayerGameOver(true);
                 updateRows();
                 //setNewPlayerOrRival(column < cols + 1);
                 return true;
@@ -343,7 +340,7 @@ public class GameModel {
         grid[newRow][newColumn] = Ball.create(newRow, newColumn, color);
 
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
-            setGameOver(true);
+            GlobalState.getInstance().setPlayerGameOver(true);
             updateRows();
             //setNewPlayerOrRival(column < cols + 1);
             return true;
@@ -450,7 +447,7 @@ public class GameModel {
             endcol = Constants.MAX_COLS;
         }
         if (lastRow >= Constants.MAX_ROWS || lastRow >= grid[lastRow].length) {
-            setGameOver(true);
+            GlobalState.getInstance().setPlayerGameOver(true);
             updateRows();
             //setNewPlayerOrRival(isPlayer);
             return;

@@ -15,7 +15,7 @@ public class Constants {
     public static final int PLAYER_Y = FIELD_SIZE_Y - 2 * SPRITE_R;
     public static final int MAX_ROWS = 11;
     public static final int MAX_COLS = 28;
-    public static final int MAX_BAD_THROWS = 1000;
+    public static final int MAX_BAD_THROWS = 3;
     public static final int START_NUM_ROWS = 3;
     public static final int START_NUM_COLS = 14;
     public static LinkedList<Integer> PLAYER_BALL_LIST;
