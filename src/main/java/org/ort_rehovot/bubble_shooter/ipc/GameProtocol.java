@@ -38,7 +38,9 @@ public class GameProtocol implements Protocol {
         }
 
         if (toks[0].equals("GG")) {
+            System.out.println(1234);
             GlobalState.getInstance().setRivalGameOver(true);
+            System.out.println(GlobalState.getInstance().isRivalGameOver());
         }
 
         if (toks[0].equals("SC")) {

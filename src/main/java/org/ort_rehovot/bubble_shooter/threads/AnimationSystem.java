@@ -108,7 +108,7 @@ public class AnimationSystem extends Thread {
             else
                 setInternalState(State.IDLE);
             gameModel.setNewPlayerOrRival(isPlayer);
-            endOrBoom(isPlayer);
+            Boom(isPlayer);
             return;
         }
         state.update();
@@ -124,11 +124,12 @@ public class AnimationSystem extends Thread {
 
     @Override
     public void run () {
-        State myState = getInternalStateState();
+        State myState = checkWinGameOver();
 
         gameModel.getView().repaint();
         while (myState!=State.DONE) {
             if(!GlobalState.getInstance().isPaused()) {
+                checkWinGameOver();
                 switch (myState) {
                     case PLAYER_MOVING -> doMove(playerState, true);
 
@@ -163,20 +164,30 @@ public class AnimationSystem extends Thread {
         }
     }
 
-    private synchronized void endOrBoom(boolean isPlayer) {
+    private synchronized void Boom(boolean isPlayer) {
         boom(isPlayer);
-        boolean gamewinPlayer =gameModel.checkEnd(true),gamewinRival=gameModel.checkEnd(false);
-        if (gamewinPlayer || gamewinRival || GlobalState.getInstance().isPlayerGameOver()) {
-            try {
-                if (gamewinPlayer || GlobalState.getInstance().isRivalGameOver()) // if player wins
-                    Constants.fc.Win();
-                else if (gamewinRival && !GlobalState.getInstance().isSinglePlayer()|| GlobalState.getInstance().isPlayerGameOver()) //if rival wins or player loses
-                    Constants.fc.Lose();
-            } catch (IOException e) {
-                e.printStackTrace();
+    }
+
+    private synchronized State checkWinGameOver() {
+        boolean gamewinPlayer = gameModel.checkEnd(true), gamewinRival = gameModel.checkEnd(false);
+        try {
+            System.out.println("rival game over:" + GlobalState.getInstance().isRivalGameOver());
+            if (gamewinPlayer || GlobalState.getInstance().isRivalGameOver()) // if player wins
+            {
+                Constants.fc.Win();
+                return State.DONE;
+            } else if (gamewinRival && !GlobalState.getInstance().isSinglePlayer() || GlobalState.getInstance().isPlayerGameOver()) //if rival wins or player loses
+            {
+                Constants.fc.Lose();
+                return State.DONE;
             }
+            return getInternalStateState();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return State.DONE;
         }
     }
+
 
 
     private MovementState playerState;
