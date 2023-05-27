@@ -37,11 +37,14 @@ public class GameProtocol implements Protocol {
             GlobalState.getInstance().setRemoteAnimationFinished(true);
         }
 
+        if (toks[0].equals("GG")) {
+            GlobalState.getInstance().setRivalGameOver(true);
+        }
+
         if (toks[0].equals("SC")) {
             Constants.SECTOR = Integer.parseInt(toks[1]);
             Constants.ROW =Integer.parseInt(toks[2]);
             Constants.COLUMN =Integer.parseInt(toks[3]);
-            GlobalState.getInstance().setRivalGameOver(Integer.parseInt(toks[4]) == 1);
         }
 
 
@@ -75,8 +78,19 @@ public class GameProtocol implements Protocol {
 
     public static void sendSectorCord(int sector,int i, int j) {
         if (!GlobalState.getInstance().isSinglePlayer()) {
+            String msg = String.format("SC %d %d %d", sector,i,j);
+            try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
+                client.send(msg);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void sendGameOver() {
+        if (!GlobalState.getInstance().isSinglePlayer()) {
             int isGameOver = GlobalState.getInstance().isPlayerGameOver()?1:0;
-            String msg = String.format("SC %d %d %d %d", sector,i,j,isGameOver);
+            String msg = String.format("GG %d", isGameOver);
             try (NetworkClient client = new NetworkClient(GlobalState.getInstance().getRivalAddress())) {
                 client.send(msg);
             } catch (Exception ex) {

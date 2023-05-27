@@ -271,6 +271,7 @@ public class GameModel {
 
             if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
                 GlobalState.getInstance().setPlayerGameOver(true);
+                GameProtocol.sendGameOver();
                 updateRows();
                 //setNewPlayerOrRival(column < cols + 1);
                 return true;
@@ -344,6 +345,7 @@ public class GameModel {
 
         if (newRow >= Constants.MAX_ROWS || newColumn >= grid[newRow].length) {
             GlobalState.getInstance().setPlayerGameOver(true);
+            GameProtocol.sendGameOver();
             updateRows();
             //setNewPlayerOrRival(column < cols + 1);
             return true;
@@ -449,6 +451,7 @@ public class GameModel {
         }
         if (lastRow >= Constants.MAX_ROWS || lastRow >= grid[lastRow].length) {
             GlobalState.getInstance().setPlayerGameOver(true);
+            GameProtocol.sendGameOver();
             updateRows();
             //setNewPlayerOrRival(isPlayer);
             return;
