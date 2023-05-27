@@ -80,6 +80,8 @@ public class GameModel {
         private void initDebugBallsInternal() {
             grid[0][1] = Ball.create(0, 1, 1);
             grid[0][2] = Ball.create(0, 2, 1);
+            grid[0][26] = Ball.create(0, 26, 1);
+            grid[0][25] = Ball.create(0, 25, 1);
     }
 
     void initDebugBalls() {
@@ -104,6 +106,7 @@ public class GameModel {
         {
             setNewPlayerOrRival(false);
             initRandomBallsOnline();
+            initDebugBalls();
         }
         else
         {
@@ -386,8 +389,6 @@ public class GameModel {
         if (exploded) {
             SoundSystem.getInstance().playExplosion();
         }
-        //if(!isPlayer)
-           // GameProtocol.sendAnimationFinished();
         updateRows();
         return true;
     }
@@ -625,7 +626,6 @@ public class GameModel {
         }
 
         for (int i = startcol; i < endcol; i++) {
-            System.out.println("color:"+grid[0][i].getColor());
             if(grid[0][i].getColor()!=-1)
             {
                return false;
@@ -637,11 +637,13 @@ public class GameModel {
     public void setNewPlayerOrRival(boolean isPlayer) {
         if (isPlayer)
         {
-            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_BALL_LIST.pop());
+            //player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,Constants.PLAYER_BALL_LIST.pop());
+            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,1);
         }
         else
         {
-            rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_BALL_LIST.pop());
+            //rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_BALL_LIST.pop());
+            player = new Ball(Constants.PLAYER_X, Constants.PLAYER_Y,1);
         }
     }
 
@@ -652,8 +654,6 @@ public class GameModel {
         rivalPlayer = new Ball(Constants.RIVAL_X, Constants.PLAYER_Y,Constants.RIVAL_COLOR);
         rivalPlayer.refreshColor();
         GlobalState.getInstance().getGp().repaint();
-        //System.out.println("Constants.RIVAL_COLOR:"+Constants.RIVAL_COLOR+" Constants.PLAYER_COLOR:"+Constants.PLAYER_COLOR);
-        //System.out.println("player:"+player.getColor()+" rivalPlayer"+rivalPlayer.getColor());
     }
 
     public Ball[][] getGrid() {
