@@ -28,7 +28,7 @@ public class DiscoveryProtocol implements Protocol {
                 h1 = Integer.parseInt(tokens[3]);
                 color1= Integer.parseInt(tokens[4]);
                 addr1 = address;
-            } else {
+            } else if (port2 == 0) {
                 port2 = Integer.parseInt(tokens[1]);
                 w2 = Integer.parseInt(tokens[2]);
                 h2 = Integer.parseInt(tokens[3]);

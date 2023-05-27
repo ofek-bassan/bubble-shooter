@@ -78,8 +78,8 @@ public class GameModel {
     }
 
         private void initDebugBallsInternal() {
+            grid[0][0] = Ball.create(0, 0, 1);
             grid[0][1] = Ball.create(0, 1, 1);
-            grid[0][2] = Ball.create(0, 2, 1);
             grid[0][15] = Ball.create(0, 15, 1);
             grid[0][16] = Ball.create(0, 16, 1);
     }
@@ -105,13 +105,13 @@ public class GameModel {
         if(!GlobalState.getInstance().isSinglePlayer())
         {
             setNewPlayerOrRival(false);
-            //initRandomBallsOnline();
-            initDebugBalls();
+            initRandomBallsOnline();
+            //initDebugBalls();
         }
         else
         {
-            //initRandomBallsOffline();
-            initDebugBalls();
+            initRandomBallsOffline();
+            //initDebugBalls();
             //printDebug();
         }
         //printDebug();
