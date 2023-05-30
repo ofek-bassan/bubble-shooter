@@ -105,8 +105,8 @@ public class GameModel {
         if(!GlobalState.getInstance().isSinglePlayer())
         {
             setNewPlayerOrRival(false);
-            initRandomBallsOnline();
-            //initDebugBalls();
+            //initRandomBallsOnline();
+            initDebugBalls();
         }
         else
         {

@@ -170,7 +170,6 @@ public class AnimationSystem extends Thread {
     private synchronized State checkWinGameOver() {
         boolean gamewinPlayer = gameModel.checkEnd(true), gamewinRival = gameModel.checkEnd(false);
         try {
-            System.out.println("rival game over:" + GlobalState.getInstance().isRivalGameOver());
             if (gamewinPlayer || GlobalState.getInstance().isRivalGameOver()) // if player wins
             {
                 Constants.fc.Win();
